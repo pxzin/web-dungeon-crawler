@@ -201,6 +201,23 @@ Adicionar seleção de retrato à tela de criação de personagem e criar um com
 
 ---
 
+### ⏳ 010 - Refactor Portrait Component
+**Status**: ⏳ Pending / Pendente
+**Priority**: Low / Baixa
+**Type**: Refactoring
+
+**Description**:
+Refactor the Portrait component to accept the full character object instead of individual props.
+
+Refatorar o componente Portrait para aceitar o objeto de personagem completo em vez de props individuais.
+
+**Implementation**:
+- 📁 [tasks/010-refactor-portrait-component.md](./010-refactor-portrait-component.md)
+
+**Status**: Not started
+
+---
+
 ## Infrastructure / Infraestrutura
 
 ### ✅ Persistence System
