@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { Icon, StatusEffects } from '$lib/components/ui'
+	import Tooltip from '$lib/components/ui/Tooltip.svelte'
 	import type { StatusEffect } from '$lib/components/ui/StatusEffects.svelte'
 	import type { Character } from '$lib/game/character'
 
@@ -100,8 +101,11 @@
 	const circumference = 2 * Math.PI * radius
 	const circleOffset = $derived(circumference - (expPercent / 100) * circumference)
 
-	// State for character info tooltip
+	// State for tooltips
 	let showCharacterTooltip = $state(false)
+	let showExpTooltip = $state(false)
+	let showHpTooltip = $state(false)
+	let showMpTooltip = $state(false)
 
 	// Helper to format attribute with modifier
 	function formatAttribute(attr: Attribute | undefined): string {
@@ -128,7 +132,11 @@
 		<!-- Top Row: Level/Exp Circle + Class in same block -->
 		<div class="top-row-block">
 			<!-- Level/Exp Circle -->
-			<div class="level-exp-circle" title="XP: {experience}/{maxExperience} ({maxExperience - experience} to next level)">
+			<div
+				class="level-exp-circle"
+				onmouseenter={() => (showExpTooltip = true)}
+				onmouseleave={() => (showExpTooltip = false)}
+			>
 				<svg class="progress-ring" width="50" height="50" viewBox="0 0 50 50">
 					<!-- Background circle -->
 					<circle
@@ -164,10 +172,12 @@
 				<div class="level-text">{level}</div>
 
 				<!-- Tooltip -->
-				<div class="exp-tooltip">
-					<div class="tooltip-text">XP: {experience}/{maxExperience}</div>
-					<div class="tooltip-remaining">{maxExperience - experience} to next level</div>
-				</div>
+				{#if showExpTooltip}
+					<Tooltip position="top" sizeMultiplier={multiplier}>
+						<div class="tooltip-text">XP: {experience}/{maxExperience}</div>
+						<div class="tooltip-remaining">{maxExperience - experience} to next level</div>
+					</Tooltip>
+				{/if}
 			</div>
 
 			<!-- Class Badge -->
@@ -192,27 +202,39 @@
 				<!-- HP/MP Bars inside name block -->
 				<div class="stats-container">
 					<!-- HP Bar -->
-					<div class="stat-bar-wrapper" title="{health} / {maxHealth}">
+					<div
+						class="stat-bar-wrapper"
+						onmouseenter={() => (showHpTooltip = true)}
+						onmouseleave={() => (showHpTooltip = false)}
+					>
 						<span class="bar-label">HP</span>
 						<div class="bar-track">
 							<div class="bar-fill hp-bar" style:width="{healthPercent}%"></div>
 						</div>
 						<!-- HP Tooltip -->
-						<div class="bar-tooltip">
-							<span class="bar-tooltip-text">{health} / {maxHealth}</span>
-						</div>
+						{#if showHpTooltip}
+							<Tooltip position="top" sizeMultiplier={multiplier}>
+								<span class="bar-tooltip-text">{health} / {maxHealth}</span>
+							</Tooltip>
+						{/if}
 					</div>
 
 					<!-- MP Bar -->
-					<div class="stat-bar-wrapper" title="{mana} / {maxMana}">
+					<div
+						class="stat-bar-wrapper"
+						onmouseenter={() => (showMpTooltip = true)}
+						onmouseleave={() => (showMpTooltip = false)}
+					>
 						<span class="bar-label">MP</span>
 						<div class="bar-track">
 							<div class="bar-fill mp-bar" style:width="{manaPercent}%"></div>
 						</div>
 						<!-- MP Tooltip -->
-						<div class="bar-tooltip">
-							<span class="bar-tooltip-text">{mana} / {maxMana}</span>
-						</div>
+						{#if showMpTooltip}
+							<Tooltip position="top" sizeMultiplier={multiplier}>
+								<span class="bar-tooltip-text">{mana} / {maxMana}</span>
+							</Tooltip>
+						{/if}
 					</div>
 				</div>
 			</div>
@@ -234,7 +256,7 @@
 
 		<!-- Character Info Tooltip -->
 		{#if showCharacterTooltip && (playerClass || hasAttributes)}
-			<div class="character-tooltip">
+			<Tooltip position="right" sizeMultiplier={multiplier}>
 				{#if playerClass}
 					<div class="character-tooltip-section">
 						<div class="character-tooltip-header">
@@ -286,7 +308,7 @@
 						</div>
 					</div>
 				{/if}
-			</div>
+			</Tooltip>
 		{/if}
 	</div>
 </div>
@@ -348,30 +370,7 @@
 		pointer-events: none;
 	}
 
-	/* Tooltip */
-	.exp-tooltip {
-		position: absolute;
-		bottom: calc(100% + 8px);
-		left: 50%;
-		transform: translateX(-50%);
-		background: rgba(0, 0, 0, 0.95);
-		padding: calc(8px * var(--size-multiplier)) calc(12px * var(--size-multiplier));
-		border-radius: calc(8px * var(--size-multiplier));
-		border: 1px solid var(--color-arcana-gold-500);
-		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-		white-space: nowrap;
-		opacity: 0;
-		visibility: hidden;
-		transition: opacity 0.2s ease, visibility 0.2s ease;
-		z-index: 100;
-		pointer-events: none;
-	}
-
-	.level-exp-circle:hover .exp-tooltip {
-		opacity: 1;
-		visibility: visible;
-	}
-
+	/* Tooltip content styling */
 	.tooltip-text {
 		font-size: calc(12px * var(--size-multiplier));
 		font-weight: 600;
@@ -385,17 +384,6 @@
 		font-weight: 500;
 		color: rgba(255, 255, 255, 0.8);
 		font-family: var(--font-mono);
-	}
-
-	/* Tooltip arrow */
-	.exp-tooltip::after {
-		content: '';
-		position: absolute;
-		top: 100%;
-		left: 50%;
-		transform: translateX(-50%);
-		border: calc(6px * var(--size-multiplier)) solid transparent;
-		border-top-color: var(--color-arcana-gold-500);
 	}
 
 	/* Class Block */
@@ -504,46 +492,12 @@
 		background: linear-gradient(90deg, #2563eb 0%, #3b82f6 50%, #60a5fa 100%);
 	}
 
-	/* Bar Tooltips */
-	.bar-tooltip {
-		position: absolute;
-		bottom: calc(100% + 6px);
-		left: 50%;
-		transform: translateX(-50%);
-		background: rgba(0, 0, 0, 0.95);
-		padding: calc(4px * var(--size-multiplier)) calc(8px * var(--size-multiplier));
-		border-radius: calc(6px * var(--size-multiplier));
-		border: 1px solid var(--color-arcana-gold-500);
-		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-		white-space: nowrap;
-		opacity: 0;
-		visibility: hidden;
-		transition: opacity 0.2s ease, visibility 0.2s ease;
-		z-index: 100;
-		pointer-events: none;
-	}
-
-	.stat-bar-wrapper:hover .bar-tooltip {
-		opacity: 1;
-		visibility: visible;
-	}
-
+	/* Bar Tooltip content styling */
 	.bar-tooltip-text {
 		font-size: calc(11px * var(--size-multiplier));
 		font-weight: 600;
 		color: var(--color-arcana-gold-300);
 		font-family: var(--font-mono);
-	}
-
-	/* Tooltip arrow */
-	.bar-tooltip::after {
-		content: '';
-		position: absolute;
-		top: 100%;
-		left: 50%;
-		transform: translateX(-50%);
-		border: calc(4px * var(--size-multiplier)) solid transparent;
-		border-top-color: var(--color-arcana-gold-500);
 	}
 
 	/* ===== RIGHT SECTION: Portrait ===== */
@@ -577,22 +531,7 @@
 		display: block;
 	}
 
-	/* Character Info Tooltip */
-	.character-tooltip {
-		position: absolute;
-		top: 0;
-		left: calc(100% + 12px);
-		background: rgba(0, 0, 0, 0.95);
-		border: 2px solid var(--color-arcana-gold-500);
-		border-radius: calc(12px * var(--size-multiplier));
-		padding: calc(12px * var(--size-multiplier));
-		min-width: 220px;
-		box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7);
-		z-index: 100;
-		animation: fadeIn 0.2s ease;
-		pointer-events: none;
-	}
-
+	/* Character Tooltip content styling */
 	.character-tooltip-section {
 		margin-bottom: calc(12px * var(--size-multiplier));
 	}
@@ -651,25 +590,6 @@
 	.attribute-value {
 		color: white;
 		font-weight: 700;
-	}
-
-	/* Tooltip arrow */
-	.character-tooltip::before {
-		content: '';
-		position: absolute;
-		top: calc(20px * var(--size-multiplier));
-		right: 100%;
-		border: calc(8px * var(--size-multiplier)) solid transparent;
-		border-right-color: var(--color-arcana-gold-500);
-	}
-
-	.character-tooltip::after {
-		content: '';
-		position: absolute;
-		top: calc(22px * var(--size-multiplier));
-		right: 100%;
-		border: calc(6px * var(--size-multiplier)) solid transparent;
-		border-right-color: rgba(0, 0, 0, 0.95);
 	}
 
 	/* Responsive */

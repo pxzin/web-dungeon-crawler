@@ -1,5 +1,6 @@
 <script lang="ts">
 	import SpriteIcon from './SpriteIcon.svelte'
+	import Tooltip from './Tooltip.svelte'
 
 	export interface StatusEffect {
 		icon: string // SpriteIcon iconId
@@ -98,7 +99,7 @@
 
 	<!-- Hover Tooltip -->
 	{#if showHoverTooltip && effects.length > 0}
-		<div class="hover-tooltip">
+		<Tooltip position="top" sizeMultiplier={multiplier}>
 			<div class="tooltip-header">Status Effects</div>
 			<div class="tooltip-list">
 				{#each effects.slice(0, maxTooltipEffects) as effect}
@@ -127,7 +128,7 @@
 					Click to view all {effects.length} effects
 				</div>
 			{/if}
-		</div>
+		</Tooltip>
 	{/if}
 </div>
 
@@ -474,23 +475,7 @@
 		background: rgba(255, 255, 255, 0.3);
 	}
 
-	/* Hover Tooltip */
-	.hover-tooltip {
-		position: absolute;
-		bottom: calc(100% + 8px);
-		left: 0;
-		background: rgba(0, 0, 0, 0.95);
-		border: 1px solid var(--color-arcana-gold-500);
-		border-radius: calc(8px * var(--size-multiplier));
-		padding: calc(8px * var(--size-multiplier));
-		min-width: 250px;
-		max-width: 300px;
-		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-		z-index: 99;
-		animation: fadeIn 0.2s ease;
-		pointer-events: none;
-	}
-
+	/* Tooltip Content Styling */
 	.tooltip-header {
 		font-size: calc(12px * var(--size-multiplier));
 		font-weight: 700;
@@ -581,15 +566,5 @@
 		font-family: var(--font-mono);
 		text-align: center;
 		font-style: italic;
-	}
-
-	/* Tooltip arrow */
-	.hover-tooltip::after {
-		content: '';
-		position: absolute;
-		top: 100%;
-		left: calc(16px * var(--size-multiplier));
-		border: calc(6px * var(--size-multiplier)) solid transparent;
-		border-top-color: var(--color-arcana-gold-500);
 	}
 </style>

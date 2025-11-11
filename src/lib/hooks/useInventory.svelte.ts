@@ -92,13 +92,19 @@ export function createInventory() {
 
 	/**
 	 * Use consumable item
+	 * @param item - The consumable item to use
+	 * @param character - Optional character to apply effects to (for immediate application)
+	 * @returns The item effects that were applied
 	 */
-	function useItem(item: ConsumableItem): boolean {
-		// TODO: Apply item effects to character
-		console.log('Using item:', item.name, 'Effect:', item.effect)
+	function useItem(item: ConsumableItem, character?: any): { hpRestore?: number; mpRestore?: number } | null {
+		// Remove from inventory first
+		if (!removeItem(item, 1)) {
+			return null
+		}
 
-		// Remove from inventory
-		return removeItem(item, 1)
+		// Return the effects to be applied by the caller
+		// The caller should handle updating the character state and persistence
+		return item.effect
 	}
 
 	/**

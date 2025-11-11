@@ -17,6 +17,13 @@
 
 ## 🔧 Decisões Técnicas
 
+### DIRETRIZ CRÍTICA: PIVÔ TECNOLÓGICO PARA PHASER 2D
+
+-   **Toda a Interface de Usuário (UI) do jogo será implementada exclusivamente em Phaser 2D.**
+-   Isso significa que todas as telas, menus, HUDs e componentes de UI, tanto os já implementados em HTML/CSS quanto os futuros, deverão ser desenvolvidos dentro do ambiente Phaser.
+-   O SvelteKit passará a ser o "host" para o canvas do Phaser, gerenciando o carregamento do jogo e a navegação entre as "cenas" do Phaser.
+-   A componentização (conforme diretriz anterior) deve ser aplicada dentro do Phaser, criando componentes de UI reutilizáveis específicos para o framework.
+
 ### Arquitetura (A Definir)
 
 ```

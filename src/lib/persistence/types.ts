@@ -77,6 +77,8 @@ export interface PlayerData {
 	stats: PlayerStats
 	resources: PlayerResources
 	gold: number
+	inventory?: Array<{ itemId: string; quantity: number }>
+	equipment?: Record<string, string> // slot -> itemId
 	createdAt: number
 	updatedAt: number
 }

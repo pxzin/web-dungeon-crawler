@@ -205,6 +205,100 @@ type RootTranslation = {
 			 */
 			comingSoon: string
 		}
+		character: {
+			/**
+			 * C​h​a​r​a​c​t​e​r
+			 */
+			title: string
+			/**
+			 * L​o​a​d​i​n​g​ ​c​h​a​r​a​c​t​e​r​.​.​.
+			 */
+			loadingCharacter: string
+			/**
+			 * N​o​ ​C​h​a​r​a​c​t​e​r​ ​F​o​u​n​d
+			 */
+			noCharacterFound: string
+			/**
+			 * P​l​e​a​s​e​ ​c​r​e​a​t​e​ ​a​ ​c​h​a​r​a​c​t​e​r​ ​f​i​r​s​t​.
+			 */
+			createCharacterFirst: string
+			/**
+			 * E​q​u​i​p​m​e​n​t
+			 */
+			equipment: string
+			/**
+			 * I​n​v​e​n​t​o​r​y
+			 */
+			inventory: string
+			/**
+			 * S​t​a​t​i​s​t​i​c​s
+			 */
+			statistics: string
+			/**
+			 * {​c​o​u​n​t​}​ ​i​t​e​m​s
+			 * @param {unknown} count
+			 */
+			itemsCount: RequiredParams<'count'>
+			/**
+			 * Y​o​u​r​ ​i​n​v​e​n​t​o​r​y​ ​i​s​ ​e​m​p​t​y
+			 */
+			emptyInventory: string
+			/**
+			 * A​r​e​ ​y​o​u​ ​s​u​r​e​ ​y​o​u​ ​w​a​n​t​ ​t​o​ ​d​i​s​c​a​r​d​ ​{​i​t​e​m​N​a​m​e​}​?
+			 * @param {unknown} itemName
+			 */
+			discardConfirm: RequiredParams<'itemName'>
+			/**
+			 * P​r​i​m​a​r​y​ ​A​t​t​r​i​b​u​t​e​s
+			 */
+			primaryAttributes: string
+			/**
+			 * C​o​m​b​a​t​ ​S​t​a​t​s
+			 */
+			combatStats: string
+			equipmentSlots: {
+				/**
+				 * M​a​i​n​ ​H​a​n​d
+				 */
+				mainHand: string
+				/**
+				 * O​f​f​ ​H​a​n​d
+				 */
+				offHand: string
+				/**
+				 * H​e​a​d
+				 */
+				head: string
+				/**
+				 * C​h​e​s​t
+				 */
+				chest: string
+				/**
+				 * L​e​g​s
+				 */
+				legs: string
+				/**
+				 * F​e​e​t
+				 */
+				feet: string
+				/**
+				 * H​a​n​d​s
+				 */
+				hands: string
+				/**
+				 * N​e​c​k
+				 */
+				neck: string
+				/**
+				 * R​i​n​g​ ​1
+				 */
+				ring1: string
+				/**
+				 * R​i​n​g​ ​2
+				 */
+				ring2: string
+			}
+		}
 		dungeons: {
 			/**
 			 * D​u​n​g​e​o​n​s
@@ -623,6 +717,10 @@ type RootTranslation = {
 			 */
 			drop: string
 			/**
+			 * D​i​s​c​a​r​d
+			 */
+			discard: string
+			/**
 			 * S​e​l​l
 			 */
 			sell: string
@@ -630,6 +728,40 @@ type RootTranslation = {
 			 * B​u​y
 			 */
 			buy: string
+			/**
+			 * D​u​r​a​b​i​l​i​t​y
+			 */
+			durability: string
+			/**
+			 * V​a​l​u​e
+			 */
+			value: string
+			/**
+			 * B​o​n​u​s​e​s
+			 */
+			bonuses: string
+			rarity: {
+				/**
+				 * C​o​m​m​o​n
+				 */
+				common: string
+				/**
+				 * U​n​c​o​m​m​o​n
+				 */
+				uncommon: string
+				/**
+				 * R​a​r​e
+				 */
+				rare: string
+				/**
+				 * E​p​i​c
+				 */
+				epic: string
+				/**
+				 * L​e​g​e​n​d​a​r​y
+				 */
+				legendary: string
+			}
 		}
 		stats: {
 			/**
@@ -925,6 +1057,98 @@ export type TranslationFunctions = {
 			 * Coming Soon
 			 */
 			comingSoon: () => LocalizedString
+		}
+		character: {
+			/**
+			 * Character
+			 */
+			title: () => LocalizedString
+			/**
+			 * Loading character...
+			 */
+			loadingCharacter: () => LocalizedString
+			/**
+			 * No Character Found
+			 */
+			noCharacterFound: () => LocalizedString
+			/**
+			 * Please create a character first.
+			 */
+			createCharacterFirst: () => LocalizedString
+			/**
+			 * Equipment
+			 */
+			equipment: () => LocalizedString
+			/**
+			 * Inventory
+			 */
+			inventory: () => LocalizedString
+			/**
+			 * Statistics
+			 */
+			statistics: () => LocalizedString
+			/**
+			 * {count} items
+			 */
+			itemsCount: (arg: { count: unknown }) => LocalizedString
+			/**
+			 * Your inventory is empty
+			 */
+			emptyInventory: () => LocalizedString
+			/**
+			 * Are you sure you want to discard {itemName}?
+			 */
+			discardConfirm: (arg: { itemName: unknown }) => LocalizedString
+			/**
+			 * Primary Attributes
+			 */
+			primaryAttributes: () => LocalizedString
+			/**
+			 * Combat Stats
+			 */
+			combatStats: () => LocalizedString
+			equipmentSlots: {
+				/**
+				 * Main Hand
+				 */
+				mainHand: () => LocalizedString
+				/**
+				 * Off Hand
+				 */
+				offHand: () => LocalizedString
+				/**
+				 * Head
+				 */
+				head: () => LocalizedString
+				/**
+				 * Chest
+				 */
+				chest: () => LocalizedString
+				/**
+				 * Legs
+				 */
+				legs: () => LocalizedString
+				/**
+				 * Feet
+				 */
+				feet: () => LocalizedString
+				/**
+				 * Hands
+				 */
+				hands: () => LocalizedString
+				/**
+				 * Neck
+				 */
+				neck: () => LocalizedString
+				/**
+				 * Ring 1
+				 */
+				ring1: () => LocalizedString
+				/**
+				 * Ring 2
+				 */
+				ring2: () => LocalizedString
+			}
 		}
 		dungeons: {
 			/**
@@ -1326,6 +1550,10 @@ export type TranslationFunctions = {
 			 */
 			drop: () => LocalizedString
 			/**
+			 * Discard
+			 */
+			discard: () => LocalizedString
+			/**
 			 * Sell
 			 */
 			sell: () => LocalizedString
@@ -1333,6 +1561,40 @@ export type TranslationFunctions = {
 			 * Buy
 			 */
 			buy: () => LocalizedString
+			/**
+			 * Durability
+			 */
+			durability: () => LocalizedString
+			/**
+			 * Value
+			 */
+			value: () => LocalizedString
+			/**
+			 * Bonuses
+			 */
+			bonuses: () => LocalizedString
+			rarity: {
+				/**
+				 * Common
+				 */
+				common: () => LocalizedString
+				/**
+				 * Uncommon
+				 */
+				uncommon: () => LocalizedString
+				/**
+				 * Rare
+				 */
+				rare: () => LocalizedString
+				/**
+				 * Epic
+				 */
+				epic: () => LocalizedString
+				/**
+				 * Legendary
+				 */
+				legendary: () => LocalizedString
+			}
 		}
 		stats: {
 			/**

@@ -7,7 +7,10 @@
 	import { toastStore } from '$lib/stores/toast.svelte'
 	import { persistence } from '$lib/persistence/instance'
 	import { TileType } from '$lib/game/dungeon'
-	import type { Combatant } from '$lib/game/combat/types'
+	import { characterToCombatant } from '$lib/game/combat'
+	import { createInventory, type InventoryManager } from '$lib/hooks/useInventory.svelte'
+	import { getItem } from '$lib/game/items'
+	import type { EquippableItem } from '$lib/game/items/types'
 	import { LL } from '$lib/i18n/i18n-svelte'
 
 	let session = $derived(dungeonStore.session)
@@ -57,32 +60,70 @@
 
 			const player = playerResult.data
 
-			// Convert player to Combatant
-			const playerCombatant: Combatant = {
-				id: player.id,
-				name: player.name,
-				type: 'player',
-				class: player.class,
-				level: player.stats.level,
-				maxHp: player.resources.maxHealth,
-				currentHp: player.resources.health,
-				maxMp: player.resources.maxMana,
-				currentMp: player.resources.mana,
-				attack: player.stats.strength * 2,
-				defense: Math.floor(player.stats.vitality * 1.5),
-				magicAttack: player.stats.intelligence * 2,
-				magicDefense: Math.floor(player.stats.intelligence * 1.5),
-				speed: Math.floor(player.stats.dexterity * 1.5),
-				criticalRate: Math.floor(player.stats.dexterity * 0.5),
-				evasion: Math.floor(player.stats.dexterity * 0.3),
-				statusEffects: [],
-				portraitId: player.portraitId,
-				// Base attributes for UI
-				strength: player.stats.strength,
-				dexterity: player.stats.dexterity,
-				intelligence: player.stats.intelligence,
-				vitality: player.stats.vitality,
+			// Load full player data
+			const playerDataResult = await persistence.getPlayerData()
+			if (!playerDataResult.success || !playerDataResult.data) {
+				toastStore.error($LL.game.dungeon.errorLoadingPlayer())
+				return
 			}
+
+			const playerData = playerDataResult.data
+
+			// Convert player data to Character format
+			const character = {
+				id: playerData.id,
+				name: playerData.name,
+				portraitId: playerData.portraitId,
+				class: playerData.class,
+				level: playerData.stats.level,
+				experience: playerData.stats.experience,
+				experienceToNextLevel: playerData.stats.experienceToNextLevel,
+				health: playerData.resources.health,
+				maxHealth: playerData.resources.maxHealth,
+				mana: playerData.resources.mana,
+				maxMana: playerData.resources.maxMana,
+				stamina: playerData.resources.stamina,
+				maxStamina: playerData.resources.maxStamina,
+				strength: playerData.stats.strength,
+				dexterity: playerData.stats.dexterity,
+				intelligence: playerData.stats.intelligence,
+				vitality: playerData.stats.vitality,
+				luck: playerData.stats.luck,
+				attack: playerData.stats.attack,
+				defense: playerData.stats.defense,
+				magicAttack: playerData.stats.magicAttack,
+				magicDefense: playerData.stats.magicDefense,
+				speed: playerData.stats.speed,
+				criticalRate: playerData.stats.criticalRate,
+				evasion: playerData.stats.evasion,
+			}
+
+			// Create inventory manager and load inventory/equipment
+			const inventoryManager = createInventory()
+
+			// Load inventory from saved data
+			if (playerData.inventory) {
+				for (const slot of playerData.inventory) {
+					const item = getItem(slot.itemId)
+					if (item) {
+						inventoryManager.addItem(item, slot.quantity)
+					}
+				}
+			}
+
+			// Load equipment from saved data
+			if (playerData.equipment) {
+				for (const [slotKey, itemId] of Object.entries(playerData.equipment)) {
+					const item = getItem(itemId)
+					if (item) {
+						inventoryManager.addItem(item, 1)
+						inventoryManager.equipItem(item as EquippableItem)
+					}
+				}
+			}
+
+			// Convert player to Combatant with equipment bonuses
+			const playerCombatant = characterToCombatant(character, inventoryManager)
 
 			// Start combat
 			combatStore.startCombat(playerCombatant, result.enemyIds)

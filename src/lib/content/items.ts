@@ -25,7 +25,7 @@ const shortSword: EquippableItem = {
 	rarity: ItemRarity.COMMON,
 	value: 50,
 	stackable: false,
-	iconId: 'item_sword_short',
+	iconId: 'longsword',
 	slot: EquipmentSlot.MAIN_HAND,
 	requiredLevel: 1,
 	durability: {
@@ -50,7 +50,7 @@ const woodenShield: EquippableItem = {
 	rarity: ItemRarity.COMMON,
 	value: 30,
 	stackable: false,
-	iconId: 'item_shield_wooden',
+	iconId: 'wooden_shield',
 	slot: EquipmentSlot.OFF_HAND,
 	requiredLevel: 1,
 	durability: {
@@ -70,7 +70,7 @@ const leatherArmor: EquippableItem = {
 	rarity: ItemRarity.COMMON,
 	value: 80,
 	stackable: false,
-	iconId: 'item_armor_leather',
+	iconId: 'leather_armour',
 	slot: EquipmentSlot.CHEST,
 	requiredLevel: 1,
 	durability: {
@@ -96,7 +96,7 @@ const healingPotionWeak: ConsumableItem = {
 	value: 15,
 	stackable: true,
 	maxStack: 99,
-	iconId: 'item_potion_health_weak',
+	iconId: 'potion_red',
 	effect: {
 		hpRestore: 30,
 	},
@@ -116,7 +116,7 @@ const goldCoins: BaseItem = {
 	value: 1,
 	stackable: true,
 	maxStack: 999999,
-	iconId: 'item_gold_coins',
+	iconId: 'gold_coin_stack',
 }
 
 /**

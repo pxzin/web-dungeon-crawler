@@ -67,6 +67,32 @@ const en = {
 			},
 			"comingSoon": "Coming Soon"
 		},
+		"character": {
+			"title": "Character",
+			"loadingCharacter": "Loading character...",
+			"noCharacterFound": "No Character Found",
+			"createCharacterFirst": "Please create a character first.",
+			"equipment": "Equipment",
+			"inventory": "Inventory",
+			"statistics": "Statistics",
+			"itemsCount": "{count} items",
+			"emptyInventory": "Your inventory is empty",
+			"discardConfirm": "Are you sure you want to discard {itemName}?",
+			"primaryAttributes": "Primary Attributes",
+			"combatStats": "Combat Stats",
+			"equipmentSlots": {
+				"mainHand": "Main Hand",
+				"offHand": "Off Hand",
+				"head": "Head",
+				"chest": "Chest",
+				"legs": "Legs",
+				"feet": "Feet",
+				"hands": "Hands",
+				"neck": "Neck",
+				"ring1": "Ring 1",
+				"ring2": "Ring 2"
+			}
+		},
 		"dungeons": {
 			"title": "Dungeons",
 			"subtitle": "Choose your next adventure",
@@ -184,8 +210,19 @@ const en = {
 			"equip": "Equip",
 			"unequip": "Unequip",
 			"drop": "Drop",
+			"discard": "Discard",
 			"sell": "Sell",
-			"buy": "Buy"
+			"buy": "Buy",
+			"durability": "Durability",
+			"value": "Value",
+			"bonuses": "Bonuses",
+			"rarity": {
+				"common": "Common",
+				"uncommon": "Uncommon",
+				"rare": "Rare",
+				"epic": "Epic",
+				"legendary": "Legendary"
+			}
 		},
 		"stats": {
 			"strength": "Strength",

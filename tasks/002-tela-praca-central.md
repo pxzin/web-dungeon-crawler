@@ -1,7 +1,11 @@
 # Tarefa: 002 - Tela da Praça Central
 
+**Prioridade:** Alta
+**Tipo:** Feature
+**Status:** Pendente (Reimplementar em Phaser)
+
 ## Objetivo
-Criar a interface de usuário (UI) para a "Praça Central", o hub principal do jogo. Esta tela servirá como o ponto de partida para todas as atividades do jogador.
+Criar a interface de usuário (UI) para a "Praça Central", o hub principal do jogo. Esta tela servirá como o ponto de partida para todas as atividades do jogador. **Esta tela será reimplementada usando Phaser 2D.**
 
 ## Requisitos Funcionais
 
@@ -29,14 +33,13 @@ Criar a interface de usuário (UI) para a "Praça Central", o hub principal do j
 
 ## Requisitos Técnicos
 
-*   **Framework:** SvelteKit
+*   **Framework:** Phaser 2D (para a UI)
 *   **Linguagem:** TypeScript
-*   **Estilização:** UnoCSS
-*   **Rota:** A tela deve ser a rota principal do jogo após a criação do personagem, possivelmente em `/game/hub` ou `/game/square`.
+*   **Rota:** A tela deve ser a rota principal do jogo após a criação do personagem, possivelmente em `/game/hub` ou `/game/square`, que carregará a cena Phaser correspondente.
 
 ## Critérios de Aceitação
 
 *   A tela da Praça Central é carregada após a criação do personagem.
 *   As informações básicas do personagem são exibidas corretamente.
 *   Todas as áreas interativas (Masmorras, Ferreiro, etc.) estão presentes como placeholders visuais no layout.
-*   O layout geral é esteticamente agradável e bem organizado.
+*   O layout geral é esteticamente agradável e bem organizado, consistente com o Design System Arcana no Phaser.

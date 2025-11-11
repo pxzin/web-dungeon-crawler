@@ -67,6 +67,32 @@ const ptBR = {
 			},
 			"comingSoon": "Em Breve"
 		},
+		"character": {
+			"title": "Personagem",
+			"loadingCharacter": "Carregando personagem...",
+			"noCharacterFound": "Nenhum Personagem Encontrado",
+			"createCharacterFirst": "Por favor, crie um personagem primeiro.",
+			"equipment": "Equipamento",
+			"inventory": "Inventário",
+			"statistics": "Estatísticas",
+			"itemsCount": "{count} itens",
+			"emptyInventory": "Seu inventário está vazio",
+			"discardConfirm": "Tem certeza que deseja descartar {itemName}?",
+			"primaryAttributes": "Atributos Primários",
+			"combatStats": "Estatísticas de Combate",
+			"equipmentSlots": {
+				"mainHand": "Mão Principal",
+				"offHand": "Mão Secundária",
+				"head": "Cabeça",
+				"chest": "Peito",
+				"legs": "Pernas",
+				"feet": "Pés",
+				"hands": "Mãos",
+				"neck": "Pescoço",
+				"ring1": "Anel 1",
+				"ring2": "Anel 2"
+			}
+		},
 		"dungeons": {
 			"title": "Masmorras",
 			"subtitle": "Escolha sua próxima aventura",
@@ -184,8 +210,19 @@ const ptBR = {
 			"equip": "Equipar",
 			"unequip": "Desequipar",
 			"drop": "Descartar",
+			"discard": "Descartar",
 			"sell": "Vender",
-			"buy": "Comprar"
+			"buy": "Comprar",
+			"durability": "Durabilidade",
+			"value": "Valor",
+			"bonuses": "Bônus",
+			"rarity": {
+				"common": "Comum",
+				"uncommon": "Incomum",
+				"rare": "Raro",
+				"epic": "Épico",
+				"legendary": "Lendário"
+			}
 		},
 		"stats": {
 			"strength": "Força",

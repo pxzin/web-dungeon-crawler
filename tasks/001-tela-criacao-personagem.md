@@ -1,7 +1,11 @@
 # Tarefa: 001 - Tela de Criação de Personagem
 
+**Prioridade:** Alta
+**Tipo:** Feature
+**Status:** Pendente (Reimplementar em Phaser)
+
 ## Objetivo
-Desenvolver a interface de usuário (UI) e a lógica para a tela de criação de personagem, permitindo que o jogador configure seu personagem principal antes de iniciar o jogo.
+Desenvolver a interface de usuário (UI) e a lógica para a tela de criação de personagem, permitindo que o jogador configure seu personagem principal antes de iniciar o jogo. **Esta tela será reimplementada usando Phaser 2D.**
 
 ## Requisitos Funcionais
 
@@ -35,10 +39,9 @@ Desenvolver a interface de usuário (UI) e a lógica para a tela de criação de
 
 ## Requisitos Técnicos
 
-*   **Framework:** SvelteKit
+*   **Framework:** Phaser 2D (para a UI)
 *   **Linguagem:** TypeScript
-*   **Estilização:** UnoCSS
-*   **Rota:** A tela deve ser uma rota acessível em `/character-creation` (ou similar).
+*   **Rota:** A tela deve ser uma rota acessível em `/character-creation` (ou similar), que carregará a cena Phaser correspondente.
 
 ## Critérios de Aceitação
 
@@ -46,4 +49,4 @@ Desenvolver a interface de usuário (UI) e a lógica para a tela de criação de
 *   O jogador consegue distribuir os pontos de atributo.
 *   O jogador consegue definir um nome para o personagem.
 *   Ao confirmar, o personagem é salvo no LocalStorage e o jogo navega para a Praça Central.
-*   A interface é responsiva e funcional em telas de desktop.
+*   A interface é funcional e visualmente consistente com o Design System Arcana no Phaser.

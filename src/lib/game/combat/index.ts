@@ -17,3 +17,5 @@ export type {
 export { CombatState, CombatActionType } from './types'
 
 export { initializeCombat, processCombatAction, processEnemyTurn } from './combat-engine'
+
+export { characterToCombatant } from './character-to-combatant'

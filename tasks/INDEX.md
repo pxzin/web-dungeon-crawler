@@ -48,18 +48,18 @@ Painel de depuração exclusivo para desenvolvimento com inspeção e manipulaç
 
 ## Core Systems / Sistemas Principais
 
-### ✅ 001 - Character Creation Screen
-**Status**: ✅ Completed / Concluído
+### ⏳ 001 - Character Creation Screen
+**Status**: ⏳ Pending (Reimplement in Phaser) / Pendente (Reimplementar em Phaser)
 **Priority**: High / Alta
 **Type**: Feature
 
 **Description**:
-User interface and logic for character creation, allowing players to configure their main character before starting the game.
+User interface and logic for character creation, allowing players to configure their main character before starting the game. **Will be reimplemented using Phaser 2D.**
 
-Interface de usuário e lógica para criação de personagem, permitindo que jogadores configurem seu personagem principal antes de iniciar o jogo.
+Interface de usuário e lógica para criação de personagem, permitindo que jogadores configurem seu personagem principal antes de iniciar o jogo. **Será reimplementada usando Phaser 2D.**
 
 **Implementation**:
-- 📁 [src/routes/character-creation/+page.svelte](../src/routes/character-creation/+page.svelte)
+- 📁 [src/routes/character-creation/+page.svelte](../src/routes/character-creation/+page.svelte) (Original HTML/CSS)
 - 📁 [src/lib/game/character/](../src/lib/game/character/)
 - 📁 [src/lib/i18n/locales/en.json](../src/lib/i18n/locales/en.json) - Character creation translations
 - 📁 [src/lib/i18n/locales/pt-BR.json](../src/lib/i18n/locales/pt-BR.json) - Traduções de criação de personagem
@@ -74,22 +74,22 @@ Interface de usuário e lógica para criação de personagem, permitindo que jog
 - ✅ Responsive UI with glassmorphism design
 - ✅ Bilingual support (EN + PT-BR)
 
-**Completed**: 2025-01-10
+**Completed**: 2025-01-10 (Original HTML/CSS implementation)
 
 ---
 
-### ✅ 002 - Town Square Hub
-**Status**: ✅ Completed / Concluído
+### ⏳ 002 - Town Square Hub
+**Status**: ⏳ Pending (Reimplement in Phaser) / Pendente (Reimplementar em Phaser)
 **Priority**: High / Alta
 **Type**: Feature
 
 **Description**:
-Central hub of the game where players can access all activities.
+Central hub of the game where players can access all activities. **Will be reimplemented using Phaser 2D.**
 
-Hub central do jogo onde jogadores podem acessar todas as atividades.
+Hub central do jogo onde jogadores podem acessar todas as atividades. **Será reimplementado usando Phaser 2D.**
 
 **Implementation**:
-- 📁 [src/routes/game/town-square/+page.svelte](../src/routes/game/town-square/+page.svelte)
+- 📁 [src/routes/game/town-square/+page.svelte](../src/routes/game/town-square/+page.svelte) (Original HTML/CSS)
 - 📁 [src/routes/game/dungeons/+page.svelte](../src/routes/game/dungeons/+page.svelte) (placeholder)
 - 📁 [src/routes/game/blacksmith/+page.svelte](../src/routes/game/blacksmith/+page.svelte) (placeholder)
 - 📁 [src/routes/game/tavern/+page.svelte](../src/routes/game/tavern/+page.svelte) (placeholder)
@@ -106,7 +106,7 @@ Hub central do jogo onde jogadores podem acessar todas as atividades.
 - ✅ Language switcher integration
 - ✅ Responsive design
 
-**Completed**: 2025-01-11
+**Completed**: 2025-01-11 (Original HTML/CSS implementation)
 
 ---
 
@@ -237,18 +237,18 @@ Sistema de durabilidade e reparo para itens equipáveis.
 
 ---
 
-### ✅ 007 - UI Language Switcher
-**Status**: ✅ Completed / Concluído
+### ⏳ 007 - UI Language Switcher
+**Status**: ⏳ Pending (Reimplement in Phaser) / Pendente (Reimplementar em Phaser)
 **Priority**: Medium / Média
 **Type**: Feature
 
 **Description**:
-UI component to allow users to dynamically switch between supported languages.
+UI component to allow users to dynamically switch between supported languages. **Will be reimplemented using Phaser 2D.**
 
-Componente de UI para permitir que usuários troquem dinamicamente entre os idiomas suportados.
+Componente de UI para permitir que usuários troquem dinamicamente entre os idiomas suportados. **Será reimplementado usando Phaser 2D.**
 
 **Implementation**:
-- 📁 [src/lib/components/ui/LanguageSwitcher.svelte](../src/lib/components/ui/LanguageSwitcher.svelte)
+- 📁 [src/lib/components/ui/LanguageSwitcher.svelte](../src/lib/components/ui/LanguageSwitcher.svelte) (Original HTML/CSS)
 - 📁 [tasks/007-ui-language-switcher.md](./007-ui-language-switcher.md)
 
 **Features Implemented**:
@@ -259,7 +259,7 @@ Componente de UI para permitir que usuários troquem dinamicamente entre os idio
 - ✅ Responsive design
 - ✅ Integrated in Town Square (fixed position)
 
-**Completed**: 2025-01-11
+**Completed**: 2025-01-11 (Original HTML/CSS implementation)
 
 ---
 
@@ -290,18 +290,18 @@ Sistema para mapear e exibir ícones individuais a partir de um único arquivo d
 
 ---
 
-### ✅ 009 - Character Portrait Selection
-**Status**: ✅ Completed / Concluído
+### ⏳ 009 - Character Portrait Selection
+**Status**: ⏳ Pending (Reimplement in Phaser) / Pendente (Reimplementar em Phaser)
 **Priority**: High / Alta
 **Type**: Feature
 
 **Description**:
-Add portrait selection to the character creation screen and create a reusable portrait component.
+Add portrait selection to the character creation screen and create a reusable portrait component. **Will be reimplemented using Phaser 2D.**
 
-Adicionar seleção de retrato à tela de criação de personagem e criar um componente de retrato reutilizável.
+Adicionar seleção de retrato à tela de criação de personagem e criar um componente de retrato reutilizável. **Será reimplementada usando Phaser 2D.**
 
 **Implementation**:
-- 📁 [src/routes/character-creation/+page.svelte](../src/routes/character-creation/+page.svelte)
+- 📁 [src/routes/character-creation/+page.svelte](../src/routes/character-creation/+page.svelte) (Original HTML/CSS)
 - 📁 [tasks/009-character-portrait-selection.md](./009-character-portrait-selection.md)
 
 **Features Implemented**:
@@ -311,22 +311,22 @@ Adicionar seleção de retrato à tela de criação de personagem e criar um com
 - ✅ Visual selection feedback
 - ✅ Integration with existing creation flow
 
-**Completed**: Previously completed (verified 2025-01-11)
+**Completed**: Previously completed (verified 2025-01-11 - Original HTML/CSS implementation)
 
 ---
 
-### ✅ 010 - Refactor Portrait Component
-**Status**: ✅ Completed / Concluído
+### ⏳ 010 - Refactor Portrait Component
+**Status**: ⏳ Pending (Reimplement in Phaser) / Pendente (Reimplementar em Phaser)
 **Priority**: Low / Baixa
 **Type**: Refactoring
 
 **Description**:
-Refactor the Portrait component to accept the full character object instead of individual props.
+Refactor the Portrait component to accept the full character object instead of individual props. **Will be reimplemented using Phaser 2D.**
 
-Refatorar o componente Portrait para aceitar o objeto de personagem completo em vez de props individuais.
+Refatorar o componente Portrait para aceitar o objeto de personagem completo em vez de props individuais. **Será reimplementado usando Phaser 2D.**
 
 **Implementation**:
-- 📁 [src/lib/components/ui/Portrait.svelte](../src/lib/components/ui/Portrait.svelte)
+- 📁 [src/lib/components/ui/Portrait.svelte](../src/lib/components/ui/Portrait.svelte) (Original Svelte/HTML/CSS)
 - 📁 [src/lib/game/character/types.ts](../src/lib/game/character/types.ts)
 - 📁 [tasks/010-refactor-portrait-component.md](./010-refactor-portrait-component.md)
 
@@ -337,7 +337,7 @@ Refatorar o componente Portrait para aceitar o objeto de personagem completo em 
 - ✅ All usages updated (Town Square, Debug Panel, Playground)
 - ✅ Better encapsulation and maintainability
 
-**Completed**: 2025-01-11
+**Completed**: 2025-01-11 (Original Svelte/HTML/CSS implementation)
 
 ---
 
@@ -398,9 +398,9 @@ Configurar a primeira masmorra jogável, a "Caverna dos Goblins", usando os mons
 **Type**: Feature
 
 **Description**:
-UI screen for players to manage their inventory and equip gear.
+UI screen for players to manage their inventory and equip gear. **Will be implemented using Phaser 2D.**
 
-Tela de UI para os jogadores gerenciarem seu inventário e equiparem itens.
+Tela de UI para os jogadores gerenciarem seu inventário e equiparem itens. **Será implementada usando Phaser 2D.**
 
 **Implementation**:
 - 📁 [tasks/014-inventory-equipment-screen.md](./014-inventory-equipment-screen.md)
@@ -415,9 +415,9 @@ Tela de UI para os jogadores gerenciarem seu inventário e equiparem itens.
 **Type**: Feature
 
 **Description**:
-UI and functionality for the Blacksmith, where players can repair their items.
+UI and functionality for the Blacksmith, where players can repair their items. **Will be implemented using Phaser 2D.**
 
-UI e funcionalidade para o Ferreiro, onde os jogadores podem reparar seus itens.
+UI e funcionalidade para o Ferreiro, onde os jogadores podem reparar seus itens. **Será implementada usando Phaser 2D.**
 
 **Implementation**:
 - 📁 [tasks/015-blacksmith-screen.md](./015-blacksmith-screen.md)
@@ -432,9 +432,9 @@ UI e funcionalidade para o Ferreiro, onde os jogadores podem reparar seus itens.
 **Type**: Feature
 
 **Description**:
-UI for the Tavern, which will serve as the hub for quests.
+UI for the Tavern, which will serve as the hub for quests. **Will be implemented using Phaser 2D.**
 
-UI para a Taverna, que servirá como o hub para missões.
+UI para a Taverna, que servirá como o hub para missões. **Será implementada usando Phaser 2D.**
 
 **Implementation**:
 - 📁 [tasks/016-tavern-screen.md](./016-tavern-screen.md)
@@ -449,9 +449,9 @@ UI para a Taverna, que servirá como o hub para missões.
 **Type**: Feature
 
 **Description**:
-UI for the Market, allowing players to buy and sell items.
+UI for the Market, allowing players to buy and sell items. **Will be implemented using Phaser 2D.**
 
-UI para o Mercado, permitindo que os jogadores comprem e vendam itens.
+UI para o Mercado, permitindo que os jogadores comprem e vendam itens. **Será implementada usando Phaser 2D.**
 
 **Implementation**:
 - 📁 [tasks/017-market-screen.md](./017-market-screen.md)
@@ -495,14 +495,14 @@ Definir os dados para os itens temáticos e tabelas de loot da Cripta dos Inquie
 ---
 
 ### ⏳ 020 - Implement the Restless Crypt Dungeon
-**Status**: ⏳ Pending / Pendente
+**Status**: ⏳ Pending (Reimplement in Phaser) / Pendente (Reimplementar em Phaser)
 **Priority**: Very High / Altíssima
 **Type**: Feature
 
 **Description**:
-Implement the first fully playable dungeon experience, including exploration and combat UI.
+Implement the first fully playable dungeon experience, including exploration and combat UI. **Will be reimplemented using Phaser 2D.**
 
-Implementar a primeira experiência de masmorra totalmente jogável, incluindo a UI de exploração e combate.
+Implementar a primeira experiência de masmorra totalmente jogável, incluindo a UI de exploração e combate. **Será reimplementada usando Phaser 2D.**
 
 **Implementation**:
 - 📁 [tasks/020-crypt-dungeon-configuration.md](./020-crypt-dungeon-configuration.md)
@@ -511,20 +511,20 @@ Implementar a primeira experiência de masmorra totalmente jogável, incluindo a
 
 ---
 
-### ⏳ 021 - Dungeon UX & Graphics Refactor
-**Status**: ⏳ Pending / Pendente
+### ✅ 021 - Dungeon UX & Graphics Refactor
+**Status**: ✅ Completed (Subsumed by 029) / Concluído (Subsumido por 029)
 **Priority**: Very High / Altíssima
 **Type**: Refactoring
 
 **Description**:
-Replace ASCII dungeon rendering with Phaser 2D and overhaul the UI to a no-scroll layout.
+Replace ASCII dungeon rendering with Phaser 2D and overhaul the UI to a no-scroll layout. **Goals of this task are now part of the larger Task 029 (Phaser UI Pivot).**
 
-Substituir a renderização ASCII da masmorra por Phaser 2D e redesenhar a UI para um layout sem rolagem.
+Substituir a renderização ASCII da masmorra por Phaser 2D e redesenhar a UI para um layout sem rolagem. **Os objetivos desta tarefa agora fazem parte da Tarefa 029 (Pivô de UI para Phaser).**
 
 **Implementation**:
 - 📁 [tasks/021-dungeon-ux-refactor.md](./021-dungeon-ux-refactor.md)
 
-**Status**: Not started
+**Status**: Completed (Goals subsumed by 029)
 
 ---
 
@@ -585,9 +585,9 @@ Revisar e ajustar os atributos e habilidades de todos os monstros definidos para
 **Type**: Feature / Gameplay
 
 **Description**:
-Modify dungeon exploration logic to guarantee monster encounters and allow continuous searching for more encounters.
+Modify dungeon exploration logic to guarantee monster encounters and allow continuous searching for more encounters. **UI adjustments will be implemented using Phaser 2D.**
 
-Modificar a lógica de exploração da masmorra para garantir encontros com monstros e permitir a busca contínua por mais encontros.
+Modificar a lógica de exploração da masmorra para garantir encontros com monstros e permitir a busca contínua por mais encontros. **Os ajustes de UI serão implementados usando Phaser 2D.**
 
 **Implementation**:
 - 📁 [tasks/025-exploration-adjustments.md](./025-exploration-adjustments.md)
@@ -602,9 +602,9 @@ Modificar a lógica de exploração da masmorra para garantir encontros com mons
 **Type**: Feature / UX
 
 **Description**:
-Implement an automatic basic attack option in the combat system to reduce micromanagement.
+Implement an automatic basic attack option in the combat system to reduce micromanagement. **UI elements will be implemented using Phaser 2D.**
 
-Implementar uma opção de ataque básico automático no sistema de combate para reduzir a microgestão.
+Implementar uma opção de ataque básico automático no sistema de combate para reduzir a microgestão. **Os elementos de UI serão implementados usando Phaser 2D.**
 
 **Implementation**:
 - 📁 [tasks/026-combat-auto-attack.md](./026-combat-auto-attack.md)
@@ -619,12 +619,63 @@ Implementar uma opção de ataque básico automático no sistema de combate para
 **Type**: Feature / UX
 
 **Description**:
-Implement intelligent automatic target selection logic in combat.
+Implement intelligent automatic target selection logic in combat. **UI elements will be implemented using Phaser 2D.**
 
-Implementar lógica inteligente para seleção automática de alvo no combate.
+Implementar lógica inteligente para seleção automática de alvo no combate. **Os elementos de UI serão implementados usando Phaser 2D.**
 
 **Implementation**:
 - 📁 [tasks/027-combat-auto-target.md](./027-combat-auto-target.md)
+
+**Status**: Not started
+
+---
+
+### ⏳ 028 - Equipment Rating System
+**Status**: ⏳ Pending / Pendente
+**Priority**: High / Alta
+**Type**: System / Feature
+
+**Description**:
+Implement an "Equipment Rating" (ER) system that assigns a power score to each equipped item and calculates the total for the character.
+
+Implementar um sistema de "Equipment Rating" (ER) que atribui uma pontuação de poder a cada item equipado e calcula o total para o personagem.
+
+**Implementation**:
+- 📁 [tasks/028-equipment-rating-system.md](./028-equipment-rating-system.md)
+
+**Status**: Not started
+
+---
+
+### ⏳ 029 - Technological Pivot: Full UI Migration to Phaser 2D
+**Status**: ⏳ Pending / Pendente
+**Priority**: Very High / Altíssima
+**Type**: Architecture / Massive Refactoring
+
+**Description**:
+Migrate the entire game user interface to be rendered exclusively within a Phaser 2D canvas.
+
+Migrar toda a interface de usuário do jogo para ser renderizada exclusivamente dentro de um canvas Phaser 2D.
+
+**Implementation**:
+- 📁 [tasks/029-phaser-ui-pivot.md](./029-phaser-ui-pivot.md)
+
+**Status**: Not started
+
+---
+
+### ⏳ 030 - Backlog Review & Adjustment Post-Phaser Pivot
+**Status**: ⏳ Pending / Pendente
+**Priority**: Very High / Altíssima
+**Type**: Project Management / Backlog Refactoring
+
+**Description**:
+Review and adjust all existing tasks in the backlog to reflect the new Phaser 2D-based UI architecture.
+
+Revisar e ajustar todas as tarefas existentes no backlog para refletir a nova arquitetura de UI baseada em Phaser 2D.
+
+**Implementation**:
+- 📁 [tasks/030-backlog-review-phaser-pivot.md](./030-backlog-review-phaser-pivot.md)
 
 **Status**: Not started
 

@@ -1,16 +1,63 @@
 <script lang="ts">
 	import type { EquippableItem } from '$lib/game/items/types'
 	import { EquipmentSlot as SlotType } from '$lib/game/items/types'
-	import { Icon } from '$lib/components/ui'
+	import { Icon, SpriteIcon } from '$lib/components/ui'
+	import ItemTooltip from './ItemTooltip.svelte'
 
 	interface Props {
 		slot: SlotType
 		item?: EquippableItem
 		onUnequip?: (slot: SlotType) => void
+		onDragStart?: (slot: SlotType, item: EquippableItem) => void
+		onDrop?: (slot: SlotType, draggedItem: any) => void
 		class?: string
 	}
 
-	let { slot, item, onUnequip, class: className }: Props = $props()
+	let { slot, item, onUnequip, onDragStart, onDrop, class: className }: Props = $props()
+
+	let showTooltip = $state(false)
+	let isDragOver = $state(false)
+
+	function handleMouseEnter() {
+		if (!item) return
+		showTooltip = true
+	}
+
+	function handleMouseLeave() {
+		showTooltip = false
+	}
+
+	function handleDragStart(e: DragEvent) {
+		if (!item || !onDragStart) return
+		showTooltip = false
+		e.dataTransfer!.effectAllowed = 'move'
+		e.dataTransfer!.setData('application/json', JSON.stringify({ type: 'equipment', slot, item }))
+		onDragStart(slot, item)
+	}
+
+	function handleDragOver(e: DragEvent) {
+		e.preventDefault()
+		e.dataTransfer!.dropEffect = 'move'
+		isDragOver = true
+	}
+
+	function handleDragLeave() {
+		isDragOver = false
+	}
+
+	function handleDrop(e: DragEvent) {
+		e.preventDefault()
+		isDragOver = false
+
+		if (!onDrop) return
+
+		try {
+			const data = JSON.parse(e.dataTransfer!.getData('application/json'))
+			onDrop(slot, data)
+		} catch (error) {
+			console.error('Error parsing drag data:', error)
+		}
+	}
 
 	const slotNames: Record<SlotType, string> = {
 		[SlotType.MAIN_HAND]: 'Main Hand',
@@ -45,10 +92,29 @@
 	}
 </script>
 
-<div class="equipment-slot {className || ''}" class:has-item={!!item} role="button" tabindex="0" onclick={handleClick} onkeypress={(e) => e.key === 'Enter' && handleClick()}>
+<div
+	class="equipment-slot {className || ''}"
+	class:has-item={!!item}
+	class:empty-slot={!item}
+	class:drag-over={isDragOver}
+	class:show-tooltip={showTooltip}
+	role="button"
+	tabindex="0"
+	draggable={!!item}
+	onclick={handleClick}
+	onkeypress={(e) => e.key === 'Enter' && handleClick()}
+	onmouseenter={handleMouseEnter}
+	onmouseleave={handleMouseLeave}
+	ondragstart={handleDragStart}
+	ondragover={handleDragOver}
+	ondragleave={handleDragLeave}
+	ondrop={handleDrop}
+>
 	<div class="slot-icon">
-		{#if item}
-			<Icon icon={item.iconId || slotIcons[slot]} size="lg" class="text-arcana-gold-300" />
+		{#if item && item.iconId}
+			<SpriteIcon iconId={item.iconId} size={40} />
+		{:else if item}
+			<Icon icon={slotIcons[slot]} size="lg" class="text-arcana-gold-300" />
 		{:else}
 			<Icon icon={slotIcons[slot]} size="lg" class="text-arcana-text-muted opacity-30" />
 		{/if}
@@ -60,6 +126,10 @@
 		<div class="item-name">
 			<span class="arcana-text-xs font-medium">{item.name}</span>
 		</div>
+	{/if}
+
+	{#if showTooltip && item}
+		<ItemTooltip {item} />
 	{/if}
 </div>
 
@@ -81,14 +151,44 @@
 		position: relative;
 	}
 
+	.equipment-slot.empty-slot {
+		border-style: dashed;
+		border-color: var(--color-border);
+		background: rgba(0, 0, 0, 0.2);
+	}
+
 	.equipment-slot:hover {
 		border-color: var(--color-arcana-cyan-500);
 		background: var(--color-surface);
+		z-index: 10001;
+	}
+
+	.equipment-slot.empty-slot:hover {
+		border-style: dashed;
+		border-color: var(--color-arcana-cyan-500);
+		background: var(--color-arcana-cyan-500-alpha-10);
+	}
+
+	.equipment-slot.has-item {
+		border: 2px solid var(--color-arcana-cyan-500);
+		border-style: solid;
+		background: linear-gradient(135deg, var(--color-surface-darker) 0%, rgba(20, 184, 166, 0.1) 100%);
 	}
 
 	.equipment-slot.has-item:hover {
+		border-color: var(--color-arcana-gold-500);
+		box-shadow: 0 0 12px rgba(251, 191, 36, 0.4);
+		z-index: 10001;
+	}
+
+	.equipment-slot.show-tooltip {
+		z-index: 10001;
+	}
+
+	.equipment-slot.drag-over {
 		border-color: var(--color-arcana-magenta-500);
-		box-shadow: 0 0 12px var(--color-arcana-magenta-500-alpha-30);
+		background: var(--color-arcana-magenta-500-alpha-20);
+		box-shadow: 0 0 16px rgba(217, 70, 239, 0.6);
 	}
 
 	.slot-icon {
