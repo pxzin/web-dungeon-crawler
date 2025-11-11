@@ -299,11 +299,18 @@ Sistema de design completo com estética dark fantasy, inspirado em interfaces m
 - ✅ Transition timings
 
 **UI Components:**
-- ✅ Button (5 variants: primary, secondary, danger, outline, ghost)
+
+- ✅ Button (6 variants: hero, primary, secondary, danger, outline, ghost)
 - ✅ Card (3 variants: default, elevated, gold)
-- ✅ Input (with label, error, and hint support)
+- ✅ Input (with label, error, and hint support + hero variant)
 - ✅ Modal (with backdrop, animations, and keyboard navigation)
 - ✅ Icon (Iconify integration with 4000+ fantasy icons)
+- ✅ SpriteIcon (Custom RPG spritesheet with 311 icons)
+- ✅ Portrait (Character display with stats, attributes, HP/MP bars, status effects)
+- ✅ StatusEffects (Status effect display with tooltips and modal)
+- ✅ ClassBadge (Class indicator with icon support)
+- ✅ AreaCard (Interactive area selection cards)
+- ✅ Carousel (Paginated item carousel with navigation)
 
 **Icon Collections:**
 - ✅ game-icons: RPG and fantasy themed icons
