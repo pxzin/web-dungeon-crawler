@@ -9,7 +9,7 @@
 	let isModalOpen = $state(false)
 
 	// Sample data
-	const buttonVariants: Array<'primary' | 'secondary' | 'danger' | 'outline' | 'ghost'> = [
+	const buttonVariants: Array<'primary' | 'secondary' | 'danger' | 'outline' | 'ghost' | 'hero'> = [
 		'primary',
 		'secondary',
 		'danger',
@@ -154,6 +154,17 @@
 							placeholder="Enter password"
 							required
 							disabled
+						/>
+					</div>
+				</div>
+
+				<div class="demo-section">
+					<h3 class="demo-title">Hero Variant</h3>
+					<p class="arcana-text-muted mb-4">Enhanced input for important fields like character name</p>
+					<div class="max-w-md mx-auto">
+						<Input
+							variant="hero"
+							placeholder="Enter your hero name"
 						/>
 					</div>
 				</div>

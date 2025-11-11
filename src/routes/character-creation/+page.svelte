@@ -240,7 +240,7 @@
 						placeholder={$LL.game.characterCreation.namePlaceholder()}
 						maxlength={20}
 						error={errors.name ? getValidationError(errors.name) : ''}
-						class="character-name-input"
+						variant="hero"
 					/>
 				</div>
 			</Card>
@@ -360,12 +360,11 @@
 			<!-- Submit Button -->
 			<div class="flex justify-center mt-10">
 				<Button
-					variant="primary"
+					variant="hero"
 					size="lg"
 					fullWidth={false}
 					disabled={!canSubmit || isSubmitting}
 					type="submit"
-					class="submit-button"
 				>
 					{#if isSubmitting}
 						<span class="loading-spinner"></span>
@@ -698,97 +697,7 @@
 		font-family: var(--font-serif);
 	}
 
-	/* Character Name Input Enhancement */
-	:global(.character-name-input input) {
-		text-align: center;
-		font-size: var(--text-xl) !important;
-		font-family: var(--font-serif) !important;
-		font-weight: 600 !important;
-		padding: var(--spacing-lg) var(--spacing-xl) !important;
-		border: 3px solid var(--color-arcana-gold-700) !important;
-		background: var(--color-arcana-bg-primary) !important;
-		box-shadow:
-			inset 0 2px 8px rgba(0, 0, 0, 0.3),
-			0 0 0 1px rgba(201, 152, 74, 0.2),
-			var(--shadow-lg) !important;
-		transition: all var(--transition-base) !important;
-	}
-
-	:global(.character-name-input input:focus) {
-		border-color: var(--color-arcana-gold-500) !important;
-		box-shadow:
-			inset 0 2px 8px rgba(0, 0, 0, 0.3),
-			0 0 0 3px rgba(201, 152, 74, 0.3),
-			0 0 20px rgba(201, 152, 74, 0.4),
-			var(--shadow-xl) !important;
-		transform: translateY(-2px);
-	}
-
-	:global(.character-name-input input::placeholder) {
-		color: var(--color-arcana-text-muted) !important;
-		opacity: 0.6;
-	}
-
-	/* Submit Button Enhancement */
-	:global(.submit-button) {
-		min-width: 320px;
-		font-size: var(--text-xl) !important;
-		font-weight: 700 !important;
-		padding: var(--spacing-lg) var(--spacing-2xl) !important;
-		position: relative;
-		overflow: hidden;
-		border: 3px solid var(--color-arcana-gold-800) !important;
-		background: linear-gradient(135deg, var(--color-arcana-gold-600), var(--color-arcana-gold-700)) !important;
-		box-shadow:
-			0 0 0 1px rgba(201, 152, 74, 0.3),
-			0 8px 16px rgba(0, 0, 0, 0.4),
-			0 0 30px rgba(201, 152, 74, 0.3),
-			inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
-		transition: all var(--transition-base) !important;
-	}
-
-	:global(.submit-button::before) {
-		content: '';
-		position: absolute;
-		top: 0;
-		left: -100%;
-		width: 100%;
-		height: 100%;
-		background: linear-gradient(
-			90deg,
-			transparent,
-			rgba(255, 255, 255, 0.3),
-			transparent
-		);
-		transition: left 0.5s;
-	}
-
-	:global(.submit-button:not(:disabled):hover) {
-		transform: translateY(-3px) !important;
-		border-color: var(--color-arcana-gold-600) !important;
-		box-shadow:
-			0 0 0 1px rgba(201, 152, 74, 0.5),
-			0 12px 24px rgba(0, 0, 0, 0.5),
-			0 0 40px rgba(201, 152, 74, 0.5),
-			inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
-	}
-
-	:global(.submit-button:not(:disabled):hover::before) {
-		left: 100%;
-	}
-
-	:global(.submit-button:not(:disabled):active) {
-		transform: translateY(-1px) !important;
-	}
-
-	:global(.submit-button:disabled) {
-		opacity: 0.5;
-		cursor: not-allowed;
-		border-color: var(--color-arcana-border-default) !important;
-		background: var(--color-arcana-bg-secondary) !important;
-		box-shadow: var(--shadow-md) !important;
-	}
-
+	/* Additional custom styles for this page */
 	.submit-icon {
 		font-size: 1.5em;
 		filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
@@ -836,10 +745,6 @@
 		.points-badge {
 			flex-direction: column;
 			text-align: center;
-		}
-
-		:global(.submit-button) {
-			min-width: 100%;
 		}
 	}
 </style>

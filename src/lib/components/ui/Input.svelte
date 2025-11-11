@@ -17,6 +17,7 @@
 		label?: string
 		error?: string
 		hint?: string
+		variant?: 'default' | 'hero'
 		oninput?: (e: Event) => void
 		onchange?: (e: Event) => void
 		onfocus?: (e: FocusEvent) => void
@@ -41,6 +42,7 @@
 		label,
 		error,
 		hint,
+		variant = 'default',
 		oninput,
 		onchange,
 		onfocus,
@@ -75,7 +77,7 @@
 		{pattern}
 		{autocomplete}
 		bind:value
-		class="arcana-input {hasError ? 'arcana-input-error' : ''}"
+		class="arcana-input {variant === 'hero' ? 'arcana-input-hero' : ''} {hasError ? 'arcana-input-error' : ''}"
 		{oninput}
 		{onchange}
 		{onfocus}
@@ -102,6 +104,37 @@
 		color: var(--color-arcana-text-secondary);
 		text-transform: uppercase;
 		letter-spacing: 0.05em;
+	}
+
+	/* Hero variant - Enhanced styling for important inputs (like character name) */
+	.arcana-input-hero {
+		text-align: center;
+		font-size: var(--text-xl) !important;
+		font-family: var(--font-serif) !important;
+		font-weight: 600 !important;
+		padding: var(--spacing-lg) var(--spacing-xl) !important;
+		border: 3px solid var(--color-arcana-gold-700) !important;
+		background: var(--color-arcana-bg-primary) !important;
+		box-shadow:
+			inset 0 2px 8px rgba(0, 0, 0, 0.3),
+			0 0 0 1px rgba(201, 152, 74, 0.2),
+			var(--shadow-lg) !important;
+		transition: all var(--transition-base) !important;
+	}
+
+	.arcana-input-hero:focus {
+		border-color: var(--color-arcana-gold-500) !important;
+		box-shadow:
+			inset 0 2px 8px rgba(0, 0, 0, 0.3),
+			0 0 0 3px rgba(201, 152, 74, 0.3),
+			0 0 20px rgba(201, 152, 74, 0.4),
+			var(--shadow-xl) !important;
+		transform: translateY(-2px);
+	}
+
+	.arcana-input-hero::placeholder {
+		color: var(--color-arcana-text-muted) !important;
+		opacity: 0.6;
 	}
 
 	.arcana-input-error {
