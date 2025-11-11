@@ -22,4 +22,4 @@ export {
 	getDungeonTemplate,
 	getAllDungeonTemplates,
 	getDungeonsByLevel,
-} from '../../content/dungeons'
+} from '$lib/content/dungeons'

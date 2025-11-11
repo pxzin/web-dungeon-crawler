@@ -494,18 +494,35 @@ Definir os dados para os itens temáticos e tabelas de loot da Cripta dos Inquie
 
 ---
 
-### ⏳ 020 - Crypt Dungeon Configuration
+### ⏳ 020 - Implement the Restless Crypt Dungeon
 **Status**: ⏳ Pending / Pendente
-**Priority**: Medium / Média
-**Type**: Content
+**Priority**: Very High / Altíssima
+**Type**: Feature
 
 **Description**:
-Configure the second playable dungeon, "The Restless Crypt".
+Implement the first fully playable dungeon experience, including exploration and combat UI.
 
-Configurar a segunda masmorra jogável, "A Cripta dos Inquietos".
+Implementar a primeira experiência de masmorra totalmente jogável, incluindo a UI de exploração e combate.
 
 **Implementation**:
 - 📁 [tasks/020-crypt-dungeon-configuration.md](./020-crypt-dungeon-configuration.md)
+
+**Status**: Not started
+
+---
+
+### ⏳ 021 - Dungeon UX & Graphics Refactor
+**Status**: ⏳ Pending / Pendente
+**Priority**: Very High / Altíssima
+**Type**: Refactoring
+
+**Description**:
+Replace ASCII dungeon rendering with Phaser 2D and overhaul the UI to a no-scroll layout.
+
+Substituir a renderização ASCII da masmorra por Phaser 2D e redesenhar a UI para um layout sem rolagem.
+
+**Implementation**:
+- 📁 [tasks/021-dungeon-ux-refactor.md](./021-dungeon-ux-refactor.md)
 
 **Status**: Not started
 

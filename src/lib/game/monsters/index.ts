@@ -11,4 +11,4 @@ export {
 	getAllMonsters,
 	getMonstersByLevel,
 	getBossMonsters,
-} from '../../../content/monsters'
+} from '$lib/content/monsters'

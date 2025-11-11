@@ -5,7 +5,7 @@
 	import { EquipmentSlot, InventoryItem, CharacterStats } from '$lib/components/game'
 	import { LL } from '$lib/i18n/i18n-svelte'
 	import { createInventory } from '$lib/hooks/useInventory.svelte'
-	import { persistence } from '$lib/game/persistence/adapter'
+	import { persistence } from '$lib/persistence/instance'
 	import type { Character } from '$lib/game/character/types'
 	import type { EquippableItem, ConsumableItem } from '$lib/game/items/types'
 	import { EquipmentSlot as SlotType } from '$lib/game/items/types'
@@ -37,7 +37,7 @@
 
 	onMount(async () => {
 		// Load player data
-		const result = await persistence.getPlayer()
+		const result = await persistence.getPlayerData()
 		if (result.success && result.data) {
 			character = result.data
 		}

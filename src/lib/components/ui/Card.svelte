@@ -2,12 +2,13 @@
 	import type { Snippet } from 'svelte'
 
 	interface Props {
-		variant?: 'default' | 'elevated' | 'gold'
+		variant?: 'default' | 'elevated' | 'gold' | 'interactive'
 		size?: 'sm' | 'md' | 'lg'
 		class?: string
 		children?: Snippet
 		header?: Snippet
 		footer?: Snippet
+		onclick?: (event: MouseEvent) => void
 	}
 
 	let {
@@ -17,12 +18,14 @@
 		children,
 		header,
 		footer,
+		onclick,
 	}: Props = $props()
 
 	const variantClasses = {
 		default: 'arcana-card',
 		elevated: 'arcana-card-elevated',
 		gold: 'arcana-card-gold',
+		interactive: 'arcana-card-interactive',
 	}
 
 	const sizeClasses = {
@@ -34,7 +37,7 @@
 	const combinedClasses = `${variantClasses[variant]} ${sizeClasses[size]} ${className}`
 </script>
 
-<div class={combinedClasses}>
+<div class={combinedClasses} onclick={onclick} role={onclick ? 'button' : undefined} tabindex={onclick ? 0 : undefined}>
 	{#if header}
 		<div class="card-header">
 			{@render header()}
@@ -82,6 +85,22 @@
 		box-shadow:
 			var(--shadow-xl),
 			0 0 20px rgba(201, 152, 74, 0.2);
+	}
+
+	/* Interactive variant - Clickable with hover effects */
+	:global(.arcana-card-interactive) {
+		cursor: pointer;
+		transition: all 0.2s ease;
+	}
+
+	:global(.arcana-card-interactive:hover) {
+		transform: translateY(-2px);
+		box-shadow: var(--shadow-2xl);
+		border-color: var(--color-arcana-border-glow);
+	}
+
+	:global(.arcana-card-interactive:active) {
+		transform: translateY(0);
 	}
 
 	/* Size variants */

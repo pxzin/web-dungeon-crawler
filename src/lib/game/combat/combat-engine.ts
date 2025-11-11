@@ -32,6 +32,7 @@ export function initializeCombat(player: Combatant, enemies: Combatant[]): Comba
 		turnOrder,
 		currentTurnIndex: 0,
 		turns: [],
+		log: ['Combat started!'],
 		createdAt: Date.now(),
 	}
 }
@@ -80,6 +81,9 @@ export function processCombatAction(
 	}
 
 	combat.turns.push(turn)
+
+	// Add to combat log
+	combat.log.push(result.message)
 
 	// Advance turn
 	combat.currentTurnIndex = (combat.currentTurnIndex + 1) % combat.turnOrder.length

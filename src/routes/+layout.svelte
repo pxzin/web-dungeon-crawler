@@ -2,6 +2,7 @@
 	import '../app.css'
 	import 'virtual:uno.css'
 	import { dev } from '$app/environment'
+	import { ToastContainer } from '$lib/components/ui'
 
 	// Only import DebugPanel in development mode
 	let DebugPanel: any = null
@@ -18,6 +19,8 @@
 </script>
 
 <slot />
+
+<ToastContainer />
 
 {#if isDevMode && DebugPanel}
 	<svelte:component this={DebugPanel} />

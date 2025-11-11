@@ -42,6 +42,6 @@ export {
 	getAllItems,
 	getItemsByType,
 	getItemsByRarity,
-} from '../../content/items'
+} from '$lib/content/items'
 
-export { LOOT_TABLES, getLootTable, getAllLootTables, rollLoot } from '../../content/loot-tables'
+export { LOOT_TABLES, getLootTable, getAllLootTables, rollLoot } from '$lib/content/loot-tables'

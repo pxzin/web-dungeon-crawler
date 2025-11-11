@@ -3,7 +3,11 @@
 	import { goto } from '$app/navigation'
 	import { Button, Card, Icon } from '$lib/components/ui'
 	import { dungeonStore } from '$lib/stores/dungeon.svelte'
+	import { combatStore } from '$lib/stores/combat.svelte'
+	import { toastStore } from '$lib/stores/toast.svelte'
+	import { persistence } from '$lib/persistence/instance'
 	import { TileType } from '$lib/game/dungeon'
+	import type { Combatant } from '$lib/game/combat/types'
 
 	let session = $derived(dungeonStore.session)
 
@@ -23,8 +27,84 @@
 		const success = dungeonStore.nextFloor()
 		if (!success) {
 			// Dungeon complete!
-			alert('Congratulations! You have completed the dungeon!')
-			exitDungeon()
+			toastStore.success('Congratulations! You have completed the dungeon!')
+			setTimeout(exitDungeon, 2000)
+		}
+	}
+
+	async function exploreDungeon() {
+		// Get unexplored rooms
+		const unexploredRooms = dungeonStore.getUnexploredRooms()
+		if (unexploredRooms.length === 0) {
+			toastStore.warning('All rooms explored! Proceed to next floor or exit.')
+			return
+		}
+
+		// Pick a random room to explore
+		const room = unexploredRooms[Math.floor(Math.random() * unexploredRooms.length)]
+
+		// Explore the room
+		const result = dungeonStore.exploreRoom(room.id)
+
+		if (result.hasEnemies) {
+			// Start combat!
+			const playerResult = await persistence.getPlayerData()
+			if (!playerResult.success || !playerResult.data) {
+				toastStore.error('Error: Could not load player data')
+				return
+			}
+
+			const player = playerResult.data
+
+			console.log('[Dungeon] Player data loaded:', {
+				id: player.id,
+				name: player.name,
+				level: player.stats.level,
+				health: player.resources.health,
+				maxHealth: player.resources.maxHealth,
+				mana: player.resources.mana,
+				maxMana: player.resources.maxMana,
+				portraitId: player.portraitId,
+			})
+
+			// Convert player to Combatant
+			const playerCombatant: Combatant = {
+				id: player.id,
+				name: player.name,
+				type: 'player',
+				level: player.stats.level,
+				maxHp: player.resources.maxHealth,
+				currentHp: player.resources.health,
+				maxMp: player.resources.maxMana,
+				currentMp: player.resources.mana,
+				attack: player.stats.strength * 2,
+				defense: Math.floor(player.stats.vitality * 1.5),
+				magicAttack: player.stats.intelligence * 2,
+				magicDefense: Math.floor(player.stats.intelligence * 1.5),
+				speed: Math.floor(player.stats.dexterity * 1.5),
+				criticalRate: Math.floor(player.stats.dexterity * 0.5),
+				evasion: Math.floor(player.stats.dexterity * 0.3),
+				statusEffects: [],
+				portraitId: player.portraitId,
+			}
+
+			console.log('[Dungeon] Player combatant created:', {
+				id: playerCombatant.id,
+				name: playerCombatant.name,
+				currentHp: playerCombatant.currentHp,
+				maxHp: playerCombatant.maxHp,
+				currentMp: playerCombatant.currentMp,
+				maxMp: playerCombatant.maxMp,
+			})
+
+			// Start combat
+			combatStore.startCombat(playerCombatant, result.enemyIds)
+
+			// Navigate to combat
+			goto('/game/combat')
+		} else {
+			// Room is empty
+			toastStore.info('The room is empty. You found nothing of interest.')
 		}
 	}
 
@@ -147,9 +227,9 @@
 					<p class="arcana-text-xs text-arcana-text-muted">
 						Navigate through rooms and corridors
 					</p>
-					<Button variant="primary" fullWidth disabled>
+					<Button variant="primary" fullWidth onclick={exploreDungeon}>
 						<Icon icon="game-icons-walking-boot" size="sm" />
-						Explore (Coming Soon)
+						Explore
 					</Button>
 				</Card>
 

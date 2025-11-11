@@ -34,6 +34,7 @@ export interface Combatant {
 	criticalRate: number
 	evasion: number
 	statusEffects: StatusEffect[]
+	portraitId?: string
 }
 
 /**
@@ -113,6 +114,7 @@ export interface Combat {
 	turnOrder: string[]
 	currentTurnIndex: number
 	turns: CombatTurn[]
+	log: string[]
 	rewards?: CombatRewards
 	createdAt: number
 	endedAt?: number

@@ -13,6 +13,8 @@ interface DungeonSession {
 	template: DungeonTemplate
 	dungeon: Dungeon
 	currentFloor: number
+	visitedRooms: Set<string>
+	clearedRooms: Set<string>
 }
 
 /**
@@ -37,10 +39,36 @@ function createDungeonStore() {
 				seed: Date.now(), // Random seed for each session
 			})
 
+			// Populate enemies in rooms (except entrance and exit)
+			for (const room of dungeon.rooms) {
+				if (room.hasEntrance || room.hasExit) continue
+
+				// 70% chance of having enemies
+				if (Math.random() < 0.7) {
+					const enemyCount = Math.floor(Math.random() * 3) + 1 // 1-3 enemies
+					room.enemies = []
+
+					for (let i = 0; i < enemyCount; i++) {
+						const randomMonster =
+							template.possibleMonsters[
+								Math.floor(Math.random() * template.possibleMonsters.length)
+							]
+						room.enemies.push({
+							x: room.centerX,
+							y: room.centerY,
+							enemyType: randomMonster,
+							level: floor,
+						})
+					}
+				}
+			}
+
 			currentSession = {
 				template,
 				dungeon,
 				currentFloor: floor,
+				visitedRooms: new Set<string>(),
+				clearedRooms: new Set<string>(),
 			}
 
 			console.log('Started dungeon session:', template.name, 'Floor', floor)
@@ -69,9 +97,55 @@ function createDungeonStore() {
 				...currentSession,
 				dungeon,
 				currentFloor: nextFloorNum,
+				visitedRooms: new Set<string>(),
+				clearedRooms: new Set<string>(),
 			}
 
 			return true
+		},
+
+		/**
+		 * Explore a room
+		 */
+		exploreRoom(roomId: string): { hasEnemies: boolean; enemyIds: string[] } {
+			if (!currentSession) return { hasEnemies: false, enemyIds: [] }
+
+			const room = currentSession.dungeon.rooms.find((r) => r.id === roomId)
+			if (!room) return { hasEnemies: false, enemyIds: [] }
+
+			// Mark as visited
+			currentSession.visitedRooms.add(roomId)
+
+			// Check if already cleared
+			if (currentSession.clearedRooms.has(roomId)) {
+				return { hasEnemies: false, enemyIds: [] }
+			}
+
+			// Check if room has enemies
+			if (room.enemies && room.enemies.length > 0) {
+				const enemyIds = room.enemies.map((e) => e.enemyType)
+				return { hasEnemies: true, enemyIds }
+			}
+
+			// No enemies, mark as cleared
+			currentSession.clearedRooms.add(roomId)
+			return { hasEnemies: false, enemyIds: [] }
+		},
+
+		/**
+		 * Mark room as cleared after combat
+		 */
+		clearRoom(roomId: string) {
+			if (!currentSession) return
+			currentSession.clearedRooms.add(roomId)
+		},
+
+		/**
+		 * Get unexplored rooms
+		 */
+		getUnexploredRooms() {
+			if (!currentSession) return []
+			return currentSession.dungeon.rooms.filter((r) => !currentSession.visitedRooms.has(r.id))
 		},
 
 		/**
