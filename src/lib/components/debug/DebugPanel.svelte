@@ -315,6 +315,18 @@
 					</div>
 
 					<div class="section">
+						<h4>Navigation</h4>
+						<div class="actions-grid">
+							<button class="action-btn" onclick={() => window.location.href = '/playground'}>
+								🎨 Component Playground
+							</button>
+							<button class="action-btn" onclick={() => window.location.href = '/game/town-square'}>
+								🏰 Back to Game
+							</button>
+						</div>
+					</div>
+
+					<div class="section">
 						<h4>Keyboard Shortcuts</h4>
 						<div class="info-grid">
 							<div class="info-row">
