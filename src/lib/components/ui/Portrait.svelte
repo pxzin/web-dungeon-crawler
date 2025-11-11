@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { Icon, StatusEffects } from '$lib/components/ui'
 	import type { StatusEffect } from '$lib/components/ui/StatusEffects.svelte'
+	import type { Character } from '$lib/game/character'
 
 	interface Attribute {
 		value: number
@@ -8,53 +9,75 @@
 	}
 
 	interface Props {
-		portraitId: string
-		playerName?: string
-		playerClass?: string
-		classIcon?: string
-		classDescription?: string
-		health?: number
-		maxHealth?: number
-		mana?: number
-		maxMana?: number
-		level?: number
-		experience?: number
-		maxExperience?: number
+		character: Character
 		size?: 'small' | 'medium' | 'large'
 		class?: string
-		statusEffects?: StatusEffect[]
 		maxVisibleEffects?: number
-		// Character attributes
-		strength?: Attribute
-		dexterity?: Attribute
-		intelligence?: Attribute
-		vitality?: Attribute
-		luck?: Attribute
 	}
 
 	let {
-		portraitId,
-		playerName = '',
-		playerClass = '',
-		classIcon = '',
-		classDescription = '',
-		health = 0,
-		maxHealth = 0,
-		mana = 0,
-		maxMana = 0,
-		level = 1,
-		experience = 0,
-		maxExperience = 100,
+		character,
 		size = 'medium',
 		class: className = '',
-		statusEffects = [],
 		maxVisibleEffects = 3,
-		strength,
-		dexterity,
-		intelligence,
-		vitality,
-		luck,
 	}: Props = $props()
+
+	// Extract data from character object
+	const portraitId = $derived(character.portraitId)
+	const playerName = $derived(character.name)
+	const playerClass = $derived(character.class || '')
+	const classIcon = $derived(character.classIcon || '')
+	const classDescription = $derived(character.classDescription || '')
+	const health = $derived(character.health)
+	const maxHealth = $derived(character.maxHealth)
+	const mana = $derived(character.mana)
+	const maxMana = $derived(character.maxMana)
+	const level = $derived(character.level)
+	const experience = $derived(character.experience)
+	const maxExperience = $derived(character.experienceToNextLevel)
+	const statusEffects = $derived(character.statusEffects || [])
+
+	// Convert attributes to Attribute objects with modifiers
+	const strength = $derived<Attribute | undefined>(
+		character.strength !== undefined
+			? {
+					value: character.strength,
+					modifier: Math.floor((character.strength - 10) / 2),
+			  }
+			: undefined
+	)
+	const dexterity = $derived<Attribute | undefined>(
+		character.dexterity !== undefined
+			? {
+					value: character.dexterity,
+					modifier: Math.floor((character.dexterity - 10) / 2),
+			  }
+			: undefined
+	)
+	const intelligence = $derived<Attribute | undefined>(
+		character.intelligence !== undefined
+			? {
+					value: character.intelligence,
+					modifier: Math.floor((character.intelligence - 10) / 2),
+			  }
+			: undefined
+	)
+	const vitality = $derived<Attribute | undefined>(
+		character.vitality !== undefined
+			? {
+					value: character.vitality,
+					modifier: Math.floor((character.vitality - 10) / 2),
+			  }
+			: undefined
+	)
+	const luck = $derived<Attribute | undefined>(
+		character.luck !== undefined
+			? {
+					value: character.luck,
+					modifier: Math.floor((character.luck - 10) / 2),
+			  }
+			: undefined
+	)
 
 	// Compute portrait URL
 	const portraitUrl = $derived(`/src/lib/assets/portraits/${portraitId}.png`)

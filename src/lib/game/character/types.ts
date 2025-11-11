@@ -63,3 +63,48 @@ export interface CharacterCreationErrors {
 	class?: string
 	attributes?: string
 }
+
+/**
+ * Full character data for display purposes
+ * Combines player data with additional UI information
+ */
+export interface Character {
+	id: string
+	name: string
+	portraitId: string
+	class?: string
+	classIcon?: string
+	classDescription?: string
+	level: number
+	experience: number
+	experienceToNextLevel: number
+	health: number
+	maxHealth: number
+	mana: number
+	maxMana: number
+	stamina?: number
+	maxStamina?: number
+	// Attributes
+	strength: number
+	dexterity: number
+	intelligence: number
+	vitality: number
+	luck?: number
+	// Combat stats (optional)
+	attack?: number
+	defense?: number
+	magicAttack?: number
+	magicDefense?: number
+	speed?: number
+	criticalRate?: number
+	evasion?: number
+	// Status effects
+	statusEffects?: Array<{
+		id: string
+		name: string
+		icon: string
+		type: 'buff' | 'debuff'
+		duration?: number
+		description: string
+	}>
+}

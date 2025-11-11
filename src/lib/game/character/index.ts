@@ -9,6 +9,7 @@ export type {
 	ClassBaseStats,
 	CharacterCreationData,
 	CharacterCreationErrors,
+	Character,
 } from './types'
 
 export { CharacterClass, AttributeName } from './types'

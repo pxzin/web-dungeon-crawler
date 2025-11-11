@@ -369,60 +369,68 @@
 					<h3 class="demo-title">Portrait Display</h3>
 					<div class="portrait-variants-grid">
 						<Portrait
-							portraitId="portrait_010"
-							playerName="Arinacheskii"
-							playerClass="Warrior"
-							classIcon="game-icons-sword-brandish"
-							classDescription="A mighty warrior skilled in melee combat and heavy armor"
-							level={15}
-							experience={750}
-							maxExperience={1000}
-							health={2345}
-							maxHealth={3000}
-							mana={1200}
-							maxMana={1500}
+							character={{
+								id: '1',
+								name: 'Arinacheskii',
+								portraitId: 'portrait_010',
+								class: 'Warrior',
+								classIcon: 'game-icons-sword-brandish',
+								classDescription: 'A mighty warrior skilled in melee combat and heavy armor',
+								level: 15,
+								experience: 750,
+								experienceToNextLevel: 1000,
+								health: 2345,
+								maxHealth: 3000,
+								mana: 1200,
+								maxMana: 1500,
+								strength: 18,
+								dexterity: 12,
+								intelligence: 8,
+								vitality: 16,
+								luck: 10,
+								statusEffects: [
+									{
+										id: 'defense_buff',
+										icon: 'guard',
+										name: 'Defesa Aumentada',
+										description: '+5 de armadura',
+										duration: 3,
+										type: 'buff'
+									},
+									{
+										id: 'strength_buff',
+										icon: 'strong_arm',
+										name: 'Força',
+										description: '+3 de dano de ataque',
+										duration: 5,
+										type: 'buff'
+									},
+									{
+										id: 'poison_debuff',
+										icon: 'poison',
+										name: 'Envenenado',
+										description: '-2 HP por turno',
+										duration: 2,
+										type: 'debuff'
+									},
+									{
+										id: 'regen_buff',
+										icon: 'healing',
+										name: 'Regeneração',
+										description: '+3 HP por turno',
+										type: 'buff'
+									},
+									{
+										id: 'blessing_buff',
+										icon: 'sunrays',
+										name: 'Bênção',
+										description: '+10% de dano',
+										duration: 10,
+										type: 'buff'
+									}
+								]
+							}}
 							size="medium"
-							strength={{ value: 18, modifier: 5 }}
-							dexterity={{ value: 12, modifier: 1 }}
-							intelligence={{ value: 8, modifier: -1 }}
-							vitality={{ value: 16, modifier: 3 }}
-							luck={{ value: 10, modifier: 0 }}
-							statusEffects={[
-								{
-									icon: 'guard',
-									name: 'Defesa Aumentada',
-									description: '+5 de armadura',
-									duration: 3,
-									type: 'buff'
-								},
-								{
-									icon: 'strong_arm',
-									name: 'Força',
-									description: '+3 de dano de ataque',
-									duration: 5,
-									type: 'buff'
-								},
-								{
-									icon: 'poison',
-									name: 'Envenenado',
-									description: '-2 HP por turno',
-									duration: 2,
-									type: 'debuff'
-								},
-								{
-									icon: 'healing',
-									name: 'Regeneração',
-									description: '+3 HP por turno',
-									type: 'buff'
-								},
-								{
-									icon: 'sunrays',
-									name: 'Bênção',
-									description: '+10% de dano',
-									duration: 10,
-									type: 'buff'
-								}
-							]}
 						/>
 					</div>
 				</div>
@@ -434,33 +442,37 @@
 							<div>
 								<h4 class="text-sm text-arcana-text-secondary mb-4">{size}</h4>
 								<Portrait
-									portraitId="portrait_025"
-									playerName="Shadow Thief"
-									playerClass="Rogue"
-									classIcon="game-icons-hood"
-									classDescription="Master of stealth and precision strikes"
-									level={8}
-									experience={320}
-									maxExperience={500}
-									health={850}
-									maxHealth={1200}
-									mana={450}
-									maxMana={600}
+									character={{
+										id: '2',
+										name: 'Shadow Thief',
+										portraitId: 'portrait_025',
+										class: 'Rogue',
+										classIcon: 'game-icons-hood',
+										classDescription: 'Master of stealth and precision strikes',
+										level: 8,
+										experience: 320,
+										experienceToNextLevel: 500,
+										health: 850,
+										maxHealth: 1200,
+										mana: 450,
+										maxMana: 600,
+										strength: 10,
+										dexterity: 18,
+										intelligence: 14,
+										vitality: 11,
+										luck: 15,
+										statusEffects: [
+											{
+												id: 'stealth_buff',
+												icon: 'steal',
+												name: 'Furtividade',
+												description: '+50% chance de evasão',
+												duration: 4,
+												type: 'buff'
+											}
+										]
+									}}
 									{size}
-									strength={{ value: 10, modifier: 0 }}
-									dexterity={{ value: 18, modifier: 4 }}
-									intelligence={{ value: 14, modifier: 2 }}
-									vitality={{ value: 11, modifier: 0 }}
-									luck={{ value: 15, modifier: 2 }}
-									statusEffects={[
-										{
-											icon: 'steal',
-											name: 'Furtividade',
-											description: '+50% chance de evasão',
-											duration: 4,
-											type: 'buff'
-										}
-									]}
 								/>
 							</div>
 						{/each}
@@ -469,17 +481,24 @@
 
 				<div class="code-block">
 					<pre><code>{`<Portrait
-  portraitId="portrait_001"
-  playerName="Hero"
-  playerClass="Warrior"
-  classIcon="game-icons-sword-brandish"
-  level={10}
-  experience={450}
-  maxExperience={1000}
-  health={100}
-  maxHealth={150}
-  mana={50}
-  maxMana={80}
+  character={{
+    id: '1',
+    name: 'Hero',
+    portraitId: 'portrait_001',
+    class: 'Warrior',
+    classIcon: 'game-icons-sword-brandish',
+    level: 10,
+    experience: 450,
+    experienceToNextLevel: 1000,
+    health: 100,
+    maxHealth: 150,
+    mana: 50,
+    maxMana: 80,
+    strength: 15,
+    dexterity: 12,
+    intelligence: 10,
+    vitality: 14
+  }}
   size="medium"
 />`}</code></pre>
 				</div>

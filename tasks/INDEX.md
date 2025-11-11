@@ -78,8 +78,8 @@ Interface de usuário e lógica para criação de personagem, permitindo que jog
 
 ---
 
-### ⏳ 002 - Town Square Hub
-**Status**: 🚧 In Progress / Em Andamento
+### ✅ 002 - Town Square Hub
+**Status**: ✅ Completed / Concluído
 **Priority**: High / Alta
 **Type**: Feature
 
@@ -89,21 +89,29 @@ Central hub of the game where players can access all activities.
 Hub central do jogo onde jogadores podem acessar todas as atividades.
 
 **Implementation**:
-- 📁 [src/routes/game/town-square/+page.svelte](../src/routes/game/town-square/+page.svelte) (placeholder)
+- 📁 [src/routes/game/town-square/+page.svelte](../src/routes/game/town-square/+page.svelte)
+- 📁 [src/routes/game/dungeons/+page.svelte](../src/routes/game/dungeons/+page.svelte) (placeholder)
+- 📁 [src/routes/game/blacksmith/+page.svelte](../src/routes/game/blacksmith/+page.svelte) (placeholder)
+- 📁 [src/routes/game/tavern/+page.svelte](../src/routes/game/tavern/+page.svelte) (placeholder)
+- 📁 [src/routes/game/market/+page.svelte](../src/routes/game/market/+page.svelte) (placeholder)
+- 📁 [src/routes/game/arena/+page.svelte](../src/routes/game/arena/+page.svelte) (placeholder)
+- 📁 [src/routes/game/character/+page.svelte](../src/routes/game/character/+page.svelte) (placeholder)
 
 **Features Implemented**:
-- ✅ Basic layout placeholder
-- ✅ Player info display
-- ⏳ Interactive areas (Dungeons, Blacksmith, Tavern, Market, Arena, Character)
-- ⏳ Visual design and atmosphere
-- ⏳ Area navigation
+- ✅ Complete layout with player info card
+- ✅ Player Portrait display with full stats
+- ✅ Interactive area cards (all 6 areas)
+- ✅ Visual design with Arcana theme
+- ✅ Area navigation (all routes functional)
+- ✅ Language switcher integration
+- ✅ Responsive design
 
-**Status**: Placeholder created, full implementation pending
+**Completed**: 2025-01-11
 
 ---
 
-### ⏳ 003 - Player Activity State Management
-**Status**: ⏳ Pending / Pendente
+### ✅ 003 - Player Activity State Management
+**Status**: ✅ Completed / Concluído
 **Priority**: High / Alta
 **Type**: System
 
@@ -112,13 +120,21 @@ Server-side system to manage player activity state and prevent conflicting actio
 
 Sistema server-side para gerenciar o estado de atividade do jogador e prevenir ações conflitantes.
 
-**Requirements**:
-- `PlayerActivityState` enum (IDLE, IN_DUNGEON, IN_COMBAT, SHOPPING, CRAFTING)
-- `PlayerStateService` for state management
-- Route validation with SvelteKit `load` functions
-- Automatic redirection for invalid state transitions
+**Implementation**:
+- 📁 [src/lib/game/player/activity-state.ts](../src/lib/game/player/activity-state.ts)
+- 📁 [src/lib/game/player/index.ts](../src/lib/game/player/index.ts)
+- 📁 [src/lib/hooks/usePlayerState.svelte.ts](../src/lib/hooks/usePlayerState.svelte.ts)
 
-**Status**: Not started
+**Features Implemented**:
+- ✅ `PlayerActivityState` enum (IDLE, IN_DUNGEON, IN_COMBAT, SHOPPING, CRAFTING, IN_TAVERN, IN_ARENA, MANAGING_CHARACTER)
+- ✅ `PlayerStateService` class for state management
+- ✅ Route-to-state mapping system
+- ✅ State transition validation rules
+- ✅ Automatic redirect route calculation
+- ✅ Svelte 5 runes-based hook (`usePlayerState`)
+- ✅ Force state override for special cases
+
+**Completed**: 2025-01-11
 
 ---
 
@@ -150,8 +166,8 @@ Mecânicas de combate por turnos.
 
 ---
 
-### ⏳ 007 - UI Language Switcher
-**Status**: ⏳ Pending / Pendente
+### ✅ 007 - UI Language Switcher
+**Status**: ✅ Completed / Concluído
 **Priority**: Medium / Média
 **Type**: Feature
 
@@ -161,14 +177,23 @@ UI component to allow users to dynamically switch between supported languages.
 Componente de UI para permitir que usuários troquem dinamicamente entre os idiomas suportados.
 
 **Implementation**:
+- 📁 [src/lib/components/ui/LanguageSwitcher.svelte](../src/lib/components/ui/LanguageSwitcher.svelte)
 - 📁 [tasks/007-ui-language-switcher.md](./007-ui-language-switcher.md)
 
-**Status**: Not started
+**Features Implemented**:
+- ✅ Language switcher component with two variants (default, minimal)
+- ✅ Integration with i18n system
+- ✅ Persistence of language preference
+- ✅ Flag icons for visual identification
+- ✅ Responsive design
+- ✅ Integrated in Town Square (fixed position)
+
+**Completed**: 2025-01-11
 
 ---
 
-### ⏳ 008 - Icon Spritesheet Mapping
-**Status**: ⏳ Pending / Pendente
+### ✅ 008 - Icon Spritesheet Mapping
+**Status**: ✅ Completed / Concluído
 **Priority**: Medium / Média
 **Type**: System
 
@@ -178,14 +203,24 @@ System to map and display individual icons from a single spritesheet file.
 Sistema para mapear e exibir ícones individuais a partir de um único arquivo de spritesheet.
 
 **Implementation**:
+- 📁 [src/lib/assets/icons/icon-map.ts](../src/lib/assets/icons/icon-map.ts)
+- 📁 [src/lib/components/ui/SpriteIcon.svelte](../src/lib/components/ui/SpriteIcon.svelte)
 - 📁 [tasks/008-icon-mapping.md](./008-icon-mapping.md)
 
-**Status**: Not started
+**Features Implemented**:
+- ✅ Complete icon mapping (311 icons across 22 rows)
+- ✅ SpriteIcon component with size support
+- ✅ Type-safe IconId type
+- ✅ Position validation
+- ✅ Pixel-perfect rendering
+- ✅ Export in UI components index
+
+**Completed**: Previously completed (verified 2025-01-11)
 
 ---
 
-### ⏳ 009 - Character Portrait Selection
-**Status**: ⏳ Pending / Pendente
+### ✅ 009 - Character Portrait Selection
+**Status**: ✅ Completed / Concluído
 **Priority**: High / Alta
 **Type**: Feature
 
@@ -195,14 +230,22 @@ Add portrait selection to the character creation screen and create a reusable po
 Adicionar seleção de retrato à tela de criação de personagem e criar um componente de retrato reutilizável.
 
 **Implementation**:
+- 📁 [src/routes/character-creation/+page.svelte](../src/routes/character-creation/+page.svelte)
 - 📁 [tasks/009-character-portrait-selection.md](./009-character-portrait-selection.md)
 
-**Status**: Not started
+**Features Implemented**:
+- ✅ Portrait selection with carousel (100 portraits)
+- ✅ Portrait preview in character creation
+- ✅ Portrait ID saved to character data
+- ✅ Visual selection feedback
+- ✅ Integration with existing creation flow
+
+**Completed**: Previously completed (verified 2025-01-11)
 
 ---
 
-### ⏳ 010 - Refactor Portrait Component
-**Status**: ⏳ Pending / Pendente
+### ✅ 010 - Refactor Portrait Component
+**Status**: ✅ Completed / Concluído
 **Priority**: Low / Baixa
 **Type**: Refactoring
 
@@ -212,9 +255,18 @@ Refactor the Portrait component to accept the full character object instead of i
 Refatorar o componente Portrait para aceitar o objeto de personagem completo em vez de props individuais.
 
 **Implementation**:
+- 📁 [src/lib/components/ui/Portrait.svelte](../src/lib/components/ui/Portrait.svelte)
+- 📁 [src/lib/game/character/types.ts](../src/lib/game/character/types.ts)
 - 📁 [tasks/010-refactor-portrait-component.md](./010-refactor-portrait-component.md)
 
-**Status**: Not started
+**Features Implemented**:
+- ✅ New Character interface type
+- ✅ Portrait component refactored to accept `character` prop
+- ✅ Automatic attribute modifier calculation
+- ✅ All usages updated (Town Square, Debug Panel, Playground)
+- ✅ Better encapsulation and maintainability
+
+**Completed**: 2025-01-11
 
 ---
 
@@ -357,12 +409,12 @@ Sistema de design completo com estética dark fantasy, inspirado em interfaces m
 
 ## Statistics / Estatísticas
 
-**Total Tasks**: 6 (main tasks) + 4 (infrastructure) + 1 (design system)
-**Completed**: 6 (55%)
-**In Progress**: 1 (9%)
-**Pending**: 4 (36%)
+**Total Tasks**: 10 (main tasks) + 4 (infrastructure) + 1 (design system)
+**Completed**: 11 (73%)
+**In Progress**: 0 (0%)
+**Pending**: 4 (27%)
 
-**Last Updated**: 2025-01-10
+**Last Updated**: 2025-01-11
 
 ---
 

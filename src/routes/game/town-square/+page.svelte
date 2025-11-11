@@ -3,7 +3,7 @@
 	import { goto } from '$app/navigation'
 	import { playerStore } from '$lib/stores/playerStore.svelte'
 	import { LL } from '$lib/i18n/i18n-svelte'
-	import { Card, Icon, AreaCard, Portrait } from '$lib/components/ui'
+	import { Card, Icon, AreaCard, Portrait, LanguageSwitcher } from '$lib/components/ui'
 
 	onMount(async () => {
 		// Initialize player store if not already loaded
@@ -31,42 +31,42 @@
 			id: 'dungeons',
 			icon: 'game-icons-dungeon-gate',
 			iconColor: 'text-arcana-magenta-400',
-			available: false,
+			available: true, // Enabled - Navigation ready
 			route: '/game/dungeons',
 		},
 		{
 			id: 'blacksmith',
 			icon: 'game-icons-anvil',
 			iconColor: 'text-arcana-orange-500',
-			available: false,
+			available: true, // Enabled - Navigation ready
 			route: '/game/blacksmith',
 		},
 		{
 			id: 'tavern',
 			icon: 'game-icons-beer-stein',
 			iconColor: 'text-arcana-gold-400',
-			available: false,
+			available: true, // Enabled - Navigation ready
 			route: '/game/tavern',
 		},
 		{
 			id: 'market',
 			icon: 'game-icons-shop',
 			iconColor: 'text-arcana-cyan-400',
-			available: false,
+			available: true, // Enabled - Navigation ready
 			route: '/game/market',
 		},
 		{
 			id: 'arena',
 			icon: 'game-icons-crossed-swords',
 			iconColor: 'text-arcana-orange-600',
-			available: false,
+			available: true, // Enabled - Navigation ready
 			route: '/game/arena',
 		},
 		{
 			id: 'character',
 			icon: 'game-icons-player-next',
 			iconColor: 'text-arcana-gold-300',
-			available: false,
+			available: true, // Enabled - Navigation ready
 			route: '/game/character',
 		},
 	]
@@ -84,6 +84,11 @@
 	</div>
 {:else if playerStore.player}
 	<div class="town-square">
+		<!-- Language Switcher (Fixed Position) -->
+		<div class="language-switcher-wrapper">
+			<LanguageSwitcher variant="default" />
+		</div>
+
 		<div class="container">
 			<!-- Title -->
 			<div class="text-center mb-12">
@@ -97,35 +102,27 @@
 					<!-- Player Portrait -->
 					<div class="player-portrait">
 						<Portrait
-							portraitId={playerStore.player.portraitId}
-							playerName={playerStore.player.name}
-							playerClass="Warrior"
-							classIcon="game-icons-sword-brandish"
-							classDescription="A mighty warrior skilled in melee combat and heavy armor"
-							level={playerStore.player.stats.level}
-							experience={playerStore.player.stats.experience}
-							maxExperience={playerStore.player.stats.experienceToNextLevel}
-							health={playerStore.player.resources.health}
-							maxHealth={playerStore.player.resources.maxHealth}
-							mana={playerStore.player.resources.mana}
-							maxMana={playerStore.player.resources.maxMana}
+							character={{
+								id: playerStore.player.id,
+								name: playerStore.player.name,
+								portraitId: playerStore.player.portraitId,
+								class: 'Warrior',
+								classIcon: 'game-icons-sword-brandish',
+								classDescription: 'A mighty warrior skilled in melee combat and heavy armor',
+								level: playerStore.player.stats.level,
+								experience: playerStore.player.stats.experience,
+								experienceToNextLevel: playerStore.player.stats.experienceToNextLevel,
+								health: playerStore.player.resources.health,
+								maxHealth: playerStore.player.resources.maxHealth,
+								mana: playerStore.player.resources.mana,
+								maxMana: playerStore.player.resources.maxMana,
+								strength: playerStore.player.stats.strength,
+								dexterity: playerStore.player.stats.dexterity,
+								intelligence: playerStore.player.stats.intelligence,
+								vitality: playerStore.player.stats.vitality,
+								luck: playerStore.player.stats.luck,
+							}}
 							size="medium"
-							strength={{
-								value: playerStore.player.stats.strength,
-								modifier: Math.floor((playerStore.player.stats.strength - 10) / 2)
-							}}
-							dexterity={{
-								value: playerStore.player.stats.dexterity,
-								modifier: Math.floor((playerStore.player.stats.dexterity - 10) / 2)
-							}}
-							intelligence={{
-								value: playerStore.player.stats.intelligence,
-								modifier: Math.floor((playerStore.player.stats.intelligence - 10) / 2)
-							}}
-							vitality={{
-								value: playerStore.player.stats.vitality,
-								modifier: Math.floor((playerStore.player.stats.vitality - 10) / 2)
-							}}
 						/>
 					</div>
 
@@ -174,6 +171,15 @@
 	.town-square {
 		min-height: 100vh;
 		padding: var(--spacing-3xl) var(--spacing-md);
+		position: relative;
+	}
+
+	/* Language Switcher Fixed Position */
+	.language-switcher-wrapper {
+		position: fixed;
+		top: var(--spacing-lg);
+		right: var(--spacing-lg);
+		z-index: 50;
 	}
 
 	.container {

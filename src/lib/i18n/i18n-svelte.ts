@@ -46,7 +46,11 @@ const createTranslationFunctions = (
 
 	const createNestedProxy = (path: string[] = []): any => {
 		return new Proxy(() => {}, {
-			get: (_target, prop: string) => {
+			get: (_target, prop: string | symbol) => {
+				// Ignore symbol properties (like Symbol.iterator)
+				if (typeof prop === 'symbol') {
+					return undefined
+				}
 				return createNestedProxy([...path, prop])
 			},
 			apply: (_target, _thisArg, args) => {

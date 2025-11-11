@@ -251,11 +251,10 @@
 
 				<!-- Current Selection Preview -->
 				<div class="portrait-preview">
-					<Portrait
-						portraitId={formData.portraitId}
-						size="large"
-						variant="compact"
-						showBorder={true}
+					<img
+						src="/src/lib/assets/portraits/{formData.portraitId}.png"
+						alt="Selected Portrait"
+						class="selected-portrait-image"
 					/>
 				</div>
 
@@ -582,6 +581,15 @@
 		display: flex;
 		justify-content: center;
 		margin-bottom: var(--spacing-xl);
+	}
+
+	.selected-portrait-image {
+		width: 200px;
+		height: 240px;
+		object-fit: cover;
+		border: 4px solid var(--color-arcana-gold-500);
+		border-radius: var(--radius-xl);
+		box-shadow: var(--shadow-lg), var(--glow-gold);
 	}
 
 	.portrait-selector {
