@@ -12,6 +12,7 @@ import type {
 	CombatRewards,
 } from './types'
 import { CombatState, CombatActionType } from './types'
+import { CombatMessages } from './combat-i18n'
 
 /**
  * Initialize a new combat encounter
@@ -32,7 +33,7 @@ export function initializeCombat(player: Combatant, enemies: Combatant[]): Comba
 		turnOrder,
 		currentTurnIndex: 0,
 		turns: [],
-		log: ['Combat started!'],
+		log: [CombatMessages.combatStarted()],
 		createdAt: Date.now(),
 	}
 }
@@ -117,7 +118,7 @@ function processAttack(combat: Combat, action: CombatAction): CombatActionResult
 			success: true,
 			action,
 			isMiss: true,
-			message: `${actor.name}'s attack missed!`,
+			message: CombatMessages.attackMissed(actor.name),
 		}
 	}
 
@@ -143,7 +144,9 @@ function processAttack(combat: Combat, action: CombatAction): CombatActionResult
 		action,
 		damage,
 		isCritical,
-		message: `${actor.name} attacked ${target.name} for ${damage} damage${isCritical ? ' (Critical!)' : ''}!`,
+		message: isCritical
+			? CombatMessages.attackCritical(actor.name, target.name, damage)
+			: CombatMessages.attackHit(actor.name, target.name, damage),
 	}
 }
 
@@ -171,7 +174,7 @@ function processDefend(combat: Combat, action: CombatAction): CombatActionResult
 	return {
 		success: true,
 		action,
-		message: `${actor.name} takes a defensive stance! Defense increased by ${defenseBoost}!`,
+		message: CombatMessages.defend(actor.name, defenseBoost),
 	}
 }
 
@@ -185,7 +188,7 @@ function processSkill(combat: Combat, action: CombatAction): CombatActionResult 
 	return {
 		success: false,
 		action,
-		message: `${actor.name} tried to use a skill, but skill system is not implemented yet!`,
+		message: CombatMessages.skillNotImplemented(actor.name),
 	}
 }
 
@@ -199,7 +202,7 @@ function processItem(combat: Combat, action: CombatAction): CombatActionResult {
 	return {
 		success: false,
 		action,
-		message: `${actor.name} tried to use an item, but item system is not implemented yet!`,
+		message: CombatMessages.itemNotImplemented(actor.name),
 	}
 }
 
@@ -219,14 +222,14 @@ function processFlee(combat: Combat, action: CombatAction): CombatActionResult {
 		return {
 			success: true,
 			action,
-			message: `${actor.name} fled from battle!`,
+			message: CombatMessages.fled(actor.name),
 		}
 	}
 
 	return {
 		success: false,
 		action,
-		message: `${actor.name} couldn't escape!`,
+		message: CombatMessages.couldntEscape(actor.name),
 	}
 }
 
@@ -264,7 +267,7 @@ function processStatusEffects(combat: Combat, combatant: Combatant): void {
 
 	// Log expired effects
 	if (expiredEffects.length > 0) {
-		combat.log.push(`${combatant.name}'s buffs/debuffs have worn off.`)
+		combat.log.push(CombatMessages.buffsWornOff(combatant.name))
 	}
 }
 

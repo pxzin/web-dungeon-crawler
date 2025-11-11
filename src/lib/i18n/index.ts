@@ -1,3 +1,5 @@
-export { LL, locale, locales, setLocale, loadLocaleAsync } from './i18n-svelte'
-export { baseLocale, isLocale } from './i18n-util'
+export { LL, locale, setLocale } from './i18n-svelte'
+export { baseLocale, isLocale, locales } from './i18n-util'
+export { loadLocaleAsync } from './i18n-util.async'
+export { initI18n, resetI18nInit } from './i18n-init'
 export type { Locales, TranslationFunctions } from './i18n-types'

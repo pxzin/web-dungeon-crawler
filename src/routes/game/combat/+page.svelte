@@ -8,6 +8,7 @@
 	import { persistence } from '$lib/persistence/instance'
 	import { CombatActionType } from '$lib/game/combat/types'
 	import type { Combatant } from '$lib/game/combat/types'
+	import { LL } from '$lib/i18n/i18n-svelte'
 
 	let combat = $derived(combatStore.combat)
 	let selectedTarget = $state<string | null>(null)
@@ -74,13 +75,13 @@
 
 		// Check if flee was successful (combat state changed to FLED)
 		if (combat.state === 'fled') {
-			toastStore.info('You fled from battle!', 2000)
+			toastStore.info($LL.game.combat.messages.fledBattle(), 2000)
 			setTimeout(() => {
 				combatStore.endCombat()
 				goto('/game/dungeon')
 			}, 1000)
 		} else {
-			toastStore.warning('Failed to escape! The enemy blocks your path!', 2000)
+			toastStore.warning($LL.game.combat.messages.failedToEscape(), 2000)
 		}
 	}
 
@@ -99,7 +100,7 @@
 
 			// Show victory message with rewards
 			toastStore.success(
-				`Victory! +${combat.rewards.experience} XP, +${combat.rewards.gold} Gold`,
+				$LL.game.combat.messages.victory({ exp: combat.rewards.experience, gold: combat.rewards.gold }),
 				5000
 			)
 
@@ -114,7 +115,7 @@
 				goto('/game/dungeon')
 			}, 2000)
 		} else if (defeat) {
-			toastStore.error('Defeat... You have been defeated.', 3000)
+			toastStore.error($LL.game.combat.messages.defeat(), 3000)
 
 			setTimeout(() => {
 				combatStore.endCombat()
@@ -164,7 +165,7 @@
 			playerData.resources.health = playerData.resources.maxHealth
 			playerData.resources.mana = playerData.resources.maxMana
 
-			toastStore.success(`Level Up! Now level ${playerData.stats.level}!`, 5000)
+			toastStore.success($LL.game.combat.messages.levelUp({ level: playerData.stats.level }), 5000)
 		}
 
 		// Add gold
@@ -248,12 +249,12 @@
 			<Card variant="elevated" class="combat-header">
 				<div class="header-content">
 					<Icon icon="game-icons-crossed-swords" size="xl" class="text-arcana-red-400" />
-					<h1 class="arcana-heading-lg">Combat</h1>
+					<h1 class="arcana-heading-lg">{$LL.game.combat.title()}</h1>
 					<div class="turn-indicator">
 						{#if combatStore.isPlayerTurn()}
-							<span class="arcana-text-sm text-arcana-green-400">Your Turn</span>
+							<span class="arcana-text-sm text-arcana-green-400">{$LL.game.combat.yourTurn()}</span>
 						{:else}
-							<span class="arcana-text-sm text-arcana-yellow-400">Enemy Turn</span>
+							<span class="arcana-text-sm text-arcana-yellow-400">{$LL.game.combat.enemyTurn()}</span>
 						{/if}
 					</div>
 				</div>
@@ -347,7 +348,7 @@
 								{#if selectedTarget === enemy.id}
 									<div class="target-badge">
 										<Icon icon="game-icons-crosshair" size="sm" />
-										<span class="arcana-text-xs">Target</span>
+										<span class="arcana-text-xs">{$LL.game.combat.target()}</span>
 									</div>
 								{/if}
 							</div>
@@ -367,24 +368,24 @@
 							onclick={handleAttack}
 						>
 							<Icon icon="game-icons-sword-brandish" size="md" />
-							Attack
+							{$LL.game.combat.actions.attack()}
 						</Button>
 						<Button variant="primary" size="lg" disabled={!combatStore.isPlayerTurn()} onclick={handleDefend}>
 							<Icon icon="game-icons-shield" size="md" />
-							Defend
+							{$LL.game.combat.actions.defend()}
 						</Button>
 						<Button variant="secondary" size="lg" disabled>
 							<Icon icon="game-icons-fire-spell-cast" size="md" />
-							Skills (Soon)
+							{$LL.game.combat.actions.skills()}
 						</Button>
 						<Button variant="ghost" size="lg" disabled={!combatStore.isPlayerTurn()} onclick={handleFlee}>
 							<Icon icon="game-icons-run" size="md" />
-							Flee
+							{$LL.game.combat.actions.flee()}
 						</Button>
 					</div>
 					{#if !selectedTarget}
 						<p class="arcana-text-xs text-arcana-text-muted text-center mt-4">
-							Select an enemy to attack
+							{$LL.game.combat.selectEnemy()}
 						</p>
 					{/if}
 				</Card>
@@ -394,7 +395,7 @@
 			<Card variant="elevated" class="combat-log">
 				<div class="log-header">
 					<Icon icon="game-icons-scroll-unfurled" size="sm" class="text-arcana-gold-300" />
-					<h3 class="arcana-heading-sm">Combat Log</h3>
+					<h3 class="arcana-heading-sm">{$LL.game.combat.combatLog()}</h3>
 				</div>
 				<div class="log-content">
 					{#each combat.log.slice(-5).reverse() as entry}

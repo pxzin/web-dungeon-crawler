@@ -12,12 +12,12 @@
 	<div class="container">
 		<Card variant="elevated" class="text-center">
 			<Icon icon="game-icons-beer-stein" size="2xl" class="text-arcana-gold-400 mb-6" />
-			<h1 class="arcana-heading-lg mb-4">Tavern</h1>
+			<h1 class="arcana-heading-lg mb-4">{$LL.game.tavern.title()}</h1>
 			<p class="arcana-text mb-8">
-				The tavern keeper is preparing the bar. Soon you'll be able to rest, gather rumors, and accept quests!
+				{$LL.game.tavern.description()}
 			</p>
 			<Button variant="primary" onclick={returnToTown}>
-				← Return to Town Square
+				← {$LL.game.tavern.returnToTown()}
 			</Button>
 		</Card>
 	</div>

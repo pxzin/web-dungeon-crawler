@@ -12,12 +12,12 @@
 	<div class="container">
 		<Card variant="elevated" class="text-center">
 			<Icon icon="game-icons-crossed-swords" size="2xl" class="text-arcana-orange-600 mb-6" />
-			<h1 class="arcana-heading-lg mb-4">Arena</h1>
+			<h1 class="arcana-heading-lg mb-4">{$LL.game.arena.title()}</h1>
 			<p class="arcana-text mb-8">
-				The arena is being prepared for combat. Soon you'll be able to test your skills against worthy opponents!
+				{$LL.game.arena.description()}
 			</p>
 			<Button variant="primary" onclick={returnToTown}>
-				← Return to Town Square
+				← {$LL.game.arena.returnToTown()}
 			</Button>
 		</Card>
 	</div>

@@ -27,6 +27,8 @@
 	async function continueGame() {
 		await goto('/game/town-square')
 	}
+
+	console.log($LL.game.title())
 </script>
 
 <div class="home">

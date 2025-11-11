@@ -1,4 +1,6 @@
-{
+import type { BaseTranslation } from '../i18n-types'
+
+const en = {
 	"game": {
 		"title": "Dungeon Crawler",
 		"characterCreation": {
@@ -214,4 +216,6 @@
 			"no": "No"
 		}
 	}
-}
+} satisfies BaseTranslation
+
+export default en

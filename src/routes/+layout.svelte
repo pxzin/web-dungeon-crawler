@@ -3,6 +3,7 @@
 	import 'virtual:uno.css'
 	import { dev } from '$app/environment'
 	import { ToastContainer } from '$lib/components/ui'
+	import { initI18n } from '$lib/i18n'
 
 	// Only import DebugPanel in development mode
 	let DebugPanel: any = null
@@ -16,12 +17,28 @@
 			DebugPanel = module.default
 		})
 	}
+
+	// Initialize i18n system before app loads - this ensures translations are ready
+	let i18nReady = initI18n()
 </script>
 
-<slot />
+{#await i18nReady}
+	<!-- Show nothing while i18n loads (should be very fast) -->
+	<div class="loading-screen" />
+{:then}
+	<slot />
 
-<ToastContainer />
+	<ToastContainer />
 
-{#if isDevMode && DebugPanel}
-	<svelte:component this={DebugPanel} />
-{/if}
+	{#if isDevMode && DebugPanel}
+		<svelte:component this={DebugPanel} />
+	{/if}
+{/await}
+
+<style>
+	.loading-screen {
+		width: 100vw;
+		height: 100vh;
+		background: var(--color-background);
+	}
+</style>

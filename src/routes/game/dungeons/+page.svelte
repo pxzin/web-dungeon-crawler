@@ -29,8 +29,8 @@
 <div class="page-container">
 	<div class="container">
 		<div class="header">
-			<h1 class="arcana-heading-xl mb-2">Dungeons</h1>
-			<p class="arcana-text-muted mb-8">Choose your next adventure</p>
+			<h1 class="arcana-heading-xl mb-2">{$LL.game.dungeons.title()}</h1>
+			<p class="arcana-text-muted mb-8">{$LL.game.dungeons.subtitle()}</p>
 		</div>
 
 		<div class="dungeon-list">
@@ -52,17 +52,17 @@
 						<div class="stat">
 							<Icon icon="game-icons-level-four" size="sm" class="text-arcana-cyan-400" />
 							<span class="arcana-text-sm">
-								Level {dungeon.recommendedLevel.min}-{dungeon.recommendedLevel.max}
+								{$LL.game.dungeons.level()} {dungeon.recommendedLevel.min}-{dungeon.recommendedLevel.max}
 							</span>
 						</div>
 						<div class="stat">
 							<Icon icon="game-icons-stairs" size="sm" class="text-arcana-yellow-400" />
-							<span class="arcana-text-sm">{dungeon.floorCount} Floors</span>
+							<span class="arcana-text-sm">{dungeon.floorCount} {$LL.game.dungeons.floors()}</span>
 						</div>
 					</div>
 
 					<Button variant="primary" fullWidth onclick={() => enterDungeon(dungeon.id)}>
-						Enter Dungeon
+						{$LL.game.dungeons.enterDungeon()}
 					</Button>
 				</Card>
 			{/each}
@@ -70,7 +70,7 @@
 
 		<div class="footer">
 			<Button variant="secondary" onclick={returnToTown}>
-				← Return to Town Square
+				← {$LL.game.dungeons.returnToTown()}
 			</Button>
 		</div>
 	</div>

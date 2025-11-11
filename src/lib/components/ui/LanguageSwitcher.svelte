@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { locale, loadLocaleAsync, type Locales } from '$lib/i18n'
+	import { locale, loadLocaleAsync, setLocale, type Locales } from '$lib/i18n'
 	import { PersistenceService } from '$lib/persistence'
 	import type { GameSettings } from '$lib/persistence/types'
 
@@ -20,8 +20,13 @@
 
 	async function changeLanguage(newLocale: Locales) {
 		try {
-			// Update locale in i18n system using loadLocaleAsync
+			// Load translations first
 			await loadLocaleAsync(newLocale)
+			console.log('Translations loaded for:', newLocale)
+
+			// Then update the active locale (this triggers UI updates)
+			await setLocale(newLocale)
+			console.log('Locale set to:', newLocale)
 
 			// Save to persistence
 			const settingsResult = await persistence.getSettings()
@@ -31,6 +36,7 @@
 					locale: newLocale,
 				}
 				await persistence.saveSettings(settings)
+				console.log('Settings saved with locale:', newLocale)
 			}
 		} catch (error) {
 			console.error('Error changing language:', error)

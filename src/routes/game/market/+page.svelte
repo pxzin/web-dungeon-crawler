@@ -12,12 +12,12 @@
 	<div class="container">
 		<Card variant="elevated" class="text-center">
 			<Icon icon="game-icons-shop" size="2xl" class="text-arcana-cyan-400 mb-6" />
-			<h1 class="arcana-heading-lg mb-4">Market</h1>
+			<h1 class="arcana-heading-lg mb-4">{$LL.game.market.title()}</h1>
 			<p class="arcana-text mb-8">
-				The merchants are setting up their stalls. Soon you'll be able to buy and sell items and equipment!
+				{$LL.game.market.description()}
 			</p>
 			<Button variant="primary" onclick={returnToTown}>
-				← Return to Town Square
+				← {$LL.game.market.returnToTown()}
 			</Button>
 		</Card>
 	</div>

@@ -1,4 +1,6 @@
-{
+import type { Translation } from '../i18n-types'
+
+const ptBR = {
 	"game": {
 		"title": "Explorador de Masmorras",
 		"characterCreation": {
@@ -214,4 +216,6 @@
 			"no": "Não"
 		}
 	}
-}
+} satisfies Translation
+
+export default ptBR

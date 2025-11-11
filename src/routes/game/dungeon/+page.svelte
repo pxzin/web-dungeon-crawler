@@ -8,6 +8,7 @@
 	import { persistence } from '$lib/persistence/instance'
 	import { TileType } from '$lib/game/dungeon'
 	import type { Combatant } from '$lib/game/combat/types'
+	import { LL } from '$lib/i18n/i18n-svelte'
 
 	let session = $derived(dungeonStore.session)
 
@@ -27,7 +28,7 @@
 		const success = dungeonStore.nextFloor()
 		if (!success) {
 			// Dungeon complete!
-			toastStore.success('Congratulations! You have completed the dungeon!')
+			toastStore.success($LL.game.dungeon.congratulations())
 			setTimeout(exitDungeon, 2000)
 		}
 	}
@@ -36,7 +37,7 @@
 		// Get unexplored rooms
 		const unexploredRooms = dungeonStore.getUnexploredRooms()
 		if (unexploredRooms.length === 0) {
-			toastStore.warning('All rooms explored! Proceed to next floor or exit.')
+			toastStore.warning($LL.game.dungeon.allRoomsExplored())
 			return
 		}
 
@@ -50,7 +51,7 @@
 			// Start combat!
 			const playerResult = await persistence.getPlayerData()
 			if (!playerResult.success || !playerResult.data) {
-				toastStore.error('Error: Could not load player data')
+				toastStore.error($LL.game.dungeon.errorLoadingPlayer())
 				return
 			}
 
@@ -90,7 +91,7 @@
 			goto('/game/combat')
 		} else {
 			// Room is empty
-			toastStore.info('The room is empty. You found nothing of interest.')
+			toastStore.info($LL.game.dungeon.roomEmpty())
 		}
 	}
 
@@ -155,7 +156,7 @@
 					<div class="floor-info">
 						<Icon icon="game-icons-stairs" size="lg" class="text-arcana-yellow-400" />
 						<span class="arcana-heading-md">
-							Floor {session.currentFloor} / {session.template.floorCount}
+							{$LL.game.dungeon.floor()} {session.currentFloor} / {session.template.floorCount}
 						</span>
 					</div>
 				</div>
@@ -165,10 +166,10 @@
 			<Card variant="elevated" class="map-card">
 				<div class="map-header">
 					<Icon icon="game-icons-treasure-map" size="lg" class="text-arcana-cyan-400" />
-					<h2 class="arcana-heading-md">Dungeon Map</h2>
+					<h2 class="arcana-heading-md">{$LL.game.dungeon.dungeonMap()}</h2>
 					<div class="map-stats">
 						<span class="arcana-text-xs text-arcana-text-muted">
-							{session.dungeon.rooms.length} rooms
+							{session.dungeon.rooms.length} {$LL.game.dungeon.rooms()}
 						</span>
 					</div>
 				</div>
@@ -188,19 +189,19 @@
 				<div class="map-legend">
 					<div class="legend-item">
 						<span class="legend-icon text-arcana-green-400">↑</span>
-						<span class="arcana-text-xs">Entrance</span>
+						<span class="arcana-text-xs">{$LL.game.dungeon.entrance()}</span>
 					</div>
 					<div class="legend-item">
 						<span class="legend-icon text-arcana-cyan-400">↓</span>
-						<span class="arcana-text-xs">Exit</span>
+						<span class="arcana-text-xs">{$LL.game.dungeon.exit()}</span>
 					</div>
 					<div class="legend-item">
 						<span class="legend-icon text-arcana-gold-300">■</span>
-						<span class="arcana-text-xs">Chest</span>
+						<span class="arcana-text-xs">{$LL.game.dungeon.chest()}</span>
 					</div>
 					<div class="legend-item">
 						<span class="legend-icon text-arcana-red-400">☠</span>
-						<span class="arcana-text-xs">Enemy</span>
+						<span class="arcana-text-xs">{$LL.game.dungeon.enemy()}</span>
 					</div>
 				</div>
 			</Card>
@@ -209,45 +210,45 @@
 			<div class="actions">
 				<Card variant="interactive" class="action-card">
 					<Icon icon="game-icons-dungeon-gate" size="xl" class="text-arcana-magenta-400" />
-					<h3 class="arcana-heading-sm">Explore Dungeon</h3>
+					<h3 class="arcana-heading-sm">{$LL.game.dungeon.exploreDungeon()}</h3>
 					<p class="arcana-text-xs text-arcana-text-muted">
-						Navigate through rooms and corridors
+						{$LL.game.dungeon.exploreDescription()}
 					</p>
 					<Button variant="primary" fullWidth onclick={exploreDungeon}>
 						<Icon icon="game-icons-walking-boot" size="sm" />
-						Explore
+						{$LL.game.dungeon.explore()}
 					</Button>
 				</Card>
 
 				{#if session.currentFloor < session.template.floorCount}
 					<Card variant="interactive" class="action-card">
 						<Icon icon="game-icons-stairs-goal" size="xl" class="text-arcana-cyan-400" />
-						<h3 class="arcana-heading-sm">Next Floor</h3>
-						<p class="arcana-text-xs text-arcana-text-muted">Descend to floor {session.currentFloor + 1}</p>
+						<h3 class="arcana-heading-sm">{$LL.game.dungeon.nextFloor()}</h3>
+						<p class="arcana-text-xs text-arcana-text-muted">{$LL.game.dungeon.descendToFloor({ floor: session.currentFloor + 1 })}</p>
 						<Button variant="primary" fullWidth onclick={proceedToNextFloor}>
 							<Icon icon="game-icons-stairs" size="sm" />
-							Proceed
+							{$LL.game.dungeon.proceed()}
 						</Button>
 					</Card>
 				{:else}
 					<Card variant="interactive" class="action-card">
 						<Icon icon="game-icons-crowned-skull" size="xl" class="text-arcana-gold-300" />
-						<h3 class="arcana-heading-sm">Boss Floor</h3>
-						<p class="arcana-text-xs text-arcana-text-muted">Face the dungeon boss</p>
+						<h3 class="arcana-heading-sm">{$LL.game.dungeon.bossFloor()}</h3>
+						<p class="arcana-text-xs text-arcana-text-muted">{$LL.game.dungeon.faceTheBoss()}</p>
 						<Button variant="danger" fullWidth disabled>
 							<Icon icon="game-icons-battle-gear" size="sm" />
-							Face Boss (Coming Soon)
+							{$LL.game.dungeon.faceBoss()}
 						</Button>
 					</Card>
 				{/if}
 
 				<Card variant="interactive" class="action-card">
 					<Icon icon="game-icons-exit-door" size="xl" class="text-arcana-red-400" />
-					<h3 class="arcana-heading-sm">Leave Dungeon</h3>
-					<p class="arcana-text-xs text-arcana-text-muted">Return to town square</p>
+					<h3 class="arcana-heading-sm">{$LL.game.dungeon.leaveDungeon()}</h3>
+					<p class="arcana-text-xs text-arcana-text-muted">{$LL.game.dungeon.returnToTownSquare()}</p>
 					<Button variant="secondary" fullWidth onclick={exitDungeon}>
 						<Icon icon="game-icons-return-arrow" size="sm" />
-						Exit
+						{$LL.game.dungeon.exitDungeon()}
 					</Button>
 				</Card>
 			</div>
