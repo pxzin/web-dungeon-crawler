@@ -73,6 +73,7 @@ export interface PlayerData {
 	id: string
 	name: string
 	portraitId: string
+	class?: string // Character class (warrior, mage, rogue, cleric)
 	stats: PlayerStats
 	resources: PlayerResources
 	gold: number

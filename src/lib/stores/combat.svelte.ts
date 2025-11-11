@@ -41,7 +41,6 @@ function createCombatStore() {
 
 			// Initialize combat
 			activeCombat = initializeCombat(player, enemies)
-			console.log('[snapshot] Combat started:', $state.snapshot(activeCombat))
 		},
 
 		/**

@@ -3,7 +3,8 @@
 	import { goto } from '$app/navigation'
 	import { playerStore } from '$lib/stores/playerStore.svelte'
 	import { LL } from '$lib/i18n/i18n-svelte'
-	import { Card, Icon, AreaCard, Portrait, LanguageSwitcher } from '$lib/components/ui'
+	import { Card, Icon, AreaCard, LanguageSwitcher } from '$lib/components/ui'
+	import { PlayerPortraitContainer } from '$lib/components/containers'
 
 	onMount(async () => {
 		// Initialize player store if not already loaded
@@ -101,29 +102,7 @@
 				<div class="player-info">
 					<!-- Player Portrait -->
 					<div class="player-portrait">
-						<Portrait
-							character={{
-								id: playerStore.player.id,
-								name: playerStore.player.name,
-								portraitId: playerStore.player.portraitId,
-								class: 'Warrior',
-								classIcon: 'game-icons-sword-brandish',
-								classDescription: 'A mighty warrior skilled in melee combat and heavy armor',
-								level: playerStore.player.stats.level,
-								experience: playerStore.player.stats.experience,
-								experienceToNextLevel: playerStore.player.stats.experienceToNextLevel,
-								health: playerStore.player.resources.health,
-								maxHealth: playerStore.player.resources.maxHealth,
-								mana: playerStore.player.resources.mana,
-								maxMana: playerStore.player.resources.maxMana,
-								strength: playerStore.player.stats.strength,
-								dexterity: playerStore.player.stats.dexterity,
-								intelligence: playerStore.player.stats.intelligence,
-								vitality: playerStore.player.stats.vitality,
-								luck: playerStore.player.stats.luck,
-							}}
-							size="medium"
-						/>
+						<PlayerPortraitContainer size="medium" />
 					</div>
 
 					<!-- Player Stats -->

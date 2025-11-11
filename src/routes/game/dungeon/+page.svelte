@@ -56,22 +56,12 @@
 
 			const player = playerResult.data
 
-			console.log('[Dungeon] Player data loaded:', {
-				id: player.id,
-				name: player.name,
-				level: player.stats.level,
-				health: player.resources.health,
-				maxHealth: player.resources.maxHealth,
-				mana: player.resources.mana,
-				maxMana: player.resources.maxMana,
-				portraitId: player.portraitId,
-			})
-
 			// Convert player to Combatant
 			const playerCombatant: Combatant = {
 				id: player.id,
 				name: player.name,
 				type: 'player',
+				class: player.class,
 				level: player.stats.level,
 				maxHp: player.resources.maxHealth,
 				currentHp: player.resources.health,
@@ -86,16 +76,12 @@
 				evasion: Math.floor(player.stats.dexterity * 0.3),
 				statusEffects: [],
 				portraitId: player.portraitId,
+				// Base attributes for UI
+				strength: player.stats.strength,
+				dexterity: player.stats.dexterity,
+				intelligence: player.stats.intelligence,
+				vitality: player.stats.vitality,
 			}
-
-			console.log('[Dungeon] Player combatant created:', {
-				id: playerCombatant.id,
-				name: playerCombatant.name,
-				currentHp: playerCombatant.currentHp,
-				maxHp: playerCombatant.maxHp,
-				currentMp: playerCombatant.currentMp,
-				maxMp: playerCombatant.maxMp,
-			})
 
 			// Start combat
 			combatStore.startCombat(playerCombatant, result.enemyIds)

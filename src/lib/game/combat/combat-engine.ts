@@ -85,6 +85,9 @@ export function processCombatAction(
 	// Add to combat log
 	combat.log.push(result.message)
 
+	// Process status effects on the actor (decrease duration, remove expired)
+	processStatusEffects(combat, actor)
+
 	// Advance turn
 	combat.currentTurnIndex = (combat.currentTurnIndex + 1) % combat.turnOrder.length
 
@@ -121,11 +124,15 @@ function processAttack(combat: Combat, action: CombatAction): CombatActionResult
 	// Calculate if critical
 	const isCritical = Math.random() < actor.criticalRate / 100
 
-	// Calculate damage
-	const baseDamage = actor.attack - target.defense / 2
+	// Calculate damage with improved formula
+	// Defense reduces damage by a percentage rather than flat reduction
+	const defenseReduction = 1 - Math.min(0.75, target.defense / (target.defense + 100))
+	const baseDamage = actor.attack * defenseReduction
+	const varianceMultiplier = 0.85 + Math.random() * 0.3 // 85% to 115% variance
+	const criticalMultiplier = isCritical ? 2 : 1
 	const damage = Math.max(
 		1,
-		Math.floor(baseDamage * (isCritical ? 2 : 1) * (0.9 + Math.random() * 0.2))
+		Math.floor(baseDamage * criticalMultiplier * varianceMultiplier)
 	)
 
 	// Apply damage
@@ -146,11 +153,25 @@ function processAttack(combat: Combat, action: CombatAction): CombatActionResult
 function processDefend(combat: Combat, action: CombatAction): CombatActionResult {
 	const actor = getCombatant(combat, action.actorId)!
 
-	// Defending increases defense temporarily (handled in status effects)
+	// Defending increases defense by 50% for the next turn
+	const defenseBoost = Math.floor(actor.defense * 0.5)
+	actor.defense += defenseBoost
+
+	// Add status effect to track the boost
+	actor.statusEffects.push({
+		id: 'defending',
+		name: 'Defending',
+		type: 'buff',
+		duration: 1,
+		effects: {
+			defenseModifier: defenseBoost,
+		},
+	})
+
 	return {
 		success: true,
 		action,
-		message: `${actor.name} takes a defensive stance!`,
+		message: `${actor.name} takes a defensive stance! Defense increased by ${defenseBoost}!`,
 	}
 }
 
@@ -206,6 +227,44 @@ function processFlee(combat: Combat, action: CombatAction): CombatActionResult {
 		success: false,
 		action,
 		message: `${actor.name} couldn't escape!`,
+	}
+}
+
+/**
+ * Process status effects for a combatant
+ */
+function processStatusEffects(combat: Combat, combatant: Combatant): void {
+	const expiredEffects: string[] = []
+
+	for (const effect of combatant.statusEffects) {
+		// Decrease duration
+		effect.duration--
+
+		// Mark expired effects
+		if (effect.duration <= 0) {
+			expiredEffects.push(effect.id)
+
+			// Remove stat modifiers when effect expires
+			if (effect.effects.defenseModifier) {
+				combatant.defense -= effect.effects.defenseModifier
+			}
+			if (effect.effects.attackModifier) {
+				combatant.attack -= effect.effects.attackModifier
+			}
+			if (effect.effects.speedModifier) {
+				combatant.speed -= effect.effects.speedModifier
+			}
+		}
+	}
+
+	// Remove expired effects
+	combatant.statusEffects = combatant.statusEffects.filter(
+		(effect) => !expiredEffects.includes(effect.id)
+	)
+
+	// Log expired effects
+	if (expiredEffects.length > 0) {
+		combat.log.push(`${combatant.name}'s buffs/debuffs have worn off.`)
 	}
 }
 

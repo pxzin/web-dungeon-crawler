@@ -122,20 +122,28 @@
 				...formData.attributes,
 			}
 
+			// Save the character class
+			if (formData.class) {
+				player.class = formData.class
+			}
+
 			// Calculate derived stats based on class
 			if (formData.class) {
 				const baseStats = CLASS_BASE_STATS[formData.class]
 				player.stats.health = baseStats.health
 				player.stats.maxHealth = baseStats.health
 				player.resources.health = baseStats.health
+				player.resources.maxHealth = baseStats.health
 
 				player.stats.mana = baseStats.mana
 				player.stats.maxMana = baseStats.mana
 				player.resources.mana = baseStats.mana
+				player.resources.maxMana = baseStats.mana
 
 				player.stats.stamina = baseStats.stamina
 				player.stats.maxStamina = baseStats.stamina
 				player.resources.stamina = baseStats.stamina
+				player.resources.maxStamina = baseStats.stamina
 
 				// Calculate derived combat stats
 				player.stats.attack = player.stats.strength * 2

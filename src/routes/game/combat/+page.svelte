@@ -4,47 +4,52 @@
 	import { Button, Card, Icon, Portrait } from '$lib/components/ui'
 	import { combatStore } from '$lib/stores/combat.svelte'
 	import { dungeonStore } from '$lib/stores/dungeon.svelte'
+	import { toastStore } from '$lib/stores/toast.svelte'
+	import { persistence } from '$lib/persistence/instance'
 	import { CombatActionType } from '$lib/game/combat/types'
 	import type { Combatant } from '$lib/game/combat/types'
 
 	let combat = $derived(combatStore.combat)
 	let selectedTarget = $state<string | null>(null)
-
-	// Watch selectedTarget changes
-	$effect(() => {
-		console.log('[Combat] selectedTarget changed:', selectedTarget)
-	})
+	let damageAnimation = $state<{ id: string; damage: number; isCritical: boolean } | null>(null)
+	let shakeAnimation = $state<string | null>(null)
 
 	onMount(() => {
-		console.log('[Combat] Component mounted, combat state:', combat ? {
-			id: combat.id,
-			state: combat.state,
-			player: combat.player.name,
-			enemies: combat.enemies.map(e => e.name),
-			isPlayerTurn: combatStore.isPlayerTurn(),
-		} : 'NO COMBAT')
-
 		// If no active combat, redirect back
 		if (!combat) {
-			console.log('[Combat] No active combat, redirecting to dungeon')
 			goto('/game/dungeon')
 		}
 	})
 
 	function handleAttack() {
-		console.log('[Combat] Attack button clicked, selectedTarget:', selectedTarget)
-
 		if (!combat || !selectedTarget) {
-			console.log('[Combat] Cannot attack - combat:', !!combat, 'selectedTarget:', selectedTarget)
 			return
 		}
 
-		console.log('[Combat] Executing attack action')
+		const targetId = selectedTarget
+
 		combatStore.executeAction({
 			type: CombatActionType.ATTACK,
 			actorId: combat.player.id,
-			targetId: selectedTarget,
+			targetId: targetId,
 		})
+
+		// Show damage animation if attack hit
+		const lastLog = combat.log[combat.log.length - 1]
+		const damageMatch = lastLog.match(/for (\d+) damage/)
+		const isCritical = lastLog.includes('Critical')
+
+		if (damageMatch) {
+			const damage = parseInt(damageMatch[1])
+			damageAnimation = { id: targetId, damage, isCritical }
+			shakeAnimation = targetId
+
+			// Clear animations after delay
+			setTimeout(() => {
+				damageAnimation = null
+				shakeAnimation = null
+			}, 1000)
+		}
 
 		// Reset selection
 		selectedTarget = null
@@ -67,37 +72,114 @@
 			actorId: combat.player.id,
 		})
 
-		// If successful, go back to dungeon
-		if (combatStore.isOver()) {
+		// Check if flee was successful (combat state changed to FLED)
+		if (combat.state === 'fled') {
+			toastStore.info('You fled from battle!', 2000)
+			setTimeout(() => {
+				combatStore.endCombat()
+				goto('/game/dungeon')
+			}, 1000)
+		} else {
+			toastStore.warning('Failed to escape! The enemy blocks your path!', 2000)
+		}
+	}
+
+	async function handleCombatEnd() {
+		if (!combat) return
+
+		const victory = combat.state === 'victory'
+		const defeat = combat.state === 'defeat'
+
+		// Save player's current HP/MP
+		await savePlayerState()
+
+		if (victory && combat.rewards) {
+			// Apply rewards
+			await applyRewards(combat.rewards)
+
+			// Show victory message with rewards
+			toastStore.success(
+				`Victory! +${combat.rewards.experience} XP, +${combat.rewards.gold} Gold`,
+				5000
+			)
+
+			// Mark room as cleared
+			const session = dungeonStore.session
+			if (session) {
+				// Room is automatically cleared in the store when combat starts
+			}
+
+			setTimeout(() => {
+				combatStore.endCombat()
+				goto('/game/dungeon')
+			}, 2000)
+		} else if (defeat) {
+			toastStore.error('Defeat... You have been defeated.', 3000)
+
+			setTimeout(() => {
+				combatStore.endCombat()
+				dungeonStore.endDungeon()
+				goto('/game/town-square')
+			}, 2000)
+		} else {
+			// Fled
 			combatStore.endCombat()
 			goto('/game/dungeon')
 		}
 	}
 
-	function handleCombatEnd() {
+	async function savePlayerState() {
 		if (!combat) return
 
-		const victory = combat.state === 'victory'
+		const playerResult = await persistence.getPlayerData()
+		if (!playerResult.success || !playerResult.data) return
 
-		// End combat
-		combatStore.endCombat()
+		const playerData = playerResult.data
 
-		if (victory) {
-			alert('Victory! You defeated all enemies!')
-			goto('/game/dungeon')
-		} else {
-			alert('Defeat... You have been defeated.')
-			dungeonStore.endDungeon()
-			goto('/game/town-square')
+		// Update resources with current combat values
+		playerData.resources.health = Math.max(0, combat.player.currentHp)
+		playerData.resources.mana = combat.player.currentMp
+
+		await persistence.setPlayerData(playerData)
+	}
+
+	async function applyRewards(rewards: { experience: number; gold: number; items: any[] }) {
+		const playerResult = await persistence.getPlayerData()
+		if (!playerResult.success || !playerResult.data) return
+
+		const playerData = playerResult.data
+
+		// Add experience
+		playerData.stats.experience += rewards.experience
+
+		// Check for level up
+		while (playerData.stats.experience >= playerData.stats.experienceToNextLevel) {
+			playerData.stats.experience -= playerData.stats.experienceToNextLevel
+			playerData.stats.level += 1
+			playerData.stats.experienceToNextLevel = Math.floor(playerData.stats.experienceToNextLevel * 1.5)
+
+			// Increase max HP/MP on level up
+			playerData.resources.maxHealth += 10
+			playerData.resources.maxMana += 5
+			playerData.resources.health = playerData.resources.maxHealth
+			playerData.resources.mana = playerData.resources.maxMana
+
+			toastStore.success(`Level Up! Now level ${playerData.stats.level}!`, 5000)
 		}
+
+		// Add gold
+		playerData.gold += rewards.gold
+
+		await persistence.setPlayerData(playerData)
 	}
 
 	function getCombatantPortrait(combatant: Combatant) {
 		// Convert combatant to Character-like object for Portrait component
-		const result = {
+		return {
 			id: combatant.id,
 			name: combatant.name,
 			portraitId: combatant.portraitId || (combatant.type === 'player' ? 'player_01' : 'goblin_01'),
+			class: combatant.class,
 			level: combatant.level,
 			experience: 0,
 			experienceToNextLevel: 100,
@@ -105,22 +187,12 @@
 			maxHealth: combatant.maxHp,
 			mana: combatant.currentMp,
 			maxMana: combatant.maxMp,
-			strength: combatant.attack,
-			dexterity: combatant.speed,
-			intelligence: combatant.magicAttack,
-			vitality: combatant.defense,
+			// Use base attributes if available, otherwise derive from combat stats
+			strength: combatant.strength || Math.floor(combatant.attack / 2),
+			dexterity: combatant.dexterity || Math.floor(combatant.speed / 1.5),
+			intelligence: combatant.intelligence || Math.floor(combatant.magicAttack / 2),
+			vitality: combatant.vitality || Math.floor(combatant.defense / 1.5),
 		}
-
-		console.log('[Combat] Converting combatant to portrait:', {
-			combatantId: combatant.id,
-			combatantName: combatant.name,
-			combatantType: combatant.type,
-			portraitId: result.portraitId,
-			hp: `${combatant.currentHp}/${combatant.maxHp}`,
-			mp: `${combatant.currentMp}/${combatant.maxMp}`,
-		})
-
-		return result
 	}
 
 	$effect(() => {
@@ -134,8 +206,6 @@
 	$effect(() => {
 		if (!combat || combatStore.isOver() || combatStore.isPlayerTurn()) return
 
-		console.log('[Combat] Enemy turn detected, processing automatically...')
-
 		// Wait a bit for UI to update, then process enemy turn
 		setTimeout(() => {
 			if (!combat || combatStore.isOver() || combatStore.isPlayerTurn()) return
@@ -144,12 +214,28 @@
 			const currentActor = combat.enemies.find((e) => e.id === currentActorId)
 
 			if (currentActor && currentActor.currentHp > 0) {
-				console.log('[Combat] Processing turn for:', currentActor.name)
 				combatStore.executeAction({
 					type: CombatActionType.ATTACK,
 					actorId: currentActor.id,
 					targetId: combat.player.id,
 				})
+
+				// Show damage animation on player if attack hit
+				const lastLog = combat.log[combat.log.length - 1]
+				const damageMatch = lastLog.match(/for (\d+) damage/)
+				const isCritical = lastLog.includes('Critical')
+
+				if (damageMatch) {
+					const damage = parseInt(damageMatch[1])
+					damageAnimation = { id: combat.player.id, damage, isCritical }
+					shakeAnimation = combat.player.id
+
+					// Clear animations after delay
+					setTimeout(() => {
+						damageAnimation = null
+						shakeAnimation = null
+					}, 1000)
+				}
 			}
 		}, 1000) // 1 second delay to let player see what's happening
 	})
@@ -176,8 +262,16 @@
 			<!-- Combat Arena -->
 			<div class="combat-arena">
 				<!-- Player Side -->
-				<Card variant="elevated" class="combatant-card player-card">
+				<Card
+					variant="elevated"
+					class="combatant-card player-card {shakeAnimation === combat.player.id ? 'shake' : ''}"
+				>
 					<Portrait character={getCombatantPortrait(combat.player)} size="large" />
+					{#if damageAnimation && damageAnimation.id === combat.player.id}
+						<div class="damage-number {damageAnimation.isCritical ? 'critical' : ''}">
+							-{damageAnimation.damage}
+						</div>
+					{/if}
 					<div class="combatant-info">
 						<h2 class="arcana-heading-md">{combat.player.name}</h2>
 						<div class="health-bar">
@@ -221,23 +315,19 @@
 					{#each combat.enemies as enemy}
 						<Card
 							variant="interactive"
-							class="combatant-card enemy-card {selectedTarget === enemy.id ? 'selected' : ''} {enemy.currentHp <= 0 ? 'defeated' : ''}"
+							class="combatant-card enemy-card {selectedTarget === enemy.id ? 'selected' : ''} {enemy.currentHp <= 0 ? 'defeated' : ''} {shakeAnimation === enemy.id ? 'shake' : ''}"
 							onclick={() => {
-								console.log('[Combat] Enemy card clicked:', {
-									enemyId: enemy.id,
-									enemyName: enemy.name,
-									currentHp: enemy.currentHp,
-									isAlive: enemy.currentHp > 0,
-								})
 								if (enemy.currentHp > 0) {
 									selectedTarget = enemy.id
-									console.log('[Combat] Target selected:', selectedTarget)
-								} else {
-									console.log('[Combat] Cannot select defeated enemy')
 								}
 							}}
 						>
 							<Portrait character={getCombatantPortrait(enemy)} size="medium" />
+							{#if damageAnimation && damageAnimation.id === enemy.id}
+								<div class="damage-number {damageAnimation.isCritical ? 'critical' : ''}">
+									-{damageAnimation.damage}
+								</div>
+							{/if}
 							<div class="combatant-info">
 								<h3 class="arcana-heading-sm">{enemy.name}</h3>
 								<div class="health-bar">
@@ -515,5 +605,63 @@
 		.actions-grid {
 			grid-template-columns: repeat(2, 1fr);
 		}
+	}
+
+	/* Combat Animations */
+	@keyframes shake {
+		0%,
+		100% {
+			transform: translateX(0);
+		}
+		25% {
+			transform: translateX(-5px);
+		}
+		75% {
+			transform: translateX(5px);
+		}
+	}
+
+	@keyframes damageFloat {
+		0% {
+			opacity: 1;
+			transform: translateY(0);
+		}
+		100% {
+			opacity: 0;
+			transform: translateY(-40px);
+		}
+	}
+
+	.shake {
+		animation: shake 0.3s ease-in-out;
+	}
+
+	.damage-number {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		font-size: 2rem;
+		font-weight: bold;
+		color: var(--color-arcana-red-400);
+		animation: damageFloat 1s ease-out forwards;
+		pointer-events: none;
+		z-index: 10;
+		text-shadow:
+			2px 2px 4px rgba(0, 0, 0, 0.8),
+			-1px -1px 2px rgba(0, 0, 0, 0.5);
+	}
+
+	.damage-number.critical {
+		color: var(--color-arcana-gold-300);
+		font-size: 2.5rem;
+		text-shadow:
+			0 0 10px var(--color-arcana-gold-300),
+			2px 2px 4px rgba(0, 0, 0, 0.8),
+			-1px -1px 2px rgba(0, 0, 0, 0.5);
+	}
+
+	.combatant-card {
+		position: relative;
 	}
 </style>

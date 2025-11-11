@@ -21,6 +21,7 @@ export interface Combatant {
 	id: string
 	name: string
 	type: 'player' | 'enemy'
+	class?: string // Character class (warrior, mage, rogue, cleric) - only for player
 	level: number
 	currentHp: number
 	maxHp: number
@@ -35,6 +36,11 @@ export interface Combatant {
 	evasion: number
 	statusEffects: StatusEffect[]
 	portraitId?: string
+	// Base attributes (for UI display)
+	strength?: number
+	dexterity?: number
+	intelligence?: number
+	vitality?: number
 }
 
 /**

@@ -3,7 +3,7 @@
 	import { LocalStorageAdapter, createPersistenceService } from '$lib/persistence'
 	import { playerStore } from '$lib/stores/playerStore.svelte'
 	import type { GameState, GameSettings } from '$lib/persistence'
-	import { Portrait } from '$lib/components/ui'
+	import { PlayerPortraitContainer } from '$lib/components/containers'
 
 	const persistence = createPersistenceService(new LocalStorageAdapter())
 
@@ -167,44 +167,9 @@
 				{#if activeTab === 'character'}
 					<div class="section">
 						<h4>Player Portrait</h4>
-						{#if playerStore.player}
-							<div class="portrait-container">
-								<Portrait
-									character={{
-										id: playerStore.player.id,
-										name: playerStore.player.name,
-										portraitId: playerStore.player.portraitId,
-										class: 'Warrior',
-										classIcon: 'game-icons-sword-brandish',
-										level: playerStore.player.stats.level,
-										experience: playerStore.player.stats.experience,
-										experienceToNextLevel: playerStore.player.stats.experienceToNextLevel,
-										health: playerStore.player.resources.health,
-										maxHealth: playerStore.player.resources.maxHealth,
-										mana: playerStore.player.resources.mana,
-										maxMana: playerStore.player.resources.maxMana,
-										strength: playerStore.player.stats.strength,
-										dexterity: playerStore.player.stats.dexterity,
-										intelligence: playerStore.player.stats.intelligence,
-										vitality: playerStore.player.stats.vitality,
-										luck: playerStore.player.stats.luck,
-										statusEffects: [
-											{
-												id: 'defense_buff',
-												icon: 'game-icons-shield',
-												name: 'Defesa',
-												description: '+5 armadura',
-												duration: 3,
-												type: 'buff'
-											}
-										]
-									}}
-									size="small"
-								/>
-							</div>
-						{:else}
-							<p class="no-data">No player data</p>
-						{/if}
+						<div class="portrait-container">
+							<PlayerPortraitContainer size="small" />
+						</div>
 					</div>
 
 					<div class="section">

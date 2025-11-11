@@ -20,8 +20,3 @@ persistenceService.init().catch((err) => {
 
 // Export initialized instance
 export const persistence = persistenceService
-
-// Debug log
-console.log('Persistence instance created:', {
-	hasGetPlayerData: typeof persistence.getPlayerData === 'function',
-})

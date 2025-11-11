@@ -40,10 +40,28 @@ function createDungeonStore() {
 			})
 
 			// Populate enemies in rooms (except entrance and exit)
+			let firstEnemyRoomAssigned = false
 			for (const room of dungeon.rooms) {
 				if (room.hasEntrance || room.hasExit) continue
 
-				// 70% chance of having enemies
+				// First floor: only ONE room with a single easy Goblin Scout
+				if (floor === 1) {
+					if (!firstEnemyRoomAssigned) {
+						room.enemies = [
+							{
+								x: room.centerX,
+								y: room.centerY,
+								enemyType: 'goblin_scout',
+								level: 1,
+							},
+						]
+						firstEnemyRoomAssigned = true
+					}
+					// All other rooms on floor 1 are empty - skip enemy assignment
+					continue
+				}
+
+				// For floors 2+: 70% chance of having enemies
 				if (Math.random() < 0.7) {
 					const enemyCount = Math.floor(Math.random() * 3) + 1 // 1-3 enemies
 					room.enemies = []
