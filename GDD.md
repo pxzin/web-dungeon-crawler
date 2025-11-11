@@ -35,9 +35,40 @@ Um jogo de RPG de aventura em que os jogadores exploram masmorras geradas proced
         *   **Agilidade:** Afeta a velocidade de ataque e a capacidade de esquiva.
         *   **Vitalidade:** Determina os pontos de vida totais.
         *   **Inteligência:** Influencia a potência de magias e habilidades especiais.
-*   **Geração Procedural de Masmorras:** Cada masmorra será única, oferecendo uma nova experiência a cada partida.
-*   **Combate por Turnos:** O combate será estratégico e baseado em turnos.
+*   **Geração Procedural de Masmorras:** As masmorras são o conteúdo principal do jogo, geradas proceduralmente para garantir rejogabilidade.
+    *   **Acesso e Dificuldade:**
+        *   Haverá uma lista de masmorras disponíveis, cada uma com um tema, uma faixa de nível recomendada e uma lista de possíveis recompensas.
+        *   Não haverá bloqueio de acesso por nível, mas masmorras de nível muito alto serão extremamente difíceis para jogadores de nível baixo.
+        *   **Masннямras para Iniciantes:** Existirão masmorras introdutórias onde a derrota não acarreta nenhuma penalidade, permitindo que os jogadores aprendam e se recuperem sem risco.
+    *   **Estrutura da Masmorra:**
+        *   Cada masmorra consistirá em múltiplos andares (ex: 3 a 5 andares).
+        *   Cada andar será um grid de salas interconectadas, com a disposição gerada proceduralmente.
+    *   **Tipos de Sala:**
+        *   **Sala de Combate:** Contém um grupo de monstros.
+        *   **Sala de Tesouro:** Contém um baú com itens ou dinheiro.
+        *   **Sala Vazia:** Pode conter elementos de lore ou servir como um conector.
+        *   **Sala do Chefe (Boss Room):** A última sala do último andar, contendo o chefe da masmorra.
+    *   **Objetivo:** O objetivo de cada masmorra é navegar pelos andares e derrotar o chefe final para obter as melhores recompensas.
+*   **Combate por Turnos:** O combate é uma parte central da exploração, ocorrendo em um modo de turnos estratégico.
+    *   **Início do Combate:** Começa quando o jogador entra em uma sala de combate.
+    *   **Ordem de Turno (Iniciativa):** A ordem das ações é determinada pela `Agilidade` de cada participante.
+    *   **Ações do Jogador:** Em seu turno, o jogador pode escolher uma das seguintes ações:
+        *   **Atacar:** Ataque físico padrão baseado em `Força`.
+        *   **Habilidade/Magia:** Usar uma habilidade de classe que consome recursos (mana/energia).
+        *   **Item:** Usar um consumível do inventário.
+        *   **Defender:** Pular o turno para reduzir o dano recebido.
+        *   **Fugir:** Tentar escapar do combate (chance de sucesso baseada em `Agilidade`).
+    *   **IA Inimiga:** No protótipo, os monstros usarão uma IA simples para atacar o jogador.
+    *   **Fim do Combate:**
+        *   **Vitória:** Todos os inimigos derrotados. Concede XP, dinheiro e chance de itens.
+        *   **Derrota:** HP do jogador chega a 0. O jogador é resgatado e acorda na Praça Central com as seguintes penalidades:
+            *   **Perda de Durabilidade:** Itens equipados sofrem uma perda significativa de durabilidade.
+            *   **Dívida com o Curandeiro:** Uma "conta" pelos serviços de ressurreição é gerada e deve ser paga.
 *   **Sistema de Inventário:** Os jogadores poderão coletar e gerenciar itens em um inventário.
+*   **Durabilidade e Reparo de Itens:**
+    *   Equipamentos possuem um status de durabilidade.
+    *   A durabilidade diminui com o uso e drasticamente com a derrota.
+    *   Itens com 0 de durabilidade se tornam ineficazes até serem reparados no Ferreiro, mediante um custo.
 *   **Sistema de Habilidades:** Os personagens terão uma árvore de habilidades para desbloquear novas perícias.
 *   **Praça Central (Hub do Jogador):** Um hub central com apelo visual onde os jogadores poderão:
     *   Pegar quests.
