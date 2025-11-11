@@ -182,13 +182,9 @@ export default defineConfig({
   },
 
   shortcuts: {
-    // Arcana Button Variants
-    'arcana-btn': 'px-6 py-3 rounded-xl font-semibold transition-all duration-300 cursor-pointer relative overflow-hidden',
-    'arcana-btn-primary': 'arcana-btn bg-arcana-gold-600 text-arcana-bg-primary hover:bg-arcana-gold-500 active:bg-arcana-gold-700 shadow-lg shadow-arcana-gold-900/50 hover:shadow-arcana-gold-600/50',
-    'arcana-btn-secondary': 'arcana-btn bg-arcana-cyan-600 text-white hover:bg-arcana-cyan-500 active:bg-arcana-cyan-700 shadow-lg shadow-arcana-cyan-900/50 hover:shadow-arcana-cyan-600/50',
-    'arcana-btn-danger': 'arcana-btn bg-arcana-orange-600 text-white hover:bg-arcana-orange-500 active:bg-arcana-orange-700 shadow-lg shadow-arcana-orange-900/50',
-    'arcana-btn-outline': 'arcana-btn border-2 border-arcana-gold-600 text-arcana-gold-300 hover:bg-arcana-gold-600/10 hover:border-arcana-gold-500 hover:text-arcana-gold-200',
-    'arcana-btn-ghost': 'arcana-btn text-arcana-text-secondary hover:text-arcana-text-gold hover:bg-arcana-bg-elevated',
+    // Arcana Button - Hero variant as default
+    'arcana-btn': 'px-6 py-3 rounded-xl font-bold transition-all duration-300 cursor-pointer relative overflow-hidden',
+    'arcana-btn-hero': 'arcana-btn min-w-80 text-xl font-bold font-serif border-3 border-arcana-gold-800',
 
     // Arcana Card Variants
     'arcana-card': 'bg-arcana-bg-secondary rounded-2xl shadow-xl border border-arcana-border-default p-6 backdrop-blur-sm',
@@ -196,9 +192,6 @@ export default defineConfig({
     'arcana-card-gold': 'arcana-card border-2 border-arcana-gold-600 shadow-arcana-gold-900/30',
     'arcana-card-sm': 'arcana-card p-4',
     'arcana-card-lg': 'arcana-card p-8',
-
-    // Arcana Input
-    'arcana-input': 'w-full px-4 py-3 bg-arcana-bg-primary border-2 border-arcana-border-default rounded-xl text-arcana-text-primary placeholder-arcana-text-muted focus:border-arcana-gold-500 focus:outline-none focus:ring-2 focus:ring-arcana-gold-500/20 transition-all',
 
     // Arcana Text Styles
     'arcana-heading': 'font-serif text-arcana-gold-300 font-bold',
@@ -208,15 +201,6 @@ export default defineConfig({
     'arcana-text': 'text-arcana-text-primary',
     'arcana-text-muted': 'text-arcana-text-muted',
     'arcana-text-gold': 'text-arcana-text-gold',
-
-    // Legacy shortcuts (backward compatibility)
-    'btn': 'px-4 py-2 rounded font-medium transition-colors cursor-pointer',
-    'btn-primary': 'btn bg-primary-600 text-white hover:bg-primary-700 active:bg-primary-800',
-    'btn-secondary': 'btn bg-secondary-600 text-white hover:bg-secondary-700 active:bg-secondary-800',
-    'btn-outline': 'btn border-2 border-primary-600 text-primary-600 hover:bg-primary-50',
-    'card': 'bg-white dark:bg-neutral-800 rounded-lg shadow-md p-6',
-    'card-sm': 'card p-4',
-    'card-lg': 'card p-8',
 
     // Layout helpers
     'center': 'flex items-center justify-center',

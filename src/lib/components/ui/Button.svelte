@@ -2,7 +2,7 @@
 	import type { Snippet } from 'svelte'
 
 	interface Props {
-		variant?: 'primary' | 'secondary' | 'danger' | 'outline' | 'ghost' | 'hero'
+		variant?: 'hero'
 		size?: 'sm' | 'md' | 'lg'
 		disabled?: boolean
 		fullWidth?: boolean
@@ -13,7 +13,7 @@
 	}
 
 	let {
-		variant = 'primary',
+		variant = 'hero',
 		size = 'md',
 		disabled = false,
 		fullWidth = false,
@@ -24,11 +24,6 @@
 	}: Props = $props()
 
 	const variantClasses = {
-		primary: 'arcana-btn-primary',
-		secondary: 'arcana-btn-secondary',
-		danger: 'arcana-btn-danger',
-		outline: 'arcana-btn-outline',
-		ghost: 'arcana-btn-ghost',
 		hero: 'arcana-btn-hero',
 	}
 
@@ -54,61 +49,30 @@
 <style>
 	button {
 		position: relative;
-		font-family: var(--font-sans);
-		font-weight: 600;
+		font-family: var(--font-serif);
+		font-weight: 700;
 		text-align: center;
 		user-select: none;
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
 		gap: 0.5rem;
-	}
-
-	button:disabled {
-		pointer-events: none;
-	}
-
-	/* Shine effect on hover for buttons */
-	button:not(:disabled):hover::before {
-		content: '';
-		position: absolute;
-		top: 0;
-		left: -100%;
-		width: 100%;
-		height: 100%;
-		background: linear-gradient(
-			90deg,
-			transparent,
-			rgba(255, 255, 255, 0.2),
-			transparent
-		);
-		animation: shine 0.6s;
-	}
-
-	@keyframes shine {
-		to {
-			left: 100%;
-		}
-	}
-
-	/* Hero variant - Enhanced styling for primary CTAs */
-	:global(.arcana-btn-hero) {
 		min-width: 320px;
-		font-size: var(--text-xl) !important;
-		font-weight: 700 !important;
-		padding: var(--spacing-lg) var(--spacing-2xl) !important;
+		font-size: var(--text-xl);
 		overflow: hidden;
-		border: 3px solid var(--color-arcana-gold-800) !important;
-		background: linear-gradient(135deg, var(--color-arcana-gold-600), var(--color-arcana-gold-700)) !important;
+		border-radius: var(--radius-xl);
+		border: 3px solid var(--color-arcana-gold-800);
+		background: linear-gradient(135deg, var(--color-arcana-gold-600), var(--color-arcana-gold-700));
+		color: var(--color-arcana-bg-primary);
 		box-shadow:
 			0 0 0 1px rgba(201, 152, 74, 0.3),
 			0 8px 16px rgba(0, 0, 0, 0.4),
 			0 0 30px rgba(201, 152, 74, 0.3),
-			inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
-		transition: all var(--transition-base) !important;
+			inset 0 1px 0 rgba(255, 255, 255, 0.2);
+		transition: all var(--transition-base);
 	}
 
-	:global(.arcana-btn-hero::before) {
+	button::before {
 		content: '';
 		position: absolute;
 		top: 0;
@@ -124,34 +88,35 @@
 		transition: left 0.5s;
 	}
 
-	:global(.arcana-btn-hero:not(:disabled):hover) {
-		transform: translateY(-3px) !important;
-		border-color: var(--color-arcana-gold-600) !important;
+	button:not(:disabled):hover {
+		transform: translateY(-3px);
+		border-color: var(--color-arcana-gold-600);
 		box-shadow:
 			0 0 0 1px rgba(201, 152, 74, 0.5),
 			0 12px 24px rgba(0, 0, 0, 0.5),
 			0 0 40px rgba(201, 152, 74, 0.5),
-			inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+			inset 0 1px 0 rgba(255, 255, 255, 0.3);
 	}
 
-	:global(.arcana-btn-hero:not(:disabled):hover::before) {
+	button:not(:disabled):hover::before {
 		left: 100%;
 	}
 
-	:global(.arcana-btn-hero:not(:disabled):active) {
-		transform: translateY(-1px) !important;
+	button:not(:disabled):active {
+		transform: translateY(-1px);
 	}
 
-	:global(.arcana-btn-hero:disabled) {
+	button:disabled {
 		opacity: 0.5;
 		cursor: not-allowed;
-		border-color: var(--color-arcana-border-default) !important;
-		background: var(--color-arcana-bg-secondary) !important;
-		box-shadow: var(--shadow-md) !important;
+		pointer-events: none;
+		border-color: var(--color-arcana-border-default);
+		background: var(--color-arcana-bg-secondary);
+		box-shadow: var(--shadow-md);
 	}
 
 	@media (max-width: 768px) {
-		:global(.arcana-btn-hero) {
+		button {
 			min-width: 100%;
 		}
 	}

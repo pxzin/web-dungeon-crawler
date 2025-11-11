@@ -17,7 +17,6 @@
 		label?: string
 		error?: string
 		hint?: string
-		variant?: 'default' | 'hero'
 		oninput?: (e: Event) => void
 		onchange?: (e: Event) => void
 		onfocus?: (e: FocusEvent) => void
@@ -42,14 +41,13 @@
 		label,
 		error,
 		hint,
-		variant = 'default',
 		oninput,
 		onchange,
 		onfocus,
 		onblur,
 	}: Props = $props()
 
-	const inputId = id || name || `input-${Math.random().toString(36).substr(2, 9)}`
+	const inputId = id || name || `input-${Math.random().toString(36).substring(2, 11)}`
 	const hasError = $derived(!!error)
 </script>
 
@@ -77,7 +75,7 @@
 		{pattern}
 		{autocomplete}
 		bind:value
-		class="arcana-input {variant === 'hero' ? 'arcana-input-hero' : ''} {hasError ? 'arcana-input-error' : ''}"
+		class="arcana-input {hasError ? 'arcana-input-error' : ''}"
 		{oninput}
 		{onchange}
 		{onfocus}
@@ -106,34 +104,38 @@
 		letter-spacing: 0.05em;
 	}
 
-	/* Hero variant - Enhanced styling for important inputs (like character name) */
-	.arcana-input-hero {
+	/* Hero styling - Enhanced dark fantasy aesthetic */
+	.arcana-input {
+		width: 100%;
 		text-align: center;
-		font-size: var(--text-xl) !important;
-		font-family: var(--font-serif) !important;
-		font-weight: 600 !important;
-		padding: var(--spacing-lg) var(--spacing-xl) !important;
-		border: 3px solid var(--color-arcana-gold-700) !important;
-		background: var(--color-arcana-bg-primary) !important;
+		font-size: var(--text-xl);
+		font-family: var(--font-serif);
+		font-weight: 600;
+		padding: var(--spacing-lg) var(--spacing-xl);
+		border: 3px solid var(--color-arcana-gold-700);
+		border-radius: var(--radius-lg);
+		background: var(--color-arcana-bg-primary);
+		color: var(--color-arcana-text-primary);
 		box-shadow:
 			inset 0 2px 8px rgba(0, 0, 0, 0.3),
 			0 0 0 1px rgba(201, 152, 74, 0.2),
-			var(--shadow-lg) !important;
-		transition: all var(--transition-base) !important;
+			var(--shadow-lg);
+		transition: all var(--transition-base);
+		outline: none;
 	}
 
-	.arcana-input-hero:focus {
-		border-color: var(--color-arcana-gold-500) !important;
+	.arcana-input:focus {
+		border-color: var(--color-arcana-gold-500);
 		box-shadow:
 			inset 0 2px 8px rgba(0, 0, 0, 0.3),
 			0 0 0 3px rgba(201, 152, 74, 0.3),
 			0 0 20px rgba(201, 152, 74, 0.4),
-			var(--shadow-xl) !important;
+			var(--shadow-xl);
 		transform: translateY(-2px);
 	}
 
-	.arcana-input-hero::placeholder {
-		color: var(--color-arcana-text-muted) !important;
+	.arcana-input::placeholder {
+		color: var(--color-arcana-text-muted);
 		opacity: 0.6;
 	}
 
