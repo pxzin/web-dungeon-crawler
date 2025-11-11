@@ -184,6 +184,23 @@ Sistema para mapear e exibir ícones individuais a partir de um único arquivo d
 
 ---
 
+### ⏳ 009 - Character Portrait Selection
+**Status**: ⏳ Pending / Pendente
+**Priority**: High / Alta
+**Type**: Feature
+
+**Description**:
+Add portrait selection to the character creation screen and create a reusable portrait component.
+
+Adicionar seleção de retrato à tela de criação de personagem e criar um componente de retrato reutilizável.
+
+**Implementation**:
+- 📁 [tasks/009-character-portrait-selection.md](./009-character-portrait-selection.md)
+
+**Status**: Not started
+
+---
+
 ## Infrastructure / Infraestrutura
 
 ### ✅ Persistence System
