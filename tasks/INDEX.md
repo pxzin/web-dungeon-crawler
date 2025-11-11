@@ -138,8 +138,8 @@ Sistema server-side para gerenciar o estado de atividade do jogador e prevenir a
 
 ---
 
-### ⏳ 004 - Dungeon Generation System
-**Status**: ⏳ Pending / Pendente
+### ✅ 004 - Dungeon Generation System
+**Status**: ✅ Completed / Concluído
 **Priority**: High / Alta
 **Type**: System
 
@@ -148,12 +148,29 @@ Procedural dungeon generation system.
 
 Sistema de geração procedural de masmorras.
 
-**Status**: Not started
+**Implementation**:
+- 📁 [src/lib/game/dungeon/types.ts](../src/lib/game/dungeon/types.ts)
+- 📁 [src/lib/game/dungeon/generator.ts](../src/lib/game/dungeon/generator.ts)
+- 📁 [src/lib/game/dungeon/index.ts](../src/lib/game/dungeon/index.ts)
+
+**Features Implemented**:
+- ✅ BSP-based procedural generation algorithm
+- ✅ Room generation with configurable sizes
+- ✅ Corridor connection system
+- ✅ Entrance and exit placement
+- ✅ Seeded random generation for reproducibility
+- ✅ Tile type system (floor, wall, corridor, entrance, exit, etc.)
+- ✅ Dungeon configuration with customizable parameters
+- ✅ Explored tiles tracking system
+- ✅ Enemy and chest spawn point support
+- ✅ Debug utilities for visualization
+
+**Completed**: 2025-01-11
 
 ---
 
-### ⏳ 005 - Turn-Based Combat System
-**Status**: ⏳ Pending / Pendente
+### ✅ 005 - Turn-Based Combat System
+**Status**: ✅ Completed / Concluído
 **Priority**: High / Alta
 **Type**: System
 
@@ -162,7 +179,61 @@ Turn-based combat mechanics.
 
 Mecânicas de combate por turnos.
 
-**Status**: Not started
+**Implementation**:
+- 📁 [src/lib/game/combat/types.ts](../src/lib/game/combat/types.ts)
+- 📁 [src/lib/game/combat/combat-engine.ts](../src/lib/game/combat/combat-engine.ts)
+- 📁 [src/lib/game/combat/index.ts](../src/lib/game/combat/index.ts)
+
+**Features Implemented**:
+- ✅ Complete combat state machine
+- ✅ Turn order based on speed stat
+- ✅ Combat actions (Attack, Defend, Use Skill, Use Item, Flee)
+- ✅ Damage calculation with attack/defense modifiers
+- ✅ Critical hit system based on critical rate
+- ✅ Evasion/miss mechanics
+- ✅ Status effects support structure
+- ✅ Combat rewards calculation (XP, gold, loot)
+- ✅ Victory/defeat/fled end states
+- ✅ Simple AI for enemy turns
+- ✅ Combat turn history tracking
+- ✅ Combatant types (player, enemy)
+- ✅ Enemy template system
+
+**Completed**: 2025-01-11
+
+---
+
+### ✅ 006 - Sistema de Durabilidade e Reparo
+**Status**: ✅ Completed / Concluído
+**Priority**: Medium / Média
+**Type**: System
+
+**Description**:
+Item durability and repair system for equipable items.
+
+Sistema de durabilidade e reparo para itens equipáveis.
+
+**Implementation**:
+- 📁 [src/lib/game/items/types.ts](../src/lib/game/items/types.ts)
+- 📁 [src/lib/game/items/durability.ts](../src/lib/game/items/durability.ts)
+- 📁 [src/lib/game/items/index.ts](../src/lib/game/items/index.ts)
+- 📁 [tasks/006-sistema-durabilidade-reparo.md](./006-sistema-durabilidade-reparo.md)
+
+**Features Implemented**:
+- ✅ Durability attribute for all equippable items
+- ✅ Durability loss on defeat (25% of max)
+- ✅ Broken items (0 durability) provide no bonuses
+- ✅ Repair cost calculation based on item value and damage
+- ✅ Individual item repair function
+- ✅ Repair all items function
+- ✅ Broken/damaged items detection
+- ✅ Effective stats calculation (returns empty if broken)
+- ✅ Durability percentage and color helpers
+- ✅ Complete item type system (weapons, armor, accessories, consumables)
+- ✅ Equipment slot management
+- ✅ Inventory system types
+
+**Completed**: 2025-01-11
 
 ---
 
@@ -267,6 +338,57 @@ Refatorar o componente Portrait para aceitar o objeto de personagem completo em 
 - ✅ Better encapsulation and maintainability
 
 **Completed**: 2025-01-11
+
+---
+
+### ⏳ 011 - Initial Monster Data Definition
+**Status**: ⏳ Pending / Pendente
+**Priority**: High / Alta
+**Type**: Content
+
+**Description**:
+Define the data structure for monsters and create the first set of goblin enemies.
+
+Definir a estrutura de dados para monstros e criar o primeiro conjunto de inimigos goblins.
+
+**Implementation**:
+- 📁 [tasks/011-monster-data-definition.md](./011-monster-data-definition.md)
+
+**Status**: Not started
+
+---
+
+### ⏳ 012 - Initial Item Data Definition
+**Status**: ⏳ Pending / Pendente
+**Priority**: High / Alta
+**Type**: Content
+
+**Description**:
+Define the data structure for items and loot tables, and create the initial set of rewards.
+
+Definir a estrutura de dados para itens e tabelas de loot, e criar o conjunto inicial de recompensas.
+
+**Implementation**:
+- 📁 [tasks/012-item-data-definition.md](./012-item-data-definition.md)
+
+**Status**: Not started
+
+---
+
+### ⏳ 013 - First Dungeon Configuration
+**Status**: ⏳ Pending / Pendente
+**Priority**: High / Alta
+**Type**: Content
+
+**Description**:
+Configure the first playable dungeon, the "Goblin Cave", using the defined monsters and items.
+
+Configurar a primeira masmorra jogável, a "Caverna dos Goblins", usando os monstros e itens definidos.
+
+**Implementation**:
+- 📁 [tasks/013-first-dungeon-configuration.md](./013-first-dungeon-configuration.md)
+
+**Status**: Not started
 
 ---
 
@@ -409,10 +531,10 @@ Sistema de design completo com estética dark fantasy, inspirado em interfaces m
 
 ## Statistics / Estatísticas
 
-**Total Tasks**: 10 (main tasks) + 4 (infrastructure) + 1 (design system)
-**Completed**: 11 (73%)
+**Total Tasks**: 11 (main tasks) + 4 (infrastructure) + 1 (design system)
+**Completed**: 14 (88%)
 **In Progress**: 0 (0%)
-**Pending**: 4 (27%)
+**Pending**: 2 (12%)
 
 **Last Updated**: 2025-01-11
 
