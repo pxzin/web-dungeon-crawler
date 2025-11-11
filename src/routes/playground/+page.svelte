@@ -1,6 +1,7 @@
 <script lang="ts">
-	import { Button, Card, Input, Modal, Icon } from '$lib/components/ui'
+	import { Button, Card, Input, Modal, Icon, SpriteIcon } from '$lib/components/ui'
 	import { goto } from '$app/navigation'
+	import { getAllIconIds, type IconId } from '$lib/assets/icons/icon-map'
 
 	// Component states
 	let inputValue = $state('')
@@ -27,6 +28,20 @@
 		'xl',
 		'2xl',
 	]
+
+	// SpriteIcon examples
+	const spriteIconSizes = [24, 32, 48, 64]
+	const sampleSpriteIcons: IconId[] = [
+		'longsword',
+		'wooden_shield',
+		'heart',
+		'healing',
+		'campfire',
+		'wizard_staff',
+		'poison',
+		'crossed_swords',
+	]
+	const allSpriteIcons = getAllIconIds()
 </script>
 
 <div class="playground">
@@ -273,6 +288,67 @@
 				</div>
 			</section>
 
+			<!-- SpriteIcon Component -->
+			<section class="component-section">
+				<h2 class="arcana-heading-md">SpriteIcon Component</h2>
+				<p class="arcana-text-muted">
+					Optimized icon system using local spritesheet (32×32 grid, single HTTP request)
+				</p>
+
+				<div class="demo-section">
+					<h3 class="demo-title">Size Variants</h3>
+					<div class="icon-row">
+						{#each spriteIconSizes as size}
+							<div class="icon-demo">
+								<SpriteIcon iconId="sword_gold" {size} />
+								<span class="icon-label">{size}px</span>
+							</div>
+						{/each}
+					</div>
+				</div>
+
+				<div class="demo-section">
+					<h3 class="demo-title">Sample Icons</h3>
+					<div class="icon-grid">
+						{#each sampleSpriteIcons as iconId}
+							<div class="icon-card">
+								<SpriteIcon {iconId} size={48} />
+								<span class="text-xs">{iconId}</span>
+							</div>
+						{/each}
+					</div>
+				</div>
+
+				<div class="demo-section">
+					<h3 class="demo-title">All Available Icons ({allSpriteIcons.length})</h3>
+					<p class="arcana-text-muted text-sm mb-4">
+						First 5 rows mapped (Hearts, Mana, Swords, Axes, Shields)
+					</p>
+					<div class="sprite-icons-all">
+						{#each allSpriteIcons as iconId}
+							<div class="sprite-icon-item" title={iconId}>
+								<SpriteIcon {iconId} size={32} />
+							</div>
+						{/each}
+					</div>
+				</div>
+
+				<div class="code-block">
+					<pre><code>{`<SpriteIcon iconId="sword_gold" size={48} />
+<SpriteIcon iconId="heart_red" size={32} alt="Health" />`}</code></pre>
+				</div>
+
+				<div class="info-box">
+					<h4 class="arcana-text-gold font-semibold mb-2">🎮 Performance Benefits</h4>
+					<ul class="arcana-text-muted text-sm space-y-1">
+						<li>✅ Single HTTP request for all icons</li>
+						<li>✅ CSS-based rendering (no JS overhead)</li>
+						<li>✅ Type-safe icon IDs with autocomplete</li>
+						<li>✅ Pixel-perfect scaling for retro aesthetics</li>
+					</ul>
+				</div>
+			</section>
+
 			<!-- Color Palette -->
 			<section class="component-section">
 				<h2 class="arcana-heading-md">Color Palette</h2>
@@ -442,6 +518,61 @@
 	.icon-card span {
 		font-size: var(--text-sm);
 		color: var(--color-arcana-text-secondary);
+	}
+
+	.sprite-icons-all {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(48px, 1fr));
+		gap: var(--spacing-md);
+		max-height: 400px;
+		overflow-y: auto;
+		padding: var(--spacing-lg);
+		background: var(--color-arcana-bg-primary);
+		border: 2px solid var(--color-arcana-border-default);
+		border-radius: var(--radius-lg);
+	}
+
+	.sprite-icon-item {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: var(--spacing-sm);
+		background: var(--color-arcana-bg-elevated);
+		border: 1px solid var(--color-arcana-border-default);
+		border-radius: var(--radius-md);
+		transition: all var(--transition-base);
+		cursor: help;
+	}
+
+	.sprite-icon-item:hover {
+		border-color: var(--color-arcana-gold-600);
+		box-shadow: var(--glow-gold);
+		transform: scale(1.1);
+	}
+
+	.info-box {
+		margin-top: var(--spacing-lg);
+		padding: var(--spacing-lg);
+		background: var(--color-arcana-bg-elevated);
+		border-left: 4px solid var(--color-arcana-cyan-500);
+		border-radius: var(--radius-md);
+	}
+
+	.info-box h4 {
+		font-size: var(--text-base);
+		font-weight: 600;
+		color: var(--color-arcana-cyan-400);
+		margin-bottom: var(--spacing-sm);
+	}
+
+	.info-box ul {
+		margin: 0;
+		padding-left: var(--spacing-lg);
+		color: var(--color-arcana-text-secondary);
+	}
+
+	.info-box li {
+		margin-bottom: var(--spacing-xs);
 	}
 
 	.color-grid {

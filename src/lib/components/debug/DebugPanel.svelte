@@ -320,6 +320,9 @@
 							<button class="action-btn" onclick={() => window.location.href = '/playground'}>
 								🎨 Component Playground
 							</button>
+							<button class="action-btn" onclick={() => window.location.href = '/playground/icon-mapper'}>
+								🗺️ Icon Sprite Mapper
+							</button>
 							<button class="action-btn" onclick={() => window.location.href = '/game/town-square'}>
 								🏰 Back to Game
 							</button>
