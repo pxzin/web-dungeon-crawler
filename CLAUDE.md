@@ -44,6 +44,8 @@ Aguardando definições do Agente Organizador
 
 ### Diretrizes de Implementação
 
+- **Componentização e Reutilização (CRÍTICO):** É de **EXTREMA IMPORTÂNCIA** que todas as partes do código que possam ser reutilizadas sejam componentizadas. Isso inclui, mas não se limita a, elementos de UI, lógica de jogo comum, e utilitários. A repetição de código gera problemas de manutenção e escalabilidade.
+    -   **Documentação no Playground:** Cada componente reutilizável deve ser documentado no "playground" (ex: exemplos de uso no README do componente, ou em um Storybook/Playground dedicado) para facilitar sua descoberta e uso por outros desenvolvedores.
 - **Design System**: Todos os componentes de UI devem ser criados como parte de um Design System coeso e reutilizável.
 - **Tokens Semânticos**: Utilizar tokens semânticos para cores, tipografia, espaçamento e outros elementos de design, permitindo a fácil troca de temas.
 - **Mobile-First e Desktop**: O design e a implementação devem sempre considerar a experiência em dispositivos móveis e desktop.
@@ -52,12 +54,19 @@ Aguardando definições do Agente Organizador
 
 ### Fluxo de Desenvolvimento
 
-1. Receber especificações do Agente
-2. Planejar arquitetura técnica
-3. Implementar funcionalidades incrementalmente
-4. Testar e debugar
-5. Documentar código
-6. Reportar progresso ao Agente
+1.  Receber especificações do Agente.
+2.  Planejar arquitetura técnica.
+3.  Implementar funcionalidades incrementalmente.
+4.  Testar e debugar.
+5.  Documentar código.
+6.  **Processo de Revisão e Entrega (CRÍTICO):**
+    *   **NÃO FAZER COMMITS:** O programador **NÃO DEVE** fazer commits diretamente. Todas as alterações devem ser mantidas em staging.
+    *   **Solicitar Revisão:** Quando o programador considerar que uma tarefa (ou parte dela) está concluída e pronta para revisão, ele deve solicitar uma revisão ao Agente Organizador.
+    *   **Conteúdo da Solicitação de Revisão:** A solicitação deve incluir:
+        *   Um **resumo claro** do que foi implementado.
+        *   **Instruções detalhadas** sobre como testar as mudanças.
+        *   A confirmação de que o código está em staging, aguardando o commit do Agente.
+7.  Reportar progresso ao Agente.
 
 ---
 
