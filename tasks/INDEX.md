@@ -150,6 +150,23 @@ Mecânicas de combate por turnos.
 
 ---
 
+### ⏳ 007 - UI Language Switcher
+**Status**: ⏳ Pending / Pendente
+**Priority**: Medium / Média
+**Type**: Feature
+
+**Description**:
+UI component to allow users to dynamically switch between supported languages.
+
+Componente de UI para permitir que usuários troquem dinamicamente entre os idiomas suportados.
+
+**Implementation**:
+- 📁 [tasks/007-ui-language-switcher.md](./007-ui-language-switcher.md)
+
+**Status**: Not started
+
+---
+
 ## Infrastructure / Infraestrutura
 
 ### ✅ Persistence System
