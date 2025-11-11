@@ -1,0 +1,23 @@
+<script lang="ts">
+	import '../app.css'
+	import { dev } from '$app/environment'
+
+	// Only import DebugPanel in development mode
+	let DebugPanel: any = null
+
+	// Check if dev mode is enabled via environment variable
+	const isDevMode = dev && import.meta.env.VITE_DEV_MODE === 'true'
+
+	// Dynamically import DebugPanel only in dev mode
+	if (isDevMode) {
+		import('$lib/components/debug/DebugPanel.svelte').then((module) => {
+			DebugPanel = module.default
+		})
+	}
+</script>
+
+<slot />
+
+{#if isDevMode && DebugPanel}
+	<svelte:component this={DebugPanel} />
+{/if}
