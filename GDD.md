@@ -52,7 +52,35 @@ Um jogo de RPG de aventura em que os jogadores exploram masmorras geradas proced
 *   **Estilo Visual:** A ser definido.
 *   **Música e Efeitos Sonoros:** A ser definido.
 
-## 7. Tecnologia
+## 8. Profissões
+
+O jogador poderá escolher uma profissão para gerar renda e obter habilidades passivas.
+
+### Profissões Iniciais
+1.  **Ferreiro (Blacksmith):** Cria e repara armas e armaduras.
+    *   **Atributo Principal:** Força.
+    *   **Habilidade Passiva:** "Mãos Calejadas" (bônus de defesa física).
+2.  **Coureiro (Leatherworker):** Cria armaduras leves e itens de couro.
+    *   **Atributo Principal:** Agilidade.
+    *   **Habilidade Passiva:** "Flexibilidade" (bônus de esquiva).
+3.  **Alquimista (Alchemist):** Cria poções, elixires e venenos.
+    *   **Atributo Principal:** Inteligência.
+    *   **Habilidade Passiva:** "Resistência Adquirida" (bônus de resistência a veneno).
+4.  **Encantador (Enchanter):** Adiciona bônus mágicos a equipamentos.
+    *   **Atributo Principal:** Inteligência.
+    *   **Habilidade Passiva:** "Afinidade Arcana" (regeneração de mana).
+5.  **Coletor (Gatherer):** Extrai recursos das masmorras.
+    *   **Atributo Principal:** Agilidade.
+    *   **Habilidade Passiva:** "Olho de Águia" (chance de achar mais recursos).
+
+### Profissões Futuras
+*   Joalheiro (Jeweler)
+*   Escriba (Scribe)
+*   Cozinheiro (Cook)
+*   Pescador (Fisherman)
+*   Ladrão (Thief)
+
+## 9. Tecnologia
 
 *   **Engine:** SvelteKit
 *   **Linguagem:** TypeScript
