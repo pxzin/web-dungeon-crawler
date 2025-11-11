@@ -14,9 +14,9 @@ export const TOTAL_ATTRIBUTE_POINTS = 20
 
 /**
  * Minimum attribute value
- * Each attribute starts at this base value
+ * Players can lower attributes to this value when redistributing points
  */
-export const MIN_ATTRIBUTE_VALUE = 5
+export const MIN_ATTRIBUTE_VALUE = 1
 
 /**
  * Maximum attribute value during character creation
@@ -36,10 +36,10 @@ export const NAME_MAX_LENGTH = 20
 export const CLASS_BASE_STATS: Record<CharacterClass, ClassBaseStats> = {
 	[CharacterClass.WARRIOR]: {
 		attributes: {
-			strength: 8,
-			dexterity: 5,
-			intelligence: 4,
-			vitality: 8,
+			strength: 7,  // High physical power
+			dexterity: 4,
+			intelligence: 3,
+			vitality: 6,  // High durability
 		},
 		health: 120,
 		mana: 30,
@@ -47,10 +47,10 @@ export const CLASS_BASE_STATS: Record<CharacterClass, ClassBaseStats> = {
 	},
 	[CharacterClass.MAGE]: {
 		attributes: {
-			strength: 4,
-			dexterity: 5,
-			intelligence: 10,
-			vitality: 6,
+			strength: 3,
+			dexterity: 4,
+			intelligence: 8,  // High magical power
+			vitality: 5,
 		},
 		health: 80,
 		mana: 100,
@@ -58,10 +58,10 @@ export const CLASS_BASE_STATS: Record<CharacterClass, ClassBaseStats> = {
 	},
 	[CharacterClass.ROGUE]: {
 		attributes: {
-			strength: 6,
-			dexterity: 10,
-			intelligence: 5,
-			vitality: 6,
+			strength: 5,
+			dexterity: 8,  // High agility
+			intelligence: 4,
+			vitality: 3,
 		},
 		health: 90,
 		mana: 50,
@@ -69,10 +69,10 @@ export const CLASS_BASE_STATS: Record<CharacterClass, ClassBaseStats> = {
 	},
 	[CharacterClass.CLERIC]: {
 		attributes: {
-			strength: 6,
-			dexterity: 5,
-			intelligence: 7,
-			vitality: 7,
+			strength: 4,
+			dexterity: 4,
+			intelligence: 6,  // Good magical power
+			vitality: 6,      // Good durability
 		},
 		health: 100,
 		mana: 80,

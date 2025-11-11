@@ -63,6 +63,7 @@
 
 	// Handle attribute decrement
 	function decrementAttribute(attr: AttributeName) {
+		// Players can lower any attribute to 1 to redistribute points freely
 		if (formData.attributes[attr] > MIN_ATTRIBUTE_VALUE) {
 			formData.attributes[attr]--
 		}

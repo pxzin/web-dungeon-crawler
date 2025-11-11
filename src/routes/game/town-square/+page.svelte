@@ -1,46 +1,35 @@
 <script lang="ts">
 	import { onMount } from 'svelte'
 	import { goto } from '$app/navigation'
-	import { LocalStorageAdapter, createPersistenceService } from '$lib/persistence'
-	import type { PlayerData } from '$lib/persistence'
-
-	const persistence = createPersistenceService(new LocalStorageAdapter())
-
-	let player = $state<PlayerData | null>(null)
-	let loading = $state(true)
+	import { playerStore } from '$lib/stores/playerStore.svelte'
 
 	onMount(async () => {
-		// Initialize persistence
-		await persistence.init()
-
-		// Load player data
-		const result = await persistence.getPlayerData()
-
-		if (!result.success || !result.data) {
-			// No player found, redirect to character creation
-			await goto('/character-creation')
-			return
+		// Initialize player store if not already loaded
+		if (playerStore.player === null) {
+			await playerStore.init()
 		}
 
-		player = result.data
-		loading = false
+		// If no player found after init, redirect to character creation
+		if (!playerStore.player) {
+			await goto('/character-creation')
+		}
 	})
 </script>
 
-{#if loading}
+{#if playerStore.loading}
 	<div class="loading">
 		<p>Loading...</p>
 	</div>
-{:else if player}
+{:else if playerStore.player}
 	<div class="town-square">
 		<div class="container">
 			<h1 class="title">Town Square</h1>
 
 			<!-- Player Info -->
 			<div class="player-info">
-				<h2>{player.name}</h2>
-				<p>Level: {player.stats.level}</p>
-				<p>Gold: {player.gold}</p>
+				<h2>{playerStore.player.name}</h2>
+				<p>Level: {playerStore.player.stats.level}</p>
+				<p>Gold: {playerStore.player.gold}</p>
 			</div>
 
 			<!-- Placeholder Areas -->

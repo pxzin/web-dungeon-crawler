@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte'
 	import { LocalStorageAdapter, createPersistenceService } from '$lib/persistence'
-	import type { PlayerData, GameState, GameSettings } from '$lib/persistence'
+	import { playerStore } from '$lib/stores/playerStore.svelte'
+	import type { GameState, GameSettings } from '$lib/persistence'
 
 	const persistence = createPersistenceService(new LocalStorageAdapter())
 
@@ -10,8 +11,7 @@
 	let isMinimized = $state(false)
 	let activeTab = $state<'player' | 'persistence' | 'character' | 'actions'>('character')
 
-	// Data state
-	let player = $state<PlayerData | null>(null)
+	// Data state (non-player data)
 	let gameState = $state<GameState | null>(null)
 	let settings = $state<GameSettings | null>(null)
 	let storageSize = $state<number | null>(null)
@@ -22,6 +22,7 @@
 
 	onMount(() => {
 		persistence.init().then(() => {
+			playerStore.init() // Initialize player store
 			refreshData()
 		})
 
@@ -47,10 +48,8 @@
 	})
 
 	async function refreshData() {
-		const playerResult = await persistence.getPlayerData()
-		if (playerResult.success) {
-			player = playerResult.data
-		}
+		// Reload player data from store
+		await playerStore.reload()
 
 		const stateResult = await persistence.getGameState()
 		if (stateResult.success) {
@@ -79,29 +78,18 @@
 		rawLocalStorage = raw
 	}
 
-	// Quick actions
+	// Quick actions using playerStore
 	async function addGold() {
-		if (!player) return
-		player.gold += 1000
-		await persistence.setPlayerData(player)
-		await refreshData()
+		await playerStore.addGold(1000)
 	}
 
 	async function restoreResources() {
-		if (!player) return
-		player.resources.health = player.resources.maxHealth
-		player.resources.mana = player.resources.maxMana
-		player.resources.stamina = player.resources.maxStamina
-		player.stats.health = player.stats.maxHealth
-		player.stats.mana = player.stats.maxMana
-		player.stats.stamina = player.stats.maxStamina
-		await persistence.setPlayerData(player)
-		await refreshData()
+		await playerStore.restoreResources()
 	}
 
 	async function clearAllData() {
 		if (confirm('Are you sure you want to clear ALL game data? This cannot be undone!')) {
-			await persistence.clearAllData()
+			await playerStore.clear()
 			await refreshData()
 		}
 	}
@@ -178,31 +166,31 @@
 				{#if activeTab === 'character'}
 					<div class="section">
 						<h4>Player Info</h4>
-						{#if player}
+						{#if playerStore.player}
 							<div class="info-grid">
 								<div class="info-row">
 									<span class="label">Name:</span>
-									<span class="value">{player.name}</span>
+									<span class="value">{playerStore.player.name}</span>
 								</div>
 								<div class="info-row">
 									<span class="label">Level:</span>
-									<span class="value">{player.stats.level}</span>
+									<span class="value">{playerStore.player.stats.level}</span>
 								</div>
 								<div class="info-row">
 									<span class="label">Gold:</span>
-									<span class="value">{player.gold}</span>
+									<span class="value">{playerStore.player.gold}</span>
 								</div>
 								<div class="info-row">
 									<span class="label">HP:</span>
-									<span class="value">{player.resources.health} / {player.resources.maxHealth}</span>
+									<span class="value">{playerStore.player.resources.health} / {playerStore.player.resources.maxHealth}</span>
 								</div>
 								<div class="info-row">
 									<span class="label">Mana:</span>
-									<span class="value">{player.resources.mana} / {player.resources.maxMana}</span>
+									<span class="value">{playerStore.player.resources.mana} / {playerStore.player.resources.maxMana}</span>
 								</div>
 								<div class="info-row">
 									<span class="label">Stamina:</span>
-									<span class="value">{player.resources.stamina} / {player.resources.maxStamina}</span>
+									<span class="value">{playerStore.player.resources.stamina} / {playerStore.player.resources.maxStamina}</span>
 								</div>
 							</div>
 
@@ -210,19 +198,19 @@
 							<div class="info-grid">
 								<div class="info-row">
 									<span class="label">Strength:</span>
-									<span class="value">{player.stats.strength}</span>
+									<span class="value">{playerStore.player.stats.strength}</span>
 								</div>
 								<div class="info-row">
 									<span class="label">Dexterity:</span>
-									<span class="value">{player.stats.dexterity}</span>
+									<span class="value">{playerStore.player.stats.dexterity}</span>
 								</div>
 								<div class="info-row">
 									<span class="label">Intelligence:</span>
-									<span class="value">{player.stats.intelligence}</span>
+									<span class="value">{playerStore.player.stats.intelligence}</span>
 								</div>
 								<div class="info-row">
 									<span class="label">Vitality:</span>
-									<span class="value">{player.stats.vitality}</span>
+									<span class="value">{playerStore.player.stats.vitality}</span>
 								</div>
 							</div>
 
@@ -230,27 +218,27 @@
 							<div class="info-grid">
 								<div class="info-row">
 									<span class="label">Attack:</span>
-									<span class="value">{player.stats.attack}</span>
+									<span class="value">{playerStore.player.stats.attack}</span>
 								</div>
 								<div class="info-row">
 									<span class="label">Defense:</span>
-									<span class="value">{player.stats.defense}</span>
+									<span class="value">{playerStore.player.stats.defense}</span>
 								</div>
 								<div class="info-row">
 									<span class="label">Magic Attack:</span>
-									<span class="value">{player.stats.magicAttack}</span>
+									<span class="value">{playerStore.player.stats.magicAttack}</span>
 								</div>
 								<div class="info-row">
 									<span class="label">Magic Defense:</span>
-									<span class="value">{player.stats.magicDefense}</span>
+									<span class="value">{playerStore.player.stats.magicDefense}</span>
 								</div>
 								<div class="info-row">
 									<span class="label">Speed:</span>
-									<span class="value">{player.stats.speed}</span>
+									<span class="value">{playerStore.player.stats.speed}</span>
 								</div>
 								<div class="info-row">
 									<span class="label">Crit Rate:</span>
-									<span class="value">{player.stats.criticalRate}%</span>
+									<span class="value">{playerStore.player.stats.criticalRate}%</span>
 								</div>
 							</div>
 						{:else}
