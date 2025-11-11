@@ -14,6 +14,7 @@
 		type CharacterCreationErrors,
 	} from '$lib/game/character'
 	import { onMount } from 'svelte'
+	import { Button, Card, Input } from '$lib/components/ui'
 
 	// Persistence service
 	const persistence = createPersistenceService(new LocalStorageAdapter())
@@ -206,82 +207,139 @@
 				return key
 		}
 	}
+
+	// Class emoji icons (fallback visual)
+	const classEmojis: Record<CharacterClass, string> = {
+		[CharacterClass.WARRIOR]: '⚔️',
+		[CharacterClass.MAGE]: '🔮',
+		[CharacterClass.ROGUE]: '🗡️',
+		[CharacterClass.CLERIC]: '✨',
+	}
 </script>
 
 <div class="character-creation">
-	<div class="container">
-		<h1 class="title">{$LL.game.characterCreation.title()}</h1>
+	<div class="container-fluid max-w-5xl">
+		<!-- Title -->
+		<div class="text-center mb-12">
+			<h1 class="arcana-heading-lg mb-2">
+				{$LL.game.characterCreation.title()}
+			</h1>
+			<div class="title-divider"></div>
+		</div>
 
 		<form onsubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
 			<!-- Character Name -->
-			<section class="section">
-				<h2 class="section-title">{$LL.game.characterCreation.characterName()}</h2>
-				<input
-					type="text"
-					bind:value={formData.name}
-					placeholder={$LL.game.characterCreation.namePlaceholder()}
-					class="input"
-					class:error={errors.name}
-					maxlength={20}
-				/>
-				{#if errors.name}
-					<p class="error-message">{getValidationError(errors.name)}</p>
-				{/if}
-			</section>
+			<Card variant="elevated" class="mb-8">
+				<h2 class="arcana-heading-sm mb-6 text-center">
+					{$LL.game.characterCreation.characterName()}
+				</h2>
+				<div class="max-w-md mx-auto">
+					<Input
+						bind:value={formData.name}
+						placeholder={$LL.game.characterCreation.namePlaceholder()}
+						maxlength={20}
+						error={errors.name ? getValidationError(errors.name) : ''}
+						class="character-name-input"
+					/>
+				</div>
+			</Card>
 
 			<!-- Class Selection -->
-			<section class="section">
-				<h2 class="section-title">{$LL.game.characterCreation.selectClass()}</h2>
+			<Card variant="elevated" class="mb-8">
+				<h2 class="arcana-heading-sm mb-6 text-center">
+					{$LL.game.characterCreation.selectClass()}
+				</h2>
 				<div class="class-grid">
 					{#each Object.values(CharacterClass) as characterClass}
 						<button
 							type="button"
-							class="class-card"
-							class:selected={formData.class === characterClass}
+							class="class-card {formData.class === characterClass ? 'class-card-selected' : ''}"
 							onclick={() => selectClass(characterClass)}
 						>
-							<h3 class="class-name">{getClassName(characterClass)}</h3>
-							<p class="class-description">{getClassDescription(characterClass)}</p>
+							<!-- Icon Circle -->
+							<div class="class-icon-wrapper">
+								<span class="class-emoji">{classEmojis[characterClass]}</span>
+							</div>
+
+							<!-- Class Name -->
+							<h3 class="class-name">
+								{getClassName(characterClass)}
+							</h3>
+
+							<!-- Description -->
+							<p class="class-description">
+								{getClassDescription(characterClass)}
+							</p>
+
+							<!-- Selection Indicator -->
+							{#if formData.class === characterClass}
+								<div class="selected-badge">
+									<svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+										<path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/>
+									</svg>
+								</div>
+							{/if}
 						</button>
 					{/each}
 				</div>
 				{#if errors.class}
-					<p class="error-message">{getValidationError(errors.class)}</p>
+					<p class="text-arcana-orange-500 text-sm mt-6 text-center font-semibold">
+						{getValidationError(errors.class)}
+					</p>
 				{/if}
-			</section>
+			</Card>
 
 			<!-- Attribute Distribution -->
 			{#if formData.class}
-				<section class="section">
-					<div class="section-header">
-						<h2 class="section-title">{$LL.game.characterCreation.distributePoints()}</h2>
-						<div class="points-display">
-							<span class="points-label">{$LL.game.characterCreation.pointsAvailable()}:</span>
-							<span class="points-value" class:warning={remainingPoints > 0}>
-								{$LL.game.characterCreation.pointsRemaining({ points: remainingPoints })}
+				<Card variant="gold" class="mb-8">
+					<!-- Header with Points -->
+					<div class="flex justify-between items-center mb-8 pb-4 border-b-2 border-arcana-border-gold/30">
+						<h2 class="arcana-heading-sm">
+							{$LL.game.characterCreation.distributePoints()}
+						</h2>
+						<div class="points-badge {remainingPoints > 0 ? 'points-warning' : ''}">
+							<span class="points-label">
+								{$LL.game.characterCreation.pointsAvailable()}:
+							</span>
+							<span class="points-value">
+								{remainingPoints}
 							</span>
 						</div>
 					</div>
 
-					<div class="attributes-grid">
+					<!-- Attributes Grid -->
+					<div class="attributes-container">
 						{#each Object.values(AttributeName) as attr}
 							<div class="attribute-row">
-								<span class="attribute-name">{getAttributeName(attr)}</span>
+								<!-- Attribute Name -->
+								<div class="attribute-label">
+									<span class="attribute-name">
+										{getAttributeName(attr)}
+									</span>
+								</div>
+
+								<!-- Controls -->
 								<div class="attribute-controls">
 									<button
 										type="button"
-										class="btn-attribute"
+										class="btn-attr"
 										disabled={formData.attributes[attr] <= MIN_ATTRIBUTE_VALUE}
 										onclick={() => decrementAttribute(attr)}
+										aria-label="Decrease {attr}"
 									>
-										-
+										−
 									</button>
-									<span class="attribute-value">{formData.attributes[attr]}</span>
+
+									<div class="attribute-value-display">
+										<span class="attribute-value">{formData.attributes[attr]}</span>
+									</div>
+
 									<button
 										type="button"
-										class="btn-attribute"
+										class="btn-attr"
 										disabled={remainingPoints <= 0 || formData.attributes[attr] >= MAX_ATTRIBUTE_VALUE}
 										onclick={() => incrementAttribute(attr)}
+										aria-label="Increase {attr}"
 									>
 										+
 									</button>
@@ -291,27 +349,31 @@
 					</div>
 
 					{#if errors.attributes}
-						<p class="error-message">{getValidationError(errors.attributes)}</p>
+						<p class="text-arcana-orange-500 text-sm mt-6 text-center font-semibold">
+							{getValidationError(errors.attributes)}
+						</p>
 					{/if}
-				</section>
+				</Card>
 			{/if}
 
-			<!-- Appearance Placeholder -->
-			<section class="section">
-				<div class="appearance-placeholder">
-					<p>{$LL.game.characterCreation.appearancePlaceholder()}</p>
-				</div>
-			</section>
-
 			<!-- Submit Button -->
-			<div class="actions">
-				<button
-					type="submit"
-					class="btn-primary"
+			<div class="flex justify-center mt-10">
+				<Button
+					variant="primary"
+					size="lg"
+					fullWidth={false}
 					disabled={!canSubmit || isSubmitting}
+					type="submit"
+					class="submit-button"
 				>
-					{isSubmitting ? '...' : $LL.game.characterCreation.startAdventure()}
-				</button>
+					{#if isSubmitting}
+						<span class="loading-spinner"></span>
+						<span>{$LL.game.ui.loading()}</span>
+					{:else}
+						<span class="submit-icon">⚔️</span>
+						<span>{$LL.game.characterCreation.startAdventure()}</span>
+					{/if}
+				</Button>
 			</div>
 		</form>
 	</div>
@@ -320,151 +382,262 @@
 <style>
 	.character-creation {
 		min-height: 100vh;
-		background: linear-gradient(135deg, var(--color-neutral-900) 0%, var(--color-primary-900) 100%);
-		padding: var(--spacing-xl) var(--spacing-md);
+		padding: var(--spacing-3xl) var(--spacing-md);
 	}
 
-	.container {
-		max-width: 800px;
+	/* Title */
+	.title-divider {
+		width: 120px;
+		height: 3px;
+		background: linear-gradient(
+			90deg,
+			transparent,
+			var(--color-arcana-gold-500),
+			transparent
+		);
+		margin: 0 auto;
+		border-radius: 2px;
+	}
+
+	/* Class Selection */
+	.class-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+		gap: var(--spacing-xl);
+		max-width: 1000px;
 		margin: 0 auto;
 	}
 
-	.title {
-		font-size: 2.5rem;
-		font-weight: bold;
-		text-align: center;
-		color: var(--color-primary-100);
-		margin-bottom: var(--spacing-xl);
-		text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-	}
-
-	.section {
-		background: rgba(255, 255, 255, 0.1);
-		backdrop-filter: blur(10px);
-		border-radius: 12px;
-		padding: var(--spacing-lg);
-		margin-bottom: var(--spacing-lg);
-		border: 1px solid rgba(255, 255, 255, 0.1);
-	}
-
-	.section-title {
-		font-size: 1.5rem;
-		font-weight: 600;
-		color: var(--color-primary-200);
-		margin-bottom: var(--spacing-md);
-	}
-
-	.section-header {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		margin-bottom: var(--spacing-md);
-		flex-wrap: wrap;
-		gap: var(--spacing-sm);
-	}
-
-	.input {
-		width: 100%;
-		padding: var(--spacing-md);
-		font-size: 1rem;
-		border: 2px solid var(--color-neutral-600);
-		border-radius: 8px;
-		background: rgba(255, 255, 255, 0.05);
-		color: var(--color-neutral-100);
-		transition: border-color 0.3s;
-	}
-
-	.input:focus {
-		outline: none;
-		border-color: var(--color-primary-500);
-	}
-
-	.input.error {
-		border-color: var(--color-accent-500);
-	}
-
-	.class-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-		gap: var(--spacing-md);
-	}
-
 	.class-card {
-		background: rgba(255, 255, 255, 0.05);
-		border: 2px solid var(--color-neutral-600);
-		border-radius: 8px;
-		padding: var(--spacing-md);
+		position: relative;
+		background: var(--color-arcana-bg-elevated);
+		border: 3px solid var(--color-arcana-border-default);
+		border-radius: var(--radius-2xl);
+		padding: var(--spacing-2xl);
 		cursor: pointer;
-		transition: all 0.3s;
-		text-align: left;
+		transition: all var(--transition-base);
+		text-align: center;
+		overflow: hidden;
+	}
+
+	.class-card::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background: linear-gradient(
+			135deg,
+			rgba(201, 152, 74, 0.05),
+			transparent
+		);
+		opacity: 0;
+		transition: opacity var(--transition-base);
 	}
 
 	.class-card:hover {
-		background: rgba(255, 255, 255, 0.1);
-		transform: translateY(-2px);
+		transform: translateY(-8px) scale(1.02);
+		border-color: var(--color-arcana-gold-600);
+		box-shadow:
+			var(--shadow-2xl),
+			0 0 40px rgba(201, 152, 74, 0.3),
+			inset 0 0 20px rgba(201, 152, 74, 0.1);
 	}
 
-	.class-card.selected {
-		border-color: var(--color-primary-500);
-		background: rgba(var(--color-primary-500-rgb), 0.2);
+	.class-card:hover::before {
+		opacity: 1;
+	}
+
+	.class-card-selected {
+		border-color: var(--color-arcana-gold-500) !important;
+		background: linear-gradient(
+			135deg,
+			var(--color-arcana-bg-elevated),
+			rgba(201, 152, 74, 0.1)
+		);
+		box-shadow:
+			var(--shadow-2xl),
+			0 0 60px rgba(201, 152, 74, 0.4),
+			inset 0 0 30px rgba(201, 152, 74, 0.15);
+	}
+
+	.class-card-selected::before {
+		opacity: 1;
+	}
+
+	.class-icon-wrapper {
+		width: 120px;
+		height: 120px;
+		margin: 0 auto var(--spacing-lg);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: var(--color-arcana-bg-primary);
+		border-radius: var(--radius-full);
+		border: 4px solid var(--color-arcana-gold-700);
+		box-shadow:
+			var(--shadow-lg),
+			inset 0 2px 8px rgba(0, 0, 0, 0.3);
+		transition: all var(--transition-base);
+		position: relative;
+		overflow: hidden;
+	}
+
+	.class-icon-wrapper::after {
+		content: '';
+		position: absolute;
+		inset: -50%;
+		background: linear-gradient(
+			45deg,
+			transparent,
+			rgba(255, 255, 255, 0.1),
+			transparent
+		);
+		transform: translateX(-100%) rotate(45deg);
+		transition: transform 0.6s;
+	}
+
+	.class-card:hover .class-icon-wrapper {
+		transform: scale(1.1) rotate(5deg);
+		border-color: var(--color-arcana-gold-500);
+		box-shadow:
+			var(--shadow-xl),
+			0 0 30px rgba(201, 152, 74, 0.5),
+			inset 0 2px 12px rgba(0, 0, 0, 0.4);
+	}
+
+	.class-card:hover .class-icon-wrapper::after {
+		transform: translateX(100%) rotate(45deg);
+	}
+
+	.class-card-selected .class-icon-wrapper {
+		background: var(--color-arcana-gold-900);
+		border-color: var(--color-arcana-gold-400);
+		box-shadow:
+			var(--shadow-xl),
+			0 0 40px rgba(201, 152, 74, 0.6);
+	}
+
+	.class-emoji {
+		font-size: 3.5rem;
+		line-height: 1;
+		filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
 	}
 
 	.class-name {
-		font-size: 1.25rem;
-		font-weight: 600;
-		color: var(--color-primary-300);
-		margin-bottom: var(--spacing-xs);
+		font-family: var(--font-serif);
+		font-size: var(--text-2xl);
+		font-weight: 700;
+		color: var(--color-arcana-gold-300);
+		margin-bottom: var(--spacing-md);
+		text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 	}
 
 	.class-description {
-		font-size: 0.875rem;
-		color: var(--color-neutral-300);
-		line-height: 1.4;
+		font-size: var(--text-sm);
+		line-height: 1.6;
+		color: var(--color-arcana-text-secondary);
 	}
 
-	.points-display {
+	.selected-badge {
+		position: absolute;
+		top: var(--spacing-md);
+		right: var(--spacing-md);
+		width: 40px;
+		height: 40px;
+		background: var(--color-arcana-gold-600);
+		border-radius: var(--radius-full);
 		display: flex;
 		align-items: center;
-		gap: var(--spacing-xs);
-		padding: var(--spacing-sm) var(--spacing-md);
-		background: rgba(255, 255, 255, 0.05);
-		border-radius: 8px;
+		justify-content: center;
+		color: var(--color-arcana-bg-primary);
+		box-shadow: var(--shadow-lg), var(--glow-gold);
+		animation: badgePulse 2s ease-in-out infinite;
+	}
+
+	@keyframes badgePulse {
+		0%, 100% { transform: scale(1); }
+		50% { transform: scale(1.1); }
+	}
+
+	/* Attributes */
+	.points-badge {
+		display: flex;
+		align-items: center;
+		gap: var(--spacing-sm);
+		background: var(--color-arcana-bg-primary);
+		padding: var(--spacing-md) var(--spacing-lg);
+		border-radius: var(--radius-xl);
+		border: 2px solid var(--color-arcana-border-gold);
+		box-shadow: var(--shadow-md);
+	}
+
+	.points-badge.points-warning {
+		border-color: var(--color-arcana-orange-500);
+		background: rgba(255, 107, 53, 0.1);
 	}
 
 	.points-label {
-		color: var(--color-neutral-300);
-		font-size: 0.875rem;
+		font-size: var(--text-sm);
+		color: var(--color-arcana-text-secondary);
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
 	}
 
 	.points-value {
-		color: var(--color-primary-400);
-		font-weight: 600;
-		font-size: 1rem;
+		font-size: var(--text-2xl);
+		font-weight: 700;
+		color: var(--color-arcana-gold-300);
+		font-family: var(--font-serif);
+		min-width: 2ch;
+		text-align: center;
 	}
 
-	.points-value.warning {
-		color: var(--color-accent-400);
+	.points-warning .points-value {
+		color: var(--color-arcana-orange-400);
+		animation: pointsPulse 1s ease-in-out infinite;
 	}
 
-	.attributes-grid {
+	@keyframes pointsPulse {
+		0%, 100% { transform: scale(1); }
+		50% { transform: scale(1.15); }
+	}
+
+	.attributes-container {
 		display: flex;
 		flex-direction: column;
-		gap: var(--spacing-md);
+		gap: var(--spacing-lg);
 	}
 
 	.attribute-row {
-		display: flex;
-		justify-content: space-between;
+		display: grid;
+		grid-template-columns: 1fr auto;
 		align-items: center;
-		padding: var(--spacing-sm);
-		background: rgba(255, 255, 255, 0.03);
-		border-radius: 6px;
+		gap: var(--spacing-lg);
+		padding: var(--spacing-lg);
+		background: var(--color-arcana-bg-primary);
+		border-radius: var(--radius-xl);
+		border: 2px solid var(--color-arcana-border-default);
+		transition: all var(--transition-fast);
+	}
+
+	.attribute-row:hover {
+		border-color: var(--color-arcana-gold-700);
+		box-shadow: var(--shadow-md), inset 0 0 20px rgba(201, 152, 74, 0.05);
+		transform: translateX(4px);
+	}
+
+	.attribute-label {
+		display: flex;
+		align-items: center;
+		gap: var(--spacing-md);
 	}
 
 	.attribute-name {
-		color: var(--color-neutral-200);
-		font-weight: 500;
-		font-size: 1rem;
+		font-size: var(--text-lg);
+		font-weight: 600;
+		color: var(--color-arcana-text-primary);
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
 	}
 
 	.attribute-controls {
@@ -473,97 +646,199 @@
 		gap: var(--spacing-md);
 	}
 
-	.btn-attribute {
-		width: 32px;
-		height: 32px;
+	.btn-attr {
+		width: 44px;
+		height: 44px;
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		background: var(--color-primary-600);
-		color: white;
+		background: var(--color-arcana-gold-600);
+		color: var(--color-arcana-bg-primary);
 		border: none;
-		border-radius: 6px;
-		font-size: 1.25rem;
-		font-weight: bold;
+		border-radius: var(--radius-lg);
+		font-size: var(--text-2xl);
+		font-weight: 700;
 		cursor: pointer;
-		transition: all 0.2s;
+		transition: all var(--transition-fast);
+		box-shadow: var(--shadow-md);
+		font-family: var(--font-sans);
+		line-height: 1;
 	}
 
-	.btn-attribute:hover:not(:disabled) {
-		background: var(--color-primary-500);
+	.btn-attr:hover:not(:disabled) {
+		background: var(--color-arcana-gold-500);
 		transform: scale(1.1);
+		box-shadow: var(--shadow-lg), var(--glow-gold);
 	}
 
-	.btn-attribute:disabled {
-		background: var(--color-neutral-700);
+	.btn-attr:active:not(:disabled) {
+		transform: scale(0.95);
+	}
+
+	.btn-attr:disabled {
+		background: var(--color-arcana-border-default);
 		cursor: not-allowed;
-		opacity: 0.5;
+		opacity: 0.3;
+	}
+
+	.attribute-value-display {
+		min-width: 64px;
+		text-align: center;
+		background: var(--color-arcana-bg-elevated);
+		border-radius: var(--radius-lg);
+		padding: var(--spacing-sm) var(--spacing-md);
+		border: 2px solid var(--color-arcana-border-gold);
 	}
 
 	.attribute-value {
-		min-width: 40px;
+		font-size: var(--text-2xl);
+		font-weight: 700;
+		color: var(--color-arcana-gold-300);
+		font-family: var(--font-serif);
+	}
+
+	/* Character Name Input Enhancement */
+	:global(.character-name-input input) {
 		text-align: center;
-		font-size: 1.125rem;
-		font-weight: 600;
-		color: var(--color-primary-300);
+		font-size: var(--text-xl) !important;
+		font-family: var(--font-serif) !important;
+		font-weight: 600 !important;
+		padding: var(--spacing-lg) var(--spacing-xl) !important;
+		border: 3px solid var(--color-arcana-gold-700) !important;
+		background: var(--color-arcana-bg-primary) !important;
+		box-shadow:
+			inset 0 2px 8px rgba(0, 0, 0, 0.3),
+			0 0 0 1px rgba(201, 152, 74, 0.2),
+			var(--shadow-lg) !important;
+		transition: all var(--transition-base) !important;
 	}
 
-	.appearance-placeholder {
-		text-align: center;
-		padding: var(--spacing-xl);
-		color: var(--color-neutral-400);
-		font-style: italic;
-	}
-
-	.actions {
-		display: flex;
-		justify-content: center;
-		margin-top: var(--spacing-xl);
-	}
-
-	.btn-primary {
-		padding: var(--spacing-md) var(--spacing-xl);
-		font-size: 1.125rem;
-		font-weight: 600;
-		background: var(--color-primary-600);
-		color: white;
-		border: none;
-		border-radius: 8px;
-		cursor: pointer;
-		transition: all 0.3s;
-		min-width: 200px;
-	}
-
-	.btn-primary:hover:not(:disabled) {
-		background: var(--color-primary-500);
+	:global(.character-name-input input:focus) {
+		border-color: var(--color-arcana-gold-500) !important;
+		box-shadow:
+			inset 0 2px 8px rgba(0, 0, 0, 0.3),
+			0 0 0 3px rgba(201, 152, 74, 0.3),
+			0 0 20px rgba(201, 152, 74, 0.4),
+			var(--shadow-xl) !important;
 		transform: translateY(-2px);
-		box-shadow: 0 4px 12px rgba(var(--color-primary-500-rgb), 0.4);
 	}
 
-	.btn-primary:disabled {
-		background: var(--color-neutral-700);
-		cursor: not-allowed;
+	:global(.character-name-input input::placeholder) {
+		color: var(--color-arcana-text-muted) !important;
 		opacity: 0.6;
 	}
 
-	.error-message {
-		color: var(--color-accent-400);
-		font-size: 0.875rem;
-		margin-top: var(--spacing-sm);
+	/* Submit Button Enhancement */
+	:global(.submit-button) {
+		min-width: 320px;
+		font-size: var(--text-xl) !important;
+		font-weight: 700 !important;
+		padding: var(--spacing-lg) var(--spacing-2xl) !important;
+		position: relative;
+		overflow: hidden;
+		border: 3px solid var(--color-arcana-gold-800) !important;
+		background: linear-gradient(135deg, var(--color-arcana-gold-600), var(--color-arcana-gold-700)) !important;
+		box-shadow:
+			0 0 0 1px rgba(201, 152, 74, 0.3),
+			0 8px 16px rgba(0, 0, 0, 0.4),
+			0 0 30px rgba(201, 152, 74, 0.3),
+			inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+		transition: all var(--transition-base) !important;
 	}
 
-	@media (max-width: 640px) {
-		.title {
-			font-size: 2rem;
+	:global(.submit-button::before) {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: -100%;
+		width: 100%;
+		height: 100%;
+		background: linear-gradient(
+			90deg,
+			transparent,
+			rgba(255, 255, 255, 0.3),
+			transparent
+		);
+		transition: left 0.5s;
+	}
+
+	:global(.submit-button:not(:disabled):hover) {
+		transform: translateY(-3px) !important;
+		border-color: var(--color-arcana-gold-600) !important;
+		box-shadow:
+			0 0 0 1px rgba(201, 152, 74, 0.5),
+			0 12px 24px rgba(0, 0, 0, 0.5),
+			0 0 40px rgba(201, 152, 74, 0.5),
+			inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+	}
+
+	:global(.submit-button:not(:disabled):hover::before) {
+		left: 100%;
+	}
+
+	:global(.submit-button:not(:disabled):active) {
+		transform: translateY(-1px) !important;
+	}
+
+	:global(.submit-button:disabled) {
+		opacity: 0.5;
+		cursor: not-allowed;
+		border-color: var(--color-arcana-border-default) !important;
+		background: var(--color-arcana-bg-secondary) !important;
+		box-shadow: var(--shadow-md) !important;
+	}
+
+	.submit-icon {
+		font-size: 1.5em;
+		filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+	}
+
+	.loading-spinner {
+		display: inline-block;
+		width: 20px;
+		height: 20px;
+		border: 3px solid rgba(255, 255, 255, 0.3);
+		border-top-color: white;
+		border-radius: 50%;
+		animation: spin 0.8s linear infinite;
+	}
+
+	@keyframes spin {
+		to { transform: rotate(360deg); }
+	}
+
+	/* Responsive */
+	@media (max-width: 768px) {
+		.character-creation {
+			padding: var(--spacing-2xl) var(--spacing-md);
 		}
 
 		.class-grid {
 			grid-template-columns: 1fr;
+			max-width: 400px;
 		}
 
-		.section-header {
+		.attribute-row {
+			grid-template-columns: 1fr;
+			gap: var(--spacing-md);
+			text-align: center;
+		}
+
+		.attribute-label {
+			justify-content: center;
+		}
+
+		.attribute-controls {
+			justify-content: center;
+		}
+
+		.points-badge {
 			flex-direction: column;
-			align-items: flex-start;
+			text-align: center;
+		}
+
+		:global(.submit-button) {
+			min-width: 100%;
 		}
 	}
 </style>

@@ -48,6 +48,7 @@
 			"load": "Load Game",
 			"save": "Save Game",
 			"quit": "Quit",
+			"loading": "Loading...",
 			"pause": "Pause",
 			"resume": "Resume"
 		},

@@ -62,6 +62,7 @@ type RootTranslation = {
 			load: string
 			save: string
 			quit: string
+			loading: string
 			pause: string
 			resume: string
 		}
@@ -179,6 +180,7 @@ export type TranslationFunctions = {
 			load: () => LocalizedString
 			save: () => LocalizedString
 			quit: () => LocalizedString
+			loading: () => LocalizedString
 			pause: () => LocalizedString
 			resume: () => LocalizedString
 		}

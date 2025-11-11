@@ -48,6 +48,7 @@
 			"load": "Carregar Jogo",
 			"save": "Salvar Jogo",
 			"quit": "Sair",
+			"loading": "Carregando...",
 			"pause": "Pausar",
 			"resume": "Retomar"
 		},
