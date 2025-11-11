@@ -1,0 +1,49 @@
+# Game Design Document: Web Dungeon Crawler
+
+## 1. Visão Geral
+
+**Título Provisório:** Web Dungeon Crawler
+**Gênero:** RPG de Aventura em Masmorras
+**Plataforma:** Web (Desktop e Mobile)
+**Público-Alvo:** Jogadores casuais e fãs de RPG.
+
+## 2. Conceito do Jogo
+
+Um jogo de RPG de aventura em que os jogadores exploram masmorras geradas proceduralmente, combatem monstros, coletam tesouros e aprimoram seus personagens. O jogo será acessível através de um navegador web e terá uma interface intuitiva e responsiva.
+
+## 3. Pilares de Design
+
+*   **Exploração:** Incentivar a curiosidade dos jogadores com masmorras cheias de segredos e desafios.
+*   **Progressão:** Oferecer um sistema de progressão de personagem claro e recompensador.
+*   **Acessibilidade:** Garantir que o jogo seja fácil de aprender e jogar, mas com profundidade para manter os jogadores engajados.
+
+## 4. Narrativa
+
+*   **Campanha Principal:** A ser definido. O foco inicial será na exploração de masmorras e progressão do personagem, sem uma campanha principal.
+
+## 5. Funcionalidades Principais
+
+*   **Criação de Personagem:** O jogador criará e controlará um personagem principal.
+    *   **Companions:** Será possível recrutar companions (aliados) autônomos que acompanharão o jogador nas masmorras.
+    *   **Classes:** As classes serão baseadas no universo de Dungeons & Dragons. Exemplos iniciais incluem:
+        *   Guerreiro
+        *   Mago
+        *   Ladino
+        *   Clérigo
+    *   **Atributos e Aparência:** Os jogadores poderão personalizar os atributos (Força, Destreza, etc.) e a aparência de seu personagem principal.
+*   **Geração Procedural de Masmorras:** Cada masmorra será única, oferecendo uma nova experiência a cada partida.
+*   **Combate por Turnos:** O combate será estratégico e baseado em turnos.
+*   **Sistema de Inventário:** Os jogadores poderão coletar e gerenciar itens em um inventário.
+*   **Sistema de Habilidades:** Os personagens terão uma árvore de habilidades para desbloquear novas perícias.
+
+## 6. Direção de Arte e Som
+
+*   **Estilo Visual:** A ser definido.
+*   **Música e Efeitos Sonoros:** A ser definido.
+
+## 7. Tecnologia
+
+*   **Engine:** SvelteKit
+*   **Linguagem:** TypeScript
+*   **Estilização:** UnoCSS
+*   **Persistência:** LocalStorage (inicialmente), com possibilidade de migração para um banco de dados.

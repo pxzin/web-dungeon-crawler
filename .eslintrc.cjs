@@ -1,0 +1,45 @@
+module.exports = {
+  root: true,
+  env: {
+    browser: true,
+    es2022: true,
+    node: true,
+  },
+  extends: [
+    'eslint:recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:svelte/recommended',
+    'prettier',
+  ],
+  parser: '@typescript-eslint/parser',
+  parserOptions: {
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+    extraFileExtensions: ['.svelte'],
+  },
+  plugins: ['@typescript-eslint'],
+  overrides: [
+    {
+      files: ['*.svelte'],
+      parser: 'svelte-eslint-parser',
+      parserOptions: {
+        parser: '@typescript-eslint/parser',
+      },
+    },
+  ],
+  rules: {
+    // TypeScript rules
+    '@typescript-eslint/no-unused-vars': ['warn', {
+      argsIgnorePattern: '^_',
+      varsIgnorePattern: '^_',
+    }],
+    '@typescript-eslint/no-explicit-any': 'warn',
+    '@typescript-eslint/explicit-function-return-type': 'off',
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
+
+    // General rules
+    'no-console': ['warn', { allow: ['warn', 'error'] }],
+    'prefer-const': 'warn',
+    'no-var': 'error',
+  },
+};
