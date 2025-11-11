@@ -95,9 +95,10 @@ export class PersistenceService {
 	/**
 	 * Create a new player
 	 * @param name - Player name
+	 * @param portraitId - Player portrait ID (defaults to portrait_001)
 	 * @returns The created player data
 	 */
-	async createPlayer(name: string): Promise<Result<PlayerData>> {
+	async createPlayer(name: string, portraitId: string = 'portrait_001'): Promise<Result<PlayerData>> {
 		const initCheck = this.checkInitialized()
 		if (!initCheck.success) return initCheck
 
@@ -105,6 +106,7 @@ export class PersistenceService {
 		const playerData: PlayerData = {
 			id: `player_${now}`,
 			name,
+			portraitId,
 			stats: {
 				// Base attributes
 				strength: 10,

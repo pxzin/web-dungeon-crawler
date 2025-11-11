@@ -14,14 +14,21 @@
 		type CharacterCreationErrors,
 	} from '$lib/game/character'
 	import { onMount } from 'svelte'
-	import { Button, Card, Input, ClassBadge } from '$lib/components/ui'
+	import { Button, Card, Input, ClassBadge, Carousel, Portrait } from '$lib/components/ui'
 
 	// Persistence service
 	const persistence = createPersistenceService(new LocalStorageAdapter())
 
+	// Generate portrait list (portrait_001 to portrait_100)
+	const availablePortraits = Array.from({ length: 100 }, (_, i) => {
+		const num = String(i + 1).padStart(3, '0')
+		return `portrait_${num}`
+	})
+
 	// Form state
 	let formData = $state<CharacterCreationData>({
 		name: '',
+		portraitId: 'portrait_001',
 		class: null,
 		attributes: {
 			strength: MIN_ATTRIBUTE_VALUE,
@@ -100,8 +107,8 @@
 		isSubmitting = true
 
 		try {
-			// Create the player
-			const result = await persistence.createPlayer(formData.name.trim())
+			// Create the player with portraitId
+			const result = await persistence.createPlayer(formData.name.trim(), formData.portraitId)
 
 			if (!result.success) {
 				console.error('Failed to create player:', result.error)
@@ -234,6 +241,40 @@
 						error={errors.name ? getValidationError(errors.name) : ''}
 					/>
 				</div>
+			</Card>
+
+			<!-- Portrait Selection -->
+			<Card variant="elevated" class="mb-8">
+				<h2 class="arcana-heading-sm mb-6 text-center">
+					Choose Your Portrait
+				</h2>
+
+				<!-- Current Selection Preview -->
+				<div class="portrait-preview">
+					<Portrait
+						portraitId={formData.portraitId}
+						size="large"
+						variant="compact"
+						showBorder={true}
+					/>
+				</div>
+
+				<!-- Portrait Carousel -->
+				<Carousel items={availablePortraits} itemsPerPage={10} class="mt-6">
+					{#snippet children(portraitId: string, index: number)}
+						<button
+							type="button"
+							class="portrait-selector {formData.portraitId === portraitId ? 'portrait-selected' : ''}"
+							onclick={() => formData.portraitId = portraitId}
+						>
+							<img
+								src="/src/lib/assets/portraits/{portraitId}.png"
+								alt="Portrait {index + 1}"
+								class="portrait-selector-img"
+							/>
+						</button>
+					{/snippet}
+				</Carousel>
 			</Card>
 
 			<!-- Class Selection -->
@@ -534,6 +575,63 @@
 
 	@keyframes spin {
 		to { transform: rotate(360deg); }
+	}
+
+	/* Portrait Selection */
+	.portrait-preview {
+		display: flex;
+		justify-content: center;
+		margin-bottom: var(--spacing-xl);
+	}
+
+	.portrait-selector {
+		position: relative;
+		border: 3px solid var(--color-arcana-border-default);
+		border-radius: var(--radius-lg);
+		overflow: hidden;
+		cursor: pointer;
+		transition: all var(--transition-fast);
+		background: var(--color-arcana-bg-primary);
+		padding: 0;
+		aspect-ratio: 1;
+	}
+
+	.portrait-selector:hover {
+		border-color: var(--color-arcana-gold-500);
+		transform: scale(1.05);
+		box-shadow: var(--shadow-md);
+	}
+
+	.portrait-selector-img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		display: block;
+	}
+
+	.portrait-selected {
+		border-color: var(--color-arcana-gold-500);
+		border-width: 4px;
+		box-shadow: var(--shadow-lg), var(--glow-gold);
+		transform: scale(1.05);
+	}
+
+	.portrait-selected::after {
+		content: '✓';
+		position: absolute;
+		top: 4px;
+		right: 4px;
+		background: var(--color-arcana-gold-500);
+		color: var(--color-arcana-bg-primary);
+		width: 28px;
+		height: 28px;
+		border-radius: 50%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-weight: 700;
+		font-size: var(--text-lg);
+		box-shadow: var(--shadow-md);
 	}
 
 	/* Responsive */

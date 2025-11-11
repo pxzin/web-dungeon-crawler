@@ -72,6 +72,7 @@ export interface PlayerResources {
 export interface PlayerData {
 	id: string
 	name: string
+	portraitId: string
 	stats: PlayerStats
 	resources: PlayerResources
 	gold: number

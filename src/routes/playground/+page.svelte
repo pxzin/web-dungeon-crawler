@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Button, Card, Input, Modal, Icon, SpriteIcon } from '$lib/components/ui'
+	import { Button, Card, Input, Modal, Icon, SpriteIcon, Portrait, Carousel } from '$lib/components/ui'
 	import { goto } from '$app/navigation'
 	import { getAllIconIds, type IconId } from '$lib/assets/icons/icon-map'
 
@@ -8,6 +8,7 @@
 	let inputWithError = $state('')
 	let inputError = $state('This field is required')
 	let isModalOpen = $state(false)
+	let selectedPortrait = $state('portrait_001')
 
 	// Sample data
 	const buttonVariants: Array<'hero' | 'primary' | 'secondary' | 'danger' | 'outline' | 'ghost'> = [
@@ -42,6 +43,14 @@
 		'crossed_swords',
 	]
 	const allSpriteIcons = getAllIconIds()
+
+	// Portrait examples
+	const availablePortraits = Array.from({ length: 100 }, (_, i) => {
+		const num = String(i + 1).padStart(3, '0')
+		return `portrait_${num}`
+	})
+
+	const portraitSizes: Array<'small' | 'medium' | 'large'> = ['small', 'medium', 'large']
 </script>
 
 <div class="playground">
@@ -349,6 +358,184 @@
 				</div>
 			</section>
 
+			<!-- Portrait Component -->
+			<section class="component-section">
+				<h2 class="arcana-heading-md">Portrait Component</h2>
+				<p class="arcana-text-muted">
+					Character portrait display with player stats and multiple variants
+				</p>
+
+				<div class="demo-section">
+					<h3 class="demo-title">Portrait Display</h3>
+					<div class="portrait-variants-grid">
+						<Portrait
+							portraitId="portrait_010"
+							playerName="Arinacheskii"
+							playerClass="Warrior"
+							classIcon="game-icons-sword-brandish"
+							classDescription="A mighty warrior skilled in melee combat and heavy armor"
+							level={15}
+							experience={750}
+							maxExperience={1000}
+							health={2345}
+							maxHealth={3000}
+							mana={1200}
+							maxMana={1500}
+							size="medium"
+							strength={{ value: 18, modifier: 5 }}
+							dexterity={{ value: 12, modifier: 1 }}
+							intelligence={{ value: 8, modifier: -1 }}
+							vitality={{ value: 16, modifier: 3 }}
+							luck={{ value: 10, modifier: 0 }}
+							statusEffects={[
+								{
+									icon: 'guard',
+									name: 'Defesa Aumentada',
+									description: '+5 de armadura',
+									duration: 3,
+									type: 'buff'
+								},
+								{
+									icon: 'strong_arm',
+									name: 'Força',
+									description: '+3 de dano de ataque',
+									duration: 5,
+									type: 'buff'
+								},
+								{
+									icon: 'poison',
+									name: 'Envenenado',
+									description: '-2 HP por turno',
+									duration: 2,
+									type: 'debuff'
+								},
+								{
+									icon: 'healing',
+									name: 'Regeneração',
+									description: '+3 HP por turno',
+									type: 'buff'
+								},
+								{
+									icon: 'sunrays',
+									name: 'Bênção',
+									description: '+10% de dano',
+									duration: 10,
+									type: 'buff'
+								}
+							]}
+						/>
+					</div>
+				</div>
+
+				<div class="demo-section">
+					<h3 class="demo-title">Different Sizes</h3>
+					<div class="portrait-sizes-grid">
+						{#each portraitSizes as size}
+							<div>
+								<h4 class="text-sm text-arcana-text-secondary mb-4">{size}</h4>
+								<Portrait
+									portraitId="portrait_025"
+									playerName="Shadow Thief"
+									playerClass="Rogue"
+									classIcon="game-icons-hood"
+									classDescription="Master of stealth and precision strikes"
+									level={8}
+									experience={320}
+									maxExperience={500}
+									health={850}
+									maxHealth={1200}
+									mana={450}
+									maxMana={600}
+									{size}
+									strength={{ value: 10, modifier: 0 }}
+									dexterity={{ value: 18, modifier: 4 }}
+									intelligence={{ value: 14, modifier: 2 }}
+									vitality={{ value: 11, modifier: 0 }}
+									luck={{ value: 15, modifier: 2 }}
+									statusEffects={[
+										{
+											icon: 'steal',
+											name: 'Furtividade',
+											description: '+50% chance de evasão',
+											duration: 4,
+											type: 'buff'
+										}
+									]}
+								/>
+							</div>
+						{/each}
+					</div>
+				</div>
+
+				<div class="code-block">
+					<pre><code>{`<Portrait
+  portraitId="portrait_001"
+  playerName="Hero"
+  playerClass="Warrior"
+  classIcon="game-icons-sword-brandish"
+  level={10}
+  experience={450}
+  maxExperience={1000}
+  health={100}
+  maxHealth={150}
+  mana={50}
+  maxMana={80}
+  size="medium"
+/>`}</code></pre>
+				</div>
+			</section>
+
+			<!-- Carousel Component -->
+			<section class="component-section">
+				<h2 class="arcana-heading-md">Carousel Component</h2>
+				<p class="arcana-text-muted">
+					Paginated carousel for displaying collections with navigation
+				</p>
+
+				<div class="demo-section">
+					<h3 class="demo-title">Portrait Selection Carousel</h3>
+					<p class="arcana-text-muted mb-4">
+						Selected: <span class="text-arcana-gold-400 font-semibold">{selectedPortrait}</span>
+					</p>
+
+					<Carousel items={availablePortraits} itemsPerPage={10}>
+						{#snippet children(portraitId: string, index: number)}
+							<button
+								type="button"
+								class="carousel-portrait {selectedPortrait === portraitId ? 'carousel-portrait-selected' : ''}"
+								onclick={() => selectedPortrait = portraitId}
+							>
+								<img
+									src="/src/lib/assets/portraits/{portraitId}.png"
+									alt="Portrait {index + 1}"
+									class="carousel-portrait-img"
+								/>
+							</button>
+						{/snippet}
+					</Carousel>
+				</div>
+
+				<div class="demo-section">
+					<h3 class="demo-title">Icon Carousel</h3>
+					<Carousel items={sampleSpriteIcons} itemsPerPage={5}>
+						{#snippet children(iconId: IconId)}
+							<div class="icon-card">
+								<SpriteIcon {iconId} size={48} />
+								<span class="text-xs">{iconId}</span>
+							</div>
+						{/snippet}
+					</Carousel>
+				</div>
+
+				<div class="code-block">
+					<pre><code>{`<Carousel items={portraits} itemsPerPage={10}>
+  {#snippet children(portrait, index)}
+    <img src={portrait.url} alt="Portrait {index}" />
+  {/snippet}
+</Carousel>`}</code></pre>
+				</div>
+			</section>
+
 			<!-- Color Palette -->
 			<section class="component-section">
 				<h2 class="arcana-heading-md">Color Palette</h2>
@@ -634,6 +821,76 @@
 
 	.mt-4 {
 		margin-top: var(--spacing-lg);
+	}
+
+	.mb-4 {
+		margin-bottom: var(--spacing-lg);
+	}
+
+	/* Portrait Component Styles */
+	.portrait-variants-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+		gap: var(--spacing-2xl);
+		justify-items: center;
+	}
+
+	.portrait-sizes-grid {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--spacing-2xl);
+		justify-content: center;
+	}
+
+	/* Carousel Portrait Styles */
+	.carousel-portrait {
+		position: relative;
+		border: 3px solid var(--color-arcana-border-default);
+		border-radius: var(--radius-lg);
+		overflow: hidden;
+		cursor: pointer;
+		transition: all var(--transition-fast);
+		background: var(--color-arcana-bg-primary);
+		padding: 0;
+		aspect-ratio: 1;
+	}
+
+	.carousel-portrait:hover {
+		border-color: var(--color-arcana-gold-500);
+		transform: scale(1.05);
+		box-shadow: var(--shadow-md);
+	}
+
+	.carousel-portrait-img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		display: block;
+	}
+
+	.carousel-portrait-selected {
+		border-color: var(--color-arcana-gold-500);
+		border-width: 4px;
+		box-shadow: var(--shadow-lg), var(--glow-gold);
+		transform: scale(1.05);
+	}
+
+	.carousel-portrait-selected::after {
+		content: '✓';
+		position: absolute;
+		top: 4px;
+		right: 4px;
+		background: var(--color-arcana-gold-500);
+		color: var(--color-arcana-bg-primary);
+		width: 28px;
+		height: 28px;
+		border-radius: 50%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-weight: 700;
+		font-size: var(--text-lg);
+		box-shadow: var(--shadow-md);
 	}
 
 	@media (max-width: 768px) {

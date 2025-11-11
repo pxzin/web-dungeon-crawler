@@ -3,6 +3,7 @@
 	import { LocalStorageAdapter, createPersistenceService } from '$lib/persistence'
 	import { playerStore } from '$lib/stores/playerStore.svelte'
 	import type { GameState, GameSettings } from '$lib/persistence'
+	import { Portrait } from '$lib/components/ui'
 
 	const persistence = createPersistenceService(new LocalStorageAdapter())
 
@@ -164,6 +165,39 @@
 			<!-- Content -->
 			<div class="panel-content">
 				{#if activeTab === 'character'}
+					<div class="section">
+						<h4>Player Portrait</h4>
+						{#if playerStore.player}
+							<div class="portrait-container">
+								<Portrait
+									portraitId={playerStore.player.portraitId}
+									playerName={playerStore.player.name}
+									playerClass="Warrior"
+									classIcon="game-icons-sword-brandish"
+									level={playerStore.player.stats.level}
+									experience={playerStore.player.stats.experience}
+									maxExperience={playerStore.player.stats.experienceToNextLevel}
+									health={playerStore.player.resources.health}
+									maxHealth={playerStore.player.resources.maxHealth}
+									mana={playerStore.player.resources.mana}
+									maxMana={playerStore.player.resources.maxMana}
+									size="small"
+									statusEffects={[
+										{
+											icon: 'game-icons-shield',
+											name: 'Defesa',
+											description: '+5 armadura',
+											duration: 3,
+											type: 'buff'
+										}
+									]}
+								/>
+							</div>
+						{:else}
+							<p class="no-data">No player data</p>
+						{/if}
+					</div>
+
 					<div class="section">
 						<h4>Player Info</h4>
 						{#if playerStore.player}
@@ -574,6 +608,12 @@
 	.toggle-btn:hover {
 		transform: scale(1.1);
 		box-shadow: 0 0 30px rgba(0, 255, 0, 0.5);
+	}
+
+	.portrait-container {
+		display: flex;
+		justify-content: center;
+		margin: 8px 0;
 	}
 
 	/* Scrollbar styling */

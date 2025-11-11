@@ -50,6 +50,7 @@ export interface ClassBaseStats {
  */
 export interface CharacterCreationData {
 	name: string
+	portraitId: string
 	class: CharacterClass | null
 	attributes: CharacterAttributes
 }

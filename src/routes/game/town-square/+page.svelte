@@ -3,7 +3,7 @@
 	import { goto } from '$app/navigation'
 	import { playerStore } from '$lib/stores/playerStore.svelte'
 	import { LL } from '$lib/i18n/i18n-svelte'
-	import { Card, Icon, AreaCard } from '$lib/components/ui'
+	import { Card, Icon, AreaCard, Portrait } from '$lib/components/ui'
 
 	onMount(async () => {
 		// Initialize player store if not already loaded
@@ -94,10 +94,42 @@
 			<!-- Player Info Card -->
 			<Card variant="gold" class="mb-8">
 				<div class="player-info">
-					<div class="player-name">
-						<Icon icon="game-icons-player-next" size="xl" class="text-arcana-gold-400" />
-						<h2 class="arcana-heading-md">{playerStore.player.name}</h2>
+					<!-- Player Portrait -->
+					<div class="player-portrait">
+						<Portrait
+							portraitId={playerStore.player.portraitId}
+							playerName={playerStore.player.name}
+							playerClass="Warrior"
+							classIcon="game-icons-sword-brandish"
+							classDescription="A mighty warrior skilled in melee combat and heavy armor"
+							level={playerStore.player.stats.level}
+							experience={playerStore.player.stats.experience}
+							maxExperience={playerStore.player.stats.experienceToNextLevel}
+							health={playerStore.player.resources.health}
+							maxHealth={playerStore.player.resources.maxHealth}
+							mana={playerStore.player.resources.mana}
+							maxMana={playerStore.player.resources.maxMana}
+							size="medium"
+							strength={{
+								value: playerStore.player.stats.strength,
+								modifier: Math.floor((playerStore.player.stats.strength - 10) / 2)
+							}}
+							dexterity={{
+								value: playerStore.player.stats.dexterity,
+								modifier: Math.floor((playerStore.player.stats.dexterity - 10) / 2)
+							}}
+							intelligence={{
+								value: playerStore.player.stats.intelligence,
+								modifier: Math.floor((playerStore.player.stats.intelligence - 10) / 2)
+							}}
+							vitality={{
+								value: playerStore.player.stats.vitality,
+								modifier: Math.floor((playerStore.player.stats.vitality - 10) / 2)
+							}}
+						/>
 					</div>
+
+					<!-- Player Stats -->
 					<div class="player-stats">
 						<div class="stat-item">
 							<Icon icon="game-icons-upgrade" size="md" class="text-arcana-cyan-400" />
@@ -168,14 +200,12 @@
 		display: flex;
 		flex-direction: column;
 		gap: var(--spacing-xl);
-		text-align: center;
+		align-items: center;
 	}
 
-	.player-name {
+	.player-portrait {
 		display: flex;
-		align-items: center;
 		justify-content: center;
-		gap: var(--spacing-md);
 	}
 
 	.player-stats {
