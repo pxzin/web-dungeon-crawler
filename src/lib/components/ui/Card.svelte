@@ -55,6 +55,44 @@
 </div>
 
 <style>
+	/* Base card styles */
+	:global(.arcana-card),
+	:global(.arcana-card-elevated),
+	:global(.arcana-card-gold) {
+		display: flex;
+		flex-direction: column;
+		background: var(--color-arcana-bg-secondary);
+		border-radius: var(--radius-2xl);
+		box-shadow: var(--shadow-xl);
+		padding: var(--spacing-xl);
+		border: 1px solid var(--color-arcana-border-default);
+		backdrop-filter: blur(8px);
+	}
+
+	/* Elevated variant - More prominent with stronger border */
+	:global(.arcana-card-elevated) {
+		background: var(--color-arcana-bg-elevated);
+		box-shadow: var(--shadow-2xl);
+		border-color: var(--color-arcana-border-glow);
+	}
+
+	/* Gold variant - Premium card with golden border */
+	:global(.arcana-card-gold) {
+		border: 2px solid var(--color-arcana-gold-600);
+		box-shadow:
+			var(--shadow-xl),
+			0 0 20px rgba(201, 152, 74, 0.2);
+	}
+
+	/* Size variants */
+	:global(.arcana-card-sm) {
+		padding: var(--spacing-md);
+	}
+
+	:global(.arcana-card-lg) {
+		padding: var(--spacing-2xl);
+	}
+
 	.card-header {
 		margin-bottom: var(--spacing-lg);
 		padding-bottom: var(--spacing-md);
@@ -69,5 +107,8 @@
 		margin-top: var(--spacing-lg);
 		padding-top: var(--spacing-md);
 		border-top: 1px solid var(--color-arcana-border-default);
+		display: flex;
+		gap: var(--spacing-md);
+		justify-content: flex-end;
 	}
 </style>

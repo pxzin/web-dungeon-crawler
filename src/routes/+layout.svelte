@@ -1,5 +1,6 @@
 <script lang="ts">
 	import '../app.css'
+	import 'virtual:uno.css'
 	import { dev } from '$app/environment'
 
 	// Only import DebugPanel in development mode

@@ -14,7 +14,7 @@
 		type CharacterCreationErrors,
 	} from '$lib/game/character'
 	import { onMount } from 'svelte'
-	import { Button, Card, Input } from '$lib/components/ui'
+	import { Button, Card, Input, ClassBadge } from '$lib/components/ui'
 
 	// Persistence service
 	const persistence = createPersistenceService(new LocalStorageAdapter())
@@ -208,14 +208,6 @@
 				return key
 		}
 	}
-
-	// Class emoji icons (fallback visual)
-	const classEmojis: Record<CharacterClass, string> = {
-		[CharacterClass.WARRIOR]: '⚔️',
-		[CharacterClass.MAGE]: '🔮',
-		[CharacterClass.ROGUE]: '🗡️',
-		[CharacterClass.CLERIC]: '✨',
-	}
 </script>
 
 <div class="character-creation">
@@ -240,7 +232,6 @@
 						placeholder={$LL.game.characterCreation.namePlaceholder()}
 						maxlength={20}
 						error={errors.name ? getValidationError(errors.name) : ''}
-						variant="hero"
 					/>
 				</div>
 			</Card>
@@ -252,35 +243,13 @@
 				</h2>
 				<div class="class-grid">
 					{#each Object.values(CharacterClass) as characterClass}
-						<button
-							type="button"
-							class="class-card {formData.class === characterClass ? 'class-card-selected' : ''}"
+						<ClassBadge
+							{characterClass}
+							selected={formData.class === characterClass}
+							title={getClassName(characterClass)}
+							description={getClassDescription(characterClass)}
 							onclick={() => selectClass(characterClass)}
-						>
-							<!-- Icon Circle -->
-							<div class="class-icon-wrapper">
-								<span class="class-emoji">{classEmojis[characterClass]}</span>
-							</div>
-
-							<!-- Class Name -->
-							<h3 class="class-name">
-								{getClassName(characterClass)}
-							</h3>
-
-							<!-- Description -->
-							<p class="class-description">
-								{getClassDescription(characterClass)}
-							</p>
-
-							<!-- Selection Indicator -->
-							{#if formData.class === characterClass}
-								<div class="selected-badge">
-									<svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-										<path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/>
-									</svg>
-								</div>
-							{/if}
-						</button>
+						/>
 					{/each}
 				</div>
 				{#if errors.class}
@@ -406,156 +375,6 @@
 		gap: var(--spacing-xl);
 		max-width: 1000px;
 		margin: 0 auto;
-	}
-
-	.class-card {
-		position: relative;
-		background: var(--color-arcana-bg-elevated);
-		border: 3px solid var(--color-arcana-border-default);
-		border-radius: var(--radius-2xl);
-		padding: var(--spacing-2xl);
-		cursor: pointer;
-		transition: all var(--transition-base);
-		text-align: center;
-		overflow: hidden;
-	}
-
-	.class-card::before {
-		content: '';
-		position: absolute;
-		inset: 0;
-		background: linear-gradient(
-			135deg,
-			rgba(201, 152, 74, 0.05),
-			transparent
-		);
-		opacity: 0;
-		transition: opacity var(--transition-base);
-	}
-
-	.class-card:hover {
-		transform: translateY(-8px) scale(1.02);
-		border-color: var(--color-arcana-gold-600);
-		box-shadow:
-			var(--shadow-2xl),
-			0 0 40px rgba(201, 152, 74, 0.3),
-			inset 0 0 20px rgba(201, 152, 74, 0.1);
-	}
-
-	.class-card:hover::before {
-		opacity: 1;
-	}
-
-	.class-card-selected {
-		border-color: var(--color-arcana-gold-500) !important;
-		background: linear-gradient(
-			135deg,
-			var(--color-arcana-bg-elevated),
-			rgba(201, 152, 74, 0.1)
-		);
-		box-shadow:
-			var(--shadow-2xl),
-			0 0 60px rgba(201, 152, 74, 0.4),
-			inset 0 0 30px rgba(201, 152, 74, 0.15);
-	}
-
-	.class-card-selected::before {
-		opacity: 1;
-	}
-
-	.class-icon-wrapper {
-		width: 120px;
-		height: 120px;
-		margin: 0 auto var(--spacing-lg);
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		background: var(--color-arcana-bg-primary);
-		border-radius: var(--radius-full);
-		border: 4px solid var(--color-arcana-gold-700);
-		box-shadow:
-			var(--shadow-lg),
-			inset 0 2px 8px rgba(0, 0, 0, 0.3);
-		transition: all var(--transition-base);
-		position: relative;
-		overflow: hidden;
-	}
-
-	.class-icon-wrapper::after {
-		content: '';
-		position: absolute;
-		inset: -50%;
-		background: linear-gradient(
-			45deg,
-			transparent,
-			rgba(255, 255, 255, 0.1),
-			transparent
-		);
-		transform: translateX(-100%) rotate(45deg);
-		transition: transform 0.6s;
-	}
-
-	.class-card:hover .class-icon-wrapper {
-		transform: scale(1.1) rotate(5deg);
-		border-color: var(--color-arcana-gold-500);
-		box-shadow:
-			var(--shadow-xl),
-			0 0 30px rgba(201, 152, 74, 0.5),
-			inset 0 2px 12px rgba(0, 0, 0, 0.4);
-	}
-
-	.class-card:hover .class-icon-wrapper::after {
-		transform: translateX(100%) rotate(45deg);
-	}
-
-	.class-card-selected .class-icon-wrapper {
-		background: var(--color-arcana-gold-900);
-		border-color: var(--color-arcana-gold-400);
-		box-shadow:
-			var(--shadow-xl),
-			0 0 40px rgba(201, 152, 74, 0.6);
-	}
-
-	.class-emoji {
-		font-size: 3.5rem;
-		line-height: 1;
-		filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
-	}
-
-	.class-name {
-		font-family: var(--font-serif);
-		font-size: var(--text-2xl);
-		font-weight: 700;
-		color: var(--color-arcana-gold-300);
-		margin-bottom: var(--spacing-md);
-		text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-	}
-
-	.class-description {
-		font-size: var(--text-sm);
-		line-height: 1.6;
-		color: var(--color-arcana-text-secondary);
-	}
-
-	.selected-badge {
-		position: absolute;
-		top: var(--spacing-md);
-		right: var(--spacing-md);
-		width: 40px;
-		height: 40px;
-		background: var(--color-arcana-gold-600);
-		border-radius: var(--radius-full);
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		color: var(--color-arcana-bg-primary);
-		box-shadow: var(--shadow-lg), var(--glow-gold);
-		animation: badgePulse 2s ease-in-out infinite;
-	}
-
-	@keyframes badgePulse {
-		0%, 100% { transform: scale(1); }
-		50% { transform: scale(1.1); }
 	}
 
 	/* Attributes */

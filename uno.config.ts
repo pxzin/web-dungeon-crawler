@@ -19,6 +19,7 @@ export default defineConfig({
       // Supports all Iconify icon collections
       cdn: 'https://esm.sh/',
       scale: 1.2,
+      warn: true, // Show warnings for missing icons
       extraProperties: {
         'display': 'inline-block',
         'vertical-align': 'middle',
@@ -209,7 +210,22 @@ export default defineConfig({
   },
 
   safelist: [
-    // Add classes that should always be included
+    // Fantasy RPG Icons used in playground
+    'i-game-icons-sword-brandish',
+    'i-game-icons-crystal-wand',
+    'i-game-icons-hood',
+    'i-game-icons-prayer-beads',
+    'i-game-icons-health-normal',
+    'i-lucide-shield',
+    // Town square icons
+    'i-game-icons-player-next',
+    'i-game-icons-upgrade',
+    'i-game-icons-two-coins',
+    'i-game-icons-dungeon-gate',
+    'i-game-icons-anvil',
+    'i-game-icons-beer-stein',
+    'i-game-icons-shop',
+    'i-game-icons-crossed-swords',
   ],
 
   content: {

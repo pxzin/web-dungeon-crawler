@@ -167,6 +167,23 @@ Componente de UI para permitir que usuários troquem dinamicamente entre os idio
 
 ---
 
+### ⏳ 008 - Icon Spritesheet Mapping
+**Status**: ⏳ Pending / Pendente
+**Priority**: Medium / Média
+**Type**: System
+
+**Description**:
+System to map and display individual icons from a single spritesheet file.
+
+Sistema para mapear e exibir ícones individuais a partir de um único arquivo de spritesheet.
+
+**Implementation**:
+- 📁 [tasks/008-icon-mapping.md](./008-icon-mapping.md)
+
+**Status**: Not started
+
+---
+
 ## Infrastructure / Infraestrutura
 
 ### ✅ Persistence System

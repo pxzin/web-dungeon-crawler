@@ -9,7 +9,7 @@
 
 	interface Props {
 		icon: string
-		size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl'
+		size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl'
 		color?: string
 		class?: string
 	}
@@ -28,6 +28,7 @@
 		lg: 'text-2xl',     // 24px
 		xl: 'text-3xl',     // 30px
 		'2xl': 'text-4xl',  // 36px
+		'3xl': 'text-5xl',  // 48px
 	}
 
 	const colorClass = color ? `text-${color}` : ''
