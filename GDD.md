@@ -30,11 +30,22 @@ Um jogo de RPG de aventura em que os jogadores exploram masmorras geradas proced
         *   Mago
         *   Ladino
         *   Clérigo
-    *   **Atributos e Aparência:** Os jogadores poderão personalizar os atributos (Força, Destreza, etc.) e a aparência de seu personagem principal.
+    *   **Atributos e Aparência:** Os jogadores poderão personalizar a aparência de seu personagem principal e distribuir pontos nos seguintes atributos:
+        *   **Força:** Influencia o dano de ataques físicos.
+        *   **Agilidade:** Afeta a velocidade de ataque e a capacidade de esquiva.
+        *   **Vitalidade:** Determina os pontos de vida totais.
+        *   **Inteligência:** Influencia a potência de magias e habilidades especiais.
 *   **Geração Procedural de Masmorras:** Cada masmorra será única, oferecendo uma nova experiência a cada partida.
 *   **Combate por Turnos:** O combate será estratégico e baseado em turnos.
 *   **Sistema de Inventário:** Os jogadores poderão coletar e gerenciar itens em um inventário.
 *   **Sistema de Habilidades:** Os personagens terão uma árvore de habilidades para desbloquear novas perícias.
+*   **Praça Central (Hub do Jogador):** Um hub central com apelo visual onde os jogadores poderão:
+    *   Pegar quests.
+    *   Inspecionar seu personagem.
+    *   Fabricar e reparar itens.
+    *   Partir para masmorras.
+    *   Comprar e vender itens.
+    *   Acessar conteúdo futuro (campanha, PvP, desafios).
 
 ## 6. Direção de Arte e Som
 

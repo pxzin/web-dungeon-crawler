@@ -49,6 +49,10 @@ uno.css
 # TypeScript
 *.tsbuildinfo
 
+# i18n generated types (optional - can be committed)
+# src/lib/i18n/i18n-types.ts
+# src/lib/i18n/i18n-util.ts
+
 # Package manager
 package-lock.json
 yarn.lock
