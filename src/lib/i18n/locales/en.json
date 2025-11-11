@@ -32,6 +32,38 @@
 				"mustSpendAllPoints": "You must spend all attribute points"
 			}
 		},
+		"townSquare": {
+			"title": "Town Square",
+			"welcome": "Welcome, {name}!",
+			"gold": "Gold",
+			"areas": {
+				"dungeons": {
+					"title": "Dungeons",
+					"description": "Explore dangerous dungeons filled with monsters and treasures"
+				},
+				"blacksmith": {
+					"title": "Blacksmith",
+					"description": "Upgrade and repair your equipment"
+				},
+				"tavern": {
+					"title": "Tavern",
+					"description": "Rest, gather information, and accept quests"
+				},
+				"market": {
+					"title": "Market",
+					"description": "Buy and sell items and equipment"
+				},
+				"arena": {
+					"title": "Arena",
+					"description": "Test your skills against other warriors"
+				},
+				"character": {
+					"title": "Character",
+					"description": "View and manage your character"
+				}
+			},
+			"comingSoon": "Coming Soon"
+		},
 		"ui": {
 			"health": "Health",
 			"mana": "Mana",

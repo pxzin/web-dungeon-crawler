@@ -32,6 +32,38 @@
 				"mustSpendAllPoints": "Você deve gastar todos os pontos de atributo"
 			}
 		},
+		"townSquare": {
+			"title": "Praça da Cidade",
+			"welcome": "Bem-vindo, {name}!",
+			"gold": "Ouro",
+			"areas": {
+				"dungeons": {
+					"title": "Masmorras",
+					"description": "Explore masmorras perigosas cheias de monstros e tesouros"
+				},
+				"blacksmith": {
+					"title": "Ferreiro",
+					"description": "Melhore e repare seus equipamentos"
+				},
+				"tavern": {
+					"title": "Taverna",
+					"description": "Descanse, colete informações e aceite missões"
+				},
+				"market": {
+					"title": "Mercado",
+					"description": "Compre e venda itens e equipamentos"
+				},
+				"arena": {
+					"title": "Arena",
+					"description": "Teste suas habilidades contra outros guerreiros"
+				},
+				"character": {
+					"title": "Personagem",
+					"description": "Visualize e gerencie seu personagem"
+				}
+			},
+			"comingSoon": "Em Breve"
+		},
 		"ui": {
 			"health": "Vida",
 			"mana": "Mana",
