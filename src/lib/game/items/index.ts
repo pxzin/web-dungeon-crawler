@@ -13,6 +13,8 @@ export type {
 	ItemStats,
 	Durability,
 	RepairCost,
+	LootEntry,
+	LootTable,
 } from './types'
 
 export { ItemRarity, ItemType, EquipmentSlot } from './types'
@@ -33,3 +35,13 @@ export {
 	DEFEAT_DURABILITY_LOSS_PERCENT,
 	REPAIR_COST_MULTIPLIER,
 } from './durability'
+
+export {
+	ITEMS,
+	getItem,
+	getAllItems,
+	getItemsByType,
+	getItemsByRarity,
+} from '../../content/items'
+
+export { LOOT_TABLES, getLootTable, getAllLootTables, rollLoot } from '../../content/loot-tables'

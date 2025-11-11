@@ -392,6 +392,125 @@ Configurar a primeira masmorra jogável, a "Caverna dos Goblins", usando os mons
 
 ---
 
+### ⏳ 014 - Inventory & Equipment Screen
+**Status**: ⏳ Pending / Pendente
+**Priority**: High / Alta
+**Type**: Feature
+
+**Description**:
+UI screen for players to manage their inventory and equip gear.
+
+Tela de UI para os jogadores gerenciarem seu inventário e equiparem itens.
+
+**Implementation**:
+- 📁 [tasks/014-inventory-equipment-screen.md](./014-inventory-equipment-screen.md)
+
+**Status**: Not started
+
+---
+
+### ⏳ 015 - Blacksmith Screen
+**Status**: ⏳ Pending / Pendente
+**Priority**: Medium / Média
+**Type**: Feature
+
+**Description**:
+UI and functionality for the Blacksmith, where players can repair their items.
+
+UI e funcionalidade para o Ferreiro, onde os jogadores podem reparar seus itens.
+
+**Implementation**:
+- 📁 [tasks/015-blacksmith-screen.md](./015-blacksmith-screen.md)
+
+**Status**: Not started
+
+---
+
+### ⏳ 016 - Tavern Screen
+**Status**: ⏳ Pending / Pendente
+**Priority**: Medium / Média
+**Type**: Feature
+
+**Description**:
+UI for the Tavern, which will serve as the hub for quests.
+
+UI para a Taverna, que servirá como o hub para missões.
+
+**Implementation**:
+- 📁 [tasks/016-tavern-screen.md](./016-tavern-screen.md)
+
+**Status**: Not started
+
+---
+
+### ⏳ 017 - Market Screen
+**Status**: ⏳ Pending / Pendente
+**Priority**: Medium / Média
+**Type**: Feature
+
+**Description**:
+UI for the Market, allowing players to buy and sell items.
+
+UI para o Mercado, permitindo que os jogadores comprem e vendam itens.
+
+**Implementation**:
+- 📁 [tasks/017-market-screen.md](./017-market-screen.md)
+
+**Status**: Not started
+
+---
+
+### ⏳ 018 - Crypt Monster Data Definition
+**Status**: ⏳ Pending / Pendente
+**Priority**: Medium / Média
+**Type**: Content
+
+**Description**:
+Define the data for the undead monsters of the Restless Crypt.
+
+Definir os dados para os monstros mortos-vivos da Cripta dos Inquietos.
+
+**Implementation**:
+- 📁 [tasks/018-crypt-monster-data.md](./018-crypt-monster-data.md)
+
+**Status**: Not started
+
+---
+
+### ⏳ 019 - Crypt Item Data Definition
+**Status**: ⏳ Pending / Pendente
+**Priority**: Medium / Média
+**Type**: Content
+
+**Description**:
+Define the data for the themed items and loot tables for the Restless Crypt.
+
+Definir os dados para os itens temáticos e tabelas de loot da Cripta dos Inquietos.
+
+**Implementation**:
+- 📁 [tasks/019-crypt-item-data.md](./019-crypt-item-data.md)
+
+**Status**: Not started
+
+---
+
+### ⏳ 020 - Crypt Dungeon Configuration
+**Status**: ⏳ Pending / Pendente
+**Priority**: Medium / Média
+**Type**: Content
+
+**Description**:
+Configure the second playable dungeon, "The Restless Crypt".
+
+Configurar a segunda masmorra jogável, "A Cripta dos Inquietos".
+
+**Implementation**:
+- 📁 [tasks/020-crypt-dungeon-configuration.md](./020-crypt-dungeon-configuration.md)
+
+**Status**: Not started
+
+---
+
 ## Infrastructure / Infraestrutura
 
 ### ✅ Persistence System

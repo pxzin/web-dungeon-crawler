@@ -49,6 +49,16 @@ Um jogo de RPG de aventura em que os jogadores exploram masmorras geradas proced
         *   **Sala Vazia:** Pode conter elementos de lore ou servir como um conector.
         *   **Sala do Chefe (Boss Room):** A última sala do último andar, contendo o chefe da masmorra.
     *   **Objetivo:** O objetivo de cada masmorra é navegar pelos andares e derrotar o chefe final para obter as melhores recompensas.
+    *   **Roteiro de Masmorras (Conteúdo Futuro):**
+        *   **Nível 1-5:** Caverna dos Goblins (Plano inicial)
+        *   **Nível 5-10:** A Cripta dos Inquietos (Mortos-vivos)
+        *   **Nível 10-15:** Bosque Sussurrante (Feras e criaturas da floresta)
+        *   **Nível 15-20:** Templo Submerso (Criaturas aquáticas)
+        *   **Nível 20-25:** A Mina Abandonada (Construtos e golens)
+        *   **Nível 25-30:** O Coração Vulcânico (Elementais de fogo)
+        *   **Nível 30-35:** Pântano do Veneno (Criaturas peçonhentas)
+        *   **Nível 35-40:** A Torre do Mago Louco (Autômatos mágicos)
+        *   **Nível 40-45:** O Abismo Sombrio (Seres extraplanares)
 *   **Combate por Turnos:** O combate é uma parte central da exploração, ocorrendo em um modo de turnos estratégico.
     *   **Início do Combate:** Começa quando o jogador entra em uma sala de combate.
     *   **Ordem de Turno (Iniciativa):** A ordem das ações é determinada pela `Agilidade` de cada participante.

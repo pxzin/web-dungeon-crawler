@@ -147,3 +147,22 @@ export interface RepairCost {
 	gold: number
 	durabilityRestored: number
 }
+
+/**
+ * Loot table entry
+ * Defines a possible drop from a monster or chest
+ */
+export interface LootEntry {
+	itemId: string
+	quantity: number | [number, number] // Fixed amount or [min, max] range
+	chance: number // 0.0 to 1.0 (0% to 100%)
+}
+
+/**
+ * Loot table
+ * Collection of possible drops with probabilities
+ */
+export interface LootTable {
+	id: string
+	entries: LootEntry[]
+}

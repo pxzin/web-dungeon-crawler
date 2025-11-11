@@ -6,6 +6,7 @@
 export type {
 	Dungeon,
 	DungeonConfig,
+	DungeonTemplate,
 	Room,
 	EnemySpawn,
 	ChestSpawn,
@@ -15,3 +16,10 @@ export type {
 export { TileType, DungeonDifficulty } from './types'
 
 export { generateDungeon, getTileChar, printDungeon } from './generator'
+
+export {
+	DUNGEON_TEMPLATES,
+	getDungeonTemplate,
+	getAllDungeonTemplates,
+	getDungeonsByLevel,
+} from '../../content/dungeons'

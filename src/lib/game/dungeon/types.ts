@@ -104,3 +104,23 @@ export interface DifficultyConfig {
 	chestCount: number
 	chestRarityBonus: number
 }
+
+/**
+ * Dungeon template configuration
+ * High-level configuration for a specific dungeon type
+ */
+export interface DungeonTemplate {
+	id: string
+	name: string
+	description: string
+	recommendedLevel: {
+		min: number
+		max: number
+	}
+	floorCount: number
+	possibleMonsters: string[] // Monster IDs
+	boss?: string // Boss monster ID
+	theme?: string
+	iconId?: string
+	generationConfig: DungeonConfig
+}
