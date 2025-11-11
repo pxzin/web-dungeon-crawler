@@ -25,24 +25,18 @@ export async function initI18n(): Promise<void> {
 	try {
 		// Load settings from persistence
 		const settingsResult = await persistence.getSettings()
-		console.log('Loaded settings for i18n init:', settingsResult)
 
 		let targetLocale: Locales = baseLocale
 
 		if (settingsResult.success && settingsResult.data.locale) {
 			targetLocale = settingsResult.data.locale as Locales
-			console.log('Setting locale to:', targetLocale)
-		} else {
-			console.log('No saved locale found, using base locale:', baseLocale)
 		}
 
 		// Load translations BEFORE setting locale
 		await loadLocaleAsync(targetLocale)
-		console.log('Translations loaded for locale:', targetLocale)
 
 		// Now set the locale (this will trigger UI updates)
 		await setLocale(targetLocale)
-		console.log('Locale set successfully')
 	} catch (error) {
 		console.error('Failed to initialize i18n:', error)
 		// Fallback to base locale on error
