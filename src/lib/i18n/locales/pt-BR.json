@@ -1,6 +1,37 @@
 {
 	"game": {
 		"title": "Explorador de Masmorras",
+		"characterCreation": {
+			"title": "Crie Seu Personagem",
+			"characterName": "Nome do Personagem",
+			"namePlaceholder": "Digite o nome do seu herói",
+			"selectClass": "Selecione Sua Classe",
+			"distributePoints": "Distribua os Pontos de Atributo",
+			"pointsAvailable": "Pontos Disponíveis",
+			"pointsRemaining": "{points} pontos restantes",
+			"createCharacter": "Criar Personagem",
+			"startAdventure": "Iniciar Aventura",
+			"appearancePlaceholder": "Customização de aparência em breve!",
+			"classes": {
+				"warrior": "Guerreiro",
+				"mage": "Mago",
+				"rogue": "Ladino",
+				"cleric": "Clérigo"
+			},
+			"classDescriptions": {
+				"warrior": "Um lutador corpo-a-corpo forte com alta vida e defesa",
+				"mage": "Um poderoso conjurador com ataques mágicos devastadores",
+				"rogue": "Um lutador ágil com alta taxa de acerto crítico",
+				"cleric": "Um guerreiro sagrado com habilidades de cura e suporte"
+			},
+			"validation": {
+				"nameRequired": "Nome do personagem é obrigatório",
+				"nameTooShort": "Nome deve ter pelo menos 3 caracteres",
+				"nameTooLong": "Nome deve ter menos de 20 caracteres",
+				"classRequired": "Por favor, selecione uma classe",
+				"mustSpendAllPoints": "Você deve gastar todos os pontos de atributo"
+			}
+		},
 		"ui": {
 			"health": "Vida",
 			"mana": "Mana",

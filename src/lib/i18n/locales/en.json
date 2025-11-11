@@ -1,6 +1,37 @@
 {
 	"game": {
 		"title": "Dungeon Crawler",
+		"characterCreation": {
+			"title": "Create Your Character",
+			"characterName": "Character Name",
+			"namePlaceholder": "Enter your hero's name",
+			"selectClass": "Select Your Class",
+			"distributePoints": "Distribute Attribute Points",
+			"pointsAvailable": "Points Available",
+			"pointsRemaining": "{points} points remaining",
+			"createCharacter": "Create Character",
+			"startAdventure": "Start Adventure",
+			"appearancePlaceholder": "Appearance customization coming soon!",
+			"classes": {
+				"warrior": "Warrior",
+				"mage": "Mage",
+				"rogue": "Rogue",
+				"cleric": "Cleric"
+			},
+			"classDescriptions": {
+				"warrior": "A strong melee fighter with high health and defense",
+				"mage": "A powerful spellcaster with devastating magic attacks",
+				"rogue": "An agile fighter with high critical hit rate",
+				"cleric": "A holy warrior with healing and support abilities"
+			},
+			"validation": {
+				"nameRequired": "Character name is required",
+				"nameTooShort": "Name must be at least 3 characters",
+				"nameTooLong": "Name must be less than 20 characters",
+				"classRequired": "Please select a class",
+				"mustSpendAllPoints": "You must spend all attribute points"
+			}
+		},
 		"ui": {
 			"health": "Health",
 			"mana": "Mana",

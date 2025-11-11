@@ -15,6 +15,37 @@ export type Translations = RootTranslation
 type RootTranslation = {
 	game: {
 		title: string
+		characterCreation: {
+			title: string
+			characterName: string
+			namePlaceholder: string
+			selectClass: string
+			distributePoints: string
+			pointsAvailable: string
+			pointsRemaining: string
+			createCharacter: string
+			startAdventure: string
+			appearancePlaceholder: string
+			classes: {
+				warrior: string
+				mage: string
+				rogue: string
+				cleric: string
+			}
+			classDescriptions: {
+				warrior: string
+				mage: string
+				rogue: string
+				cleric: string
+			}
+			validation: {
+				nameRequired: string
+				nameTooShort: string
+				nameTooLong: string
+				classRequired: string
+				mustSpendAllPoints: string
+			}
+		}
 		ui: {
 			health: string
 			mana: string
@@ -101,6 +132,37 @@ type RootTranslation = {
 export type TranslationFunctions = {
 	game: {
 		title: () => LocalizedString
+		characterCreation: {
+			title: () => LocalizedString
+			characterName: () => LocalizedString
+			namePlaceholder: () => LocalizedString
+			selectClass: () => LocalizedString
+			distributePoints: () => LocalizedString
+			pointsAvailable: () => LocalizedString
+			pointsRemaining: (arg: { points: number | string }) => LocalizedString
+			createCharacter: () => LocalizedString
+			startAdventure: () => LocalizedString
+			appearancePlaceholder: () => LocalizedString
+			classes: {
+				warrior: () => LocalizedString
+				mage: () => LocalizedString
+				rogue: () => LocalizedString
+				cleric: () => LocalizedString
+			}
+			classDescriptions: {
+				warrior: () => LocalizedString
+				mage: () => LocalizedString
+				rogue: () => LocalizedString
+				cleric: () => LocalizedString
+			}
+			validation: {
+				nameRequired: () => LocalizedString
+				nameTooShort: () => LocalizedString
+				nameTooLong: () => LocalizedString
+				classRequired: () => LocalizedString
+				mustSpendAllPoints: () => LocalizedString
+			}
+		}
 		ui: {
 			health: () => LocalizedString
 			mana: () => LocalizedString

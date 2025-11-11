@@ -11,8 +11,9 @@ export class LocalStorageAdapter implements StorageAdapter {
 	private prefix: string
 	private initialized = false
 
-	constructor(private config: StorageAdapterConfig = {}) {
-		this.prefix = config.prefix || 'dungeon_crawler_'
+	// @ts-expect-error - config may be used for future features (compression, encryption)
+	constructor(private _config: StorageAdapterConfig = {}) {
+		this.prefix = _config.prefix || 'dungeon_crawler_'
 	}
 
 	/**

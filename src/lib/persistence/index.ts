@@ -4,9 +4,10 @@
  */
 
 // Core types
+export { StorageKey } from './types'
+
 export type {
 	Result,
-	StorageKey,
 	PlayerData,
 	PlayerStats,
 	PlayerResources,
@@ -15,8 +16,6 @@ export type {
 	SaveSlot,
 	SaveData,
 } from './types'
-
-export { StorageKey } from './types'
 
 // Adapter interface and config
 export type { StorageAdapter, StorageAdapterConfig } from './adapter'

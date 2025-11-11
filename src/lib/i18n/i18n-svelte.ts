@@ -17,9 +17,12 @@ export const locales = derived(translationsStore, ($translations) => Object.keys
 
 const createTranslationFunctions = (
 	translations: any,
-	locale: Locales
+	_locale: Locales
 ): TranslationFunctions => {
-	const formatters = initFormatters
+	// formatters will be used in the future for date/number formatting
+	// @ts-expect-error - formatters will be used later
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	const _formatters = initFormatters
 
 	const t = (key: string, params?: Record<string, any>): string => {
 		const keys = key.split('.')

@@ -24,14 +24,34 @@ export enum StorageKey {
  * Player statistics and attributes
  */
 export interface PlayerStats {
+	// Base attributes
 	strength: number
 	dexterity: number
 	intelligence: number
 	vitality: number
 	luck: number
+
+	// Level and progression
 	level: number
 	experience: number
 	experienceToNextLevel: number
+
+	// Resources (max values)
+	health: number
+	maxHealth: number
+	mana: number
+	maxMana: number
+	stamina: number
+	maxStamina: number
+
+	// Combat stats
+	attack: number
+	defense: number
+	magicAttack: number
+	magicDefense: number
+	speed: number
+	criticalRate: number
+	evasion: number
 }
 
 /**
@@ -109,8 +129,6 @@ export interface SaveSlot {
  * Complete save data
  */
 export interface SaveData {
-	slot: SaveSlot
 	player: PlayerData
 	state: GameState
-	settings: GameSettings
 }

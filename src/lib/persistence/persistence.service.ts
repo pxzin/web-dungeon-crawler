@@ -5,9 +5,9 @@
  */
 
 import type { StorageAdapter } from './adapter'
+import { StorageKey } from './types'
 import type {
 	Result,
-	StorageKey,
 	PlayerData,
 	GameState,
 	GameSettings,
@@ -106,24 +106,39 @@ export class PersistenceService {
 			id: `player_${now}`,
 			name,
 			stats: {
+				// Base attributes
+				strength: 10,
+				dexterity: 10,
+				intelligence: 10,
+				vitality: 10,
+				luck: 10,
+				// Level and progression
 				level: 1,
 				experience: 0,
+				experienceToNextLevel: 100,
+				// Resources
 				health: 100,
 				maxHealth: 100,
 				mana: 50,
 				maxMana: 50,
 				stamina: 100,
 				maxStamina: 100,
-				strength: 10,
-				dexterity: 10,
-				intelligence: 10,
-				vitality: 10,
-				luck: 10,
+				// Combat stats
+				attack: 20,
+				defense: 15,
+				magicAttack: 20,
+				magicDefense: 15,
+				speed: 15,
+				criticalRate: 5,
+				evasion: 3,
 			},
 			resources: {
 				health: 100,
+				maxHealth: 100,
 				mana: 50,
+				maxMana: 50,
 				stamina: 100,
+				maxStamina: 100,
 			},
 			gold: 0,
 			createdAt: now,
@@ -213,12 +228,10 @@ export class PersistenceService {
 				graphics: {
 					quality: 'medium',
 					particles: true,
-					fullscreen: false,
 				},
 				controls: {
 					keyboardEnabled: true,
 					gamepadEnabled: true,
-					touchEnabled: true,
 				},
 			}
 			return { success: true, data: defaultSettings }

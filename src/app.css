@@ -56,6 +56,10 @@
 	--color-neutral-800: #27272a;
 	--color-neutral-900: #18181b;
 
+	/* RGB Values for rgba() usage */
+	--color-primary-500-rgb: 14, 165, 233;
+	--color-primary-600-rgb: 2, 132, 199;
+
 	/* Spacing Tokens */
 	--spacing-xs: 0.25rem;
 	--spacing-sm: 0.5rem;
