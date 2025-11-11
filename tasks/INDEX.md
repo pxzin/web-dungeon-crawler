@@ -528,6 +528,108 @@ Substituir a renderização ASCII da masmorra por Phaser 2D e redesenhar a UI pa
 
 ---
 
+### ⏳ 022 - Refactor Combat: Class-Specific Basic Attacks
+**Status**: ⏳ Pending / Pendente
+**Priority**: Very High / Altíssima
+**Type**: Refactoring / System
+
+**Description**:
+Adjust the combat system so that each class's basic attack scales with its primary attribute.
+
+Ajustar o sistema de combate para que o ataque básico de cada classe escale com seu atributo principal.
+
+**Implementation**:
+- 📁 [tasks/022-combat-class-scaling.md](./022-combat-class-scaling.md)
+
+**Status**: Not started
+
+---
+
+### ⏳ 023 - Combat Review & Balance Tuning
+**Status**: ⏳ Pending / Pendente
+**Priority**: Very High / Altíssima
+**Type**: Balanceamento / System
+
+**Description**:
+Review and adjust combat formulas and introduce tuning parameters for overall balance.
+
+Revisar e ajustar as fórmulas de combate e introduzir parâmetros de tuning para o balanceamento geral.
+
+**Implementation**:
+- 📁 [tasks/023-combat-balance-tuning.md](./023-combat-balance-tuning.md)
+
+**Status**: Not started
+
+---
+
+### ⏳ 024 - Monster Data Review & Balance
+**Status**: ⏳ Pending / Pendente
+**Priority**: High / Alta
+**Type**: Balanceamento / Content
+
+**Description**:
+Review and adjust the stats and abilities of all defined monsters for better balance.
+
+Revisar e ajustar os atributos e habilidades de todos os monstros definidos para um melhor balanceamento.
+
+**Implementation**:
+- 📁 [tasks/024-monster-data-balance.md](./024-monster-data-balance.md)
+
+**Status**: Not started
+
+---
+
+### ⏳ 025 - Exploration Adjustments: Guaranteed Encounters & Continuous Search
+**Status**: ⏳ Pending / Pendente
+**Priority**: Very High / Altíssima
+**Type**: Feature / Gameplay
+
+**Description**:
+Modify dungeon exploration logic to guarantee monster encounters and allow continuous searching for more encounters.
+
+Modificar a lógica de exploração da masmorra para garantir encontros com monstros e permitir a busca contínua por mais encontros.
+
+**Implementation**:
+- 📁 [tasks/025-exploration-adjustments.md](./025-exploration-adjustments.md)
+
+**Status**: Not started
+
+---
+
+### ⏳ 026 - Combat Adjustments: Automatic Basic Attack
+**Status**: ⏳ Pending / Pendente
+**Priority**: Very High / Altíssima
+**Type**: Feature / UX
+
+**Description**:
+Implement an automatic basic attack option in the combat system to reduce micromanagement.
+
+Implementar uma opção de ataque básico automático no sistema de combate para reduzir a microgestão.
+
+**Implementation**:
+- 📁 [tasks/026-combat-auto-attack.md](./026-combat-auto-attack.md)
+
+**Status**: Not started
+
+---
+
+### ⏳ 027 - Combat Adjustments: Automatic Target Selection
+**Status**: ⏳ Pending / Pendente
+**Priority**: Very High / Altíssima
+**Type**: Feature / UX
+
+**Description**:
+Implement intelligent automatic target selection logic in combat.
+
+Implementar lógica inteligente para seleção automática de alvo no combate.
+
+**Implementation**:
+- 📁 [tasks/027-combat-auto-target.md](./027-combat-auto-target.md)
+
+**Status**: Not started
+
+---
+
 ## Infrastructure / Infraestrutura
 
 ### ✅ Persistence System
